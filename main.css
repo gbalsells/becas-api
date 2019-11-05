@@ -7,6 +7,12 @@ body{
 
 }
 
+input{
+  padding: 10px;
+  border: none;
+  border-bottom: solid 1px #0277bd;
+}
+
 .button {
   background-color: #0277bd;
   border: none;
@@ -27,7 +33,7 @@ body{
 .top-bar{
   position: fixed;
   width: 100%;
-  height: 50px;
+  height: 70px;
   display: flex;
   justify-content: space-between;
   background-color: #0277bd;
@@ -37,6 +43,7 @@ body{
   padding: 0;
   overflow: hidden;
   align-items: center;
+  text-align: center;
 }
 
 .top-bar img {
@@ -45,20 +52,20 @@ body{
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  height: 50px;
+  height: 70px;
   width: auto;
 }
 
-/* REGISTRO */
+/* ---------------  REGISTRO  -------------- */
 
 .registro{
-  padding-top: 50px;
+  padding-top: 70px;
   padding-left: 50px;
 }
 
 .registro h2{
   text-transform: uppercase;
-  font-size: 24px;
+  font-size: 22px;
   margin-bottom: 1em;
 }
 
@@ -89,10 +96,8 @@ body{
   width: 100%;
 }
 
-input{
-  padding: 10px;
-  border: none;
-  border-bottom: solid 1px #0277bd;
+.registro .button{
+  width: 200px;
 }
 
 input:focus{
@@ -100,18 +105,18 @@ input:focus{
   border-bottom: solid 3px #0277bd;
 }
 
-/* LOGIN */
+/* --------------- LOGIN --------------- */
 
 
 .login-div{
   height: 100vh;
   display: flex;
   align-items: center;
-  background: #b4ffff;
   background: #e0f2f1;
 
 }
 .login{
+  vertical-align: middle;
   margin-left: auto;
   margin-right: auto;
   width: 55%;
@@ -131,26 +136,86 @@ input:focus{
 }
 
 .login__form p{
-  width: 40%;
+  width: 60%;
 }
 
 .login__input{
-  width: 100%;
+  width: 96%;
 }
 
 .login__buttons{
   margin-top: 3em;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  width: 96%;
+  margin-bottom: 3em;
 }
 
 .registrarse{
-  margin-left: 20px;
   background: #009688;
 }
 
 .registrarse:hover{
   background: #00675b;
+}
+
+/* -------------  MEDIA QUERIES ------------ */
+
+@media (max-width: 767px) {
+
+  .top-bar{
+    height: 50px;
+  }
+
+  .top-bar img {
+    height: 50px;
+  }
+
+  /* ---------  LOGIN  ----------- */
+
+  .login{
+    width: 100%;
+  }
+
+  .login-div{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+  }
+
+
+  .registrarse{
+    margin-left: 0;
+  }
+
+  .login__buttons{
+    width: 100%;
+  }
+
+  /* REGISTRO */
+
+  .registro{
+
+    padding-top: 50px;
+  }
+  .registro h2{
+    font-size: 20px;
+    margin-left: 0;
+  }
+
+  .registro p{
+    font-size: 14px;
+    width: 80%;
+  }
+
+  .registro__flex{
+    flex-direction: column;
+  }
+
+  .registro__button{
+    margin-bottom: 20px;
+  }
 }
 
 
