@@ -34,13 +34,15 @@
         $user->setUser($userSession->getCurrentUser($user));
         include_once 'pages/home.php';
     } else if (isset($_POST['usuario']) && isset($_POST['password'])){
-        echo "set";
         $userForm = $_POST['usuario'];
         $passForm = $_POST['password'];
 
         if($user->userExists($userForm, $passForm)){
             $userSession->setCurrentUser($userForm);
             $user->setUser($userForm);
+            if($user->getTipoUsuario() === 0) {
+                echo $user->getIdUsuario();
+            }
             include_once 'pages/home.php';
         } else {
             echo "Usuario y/o contraseña incorrecta";
