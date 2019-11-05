@@ -21,6 +21,7 @@
         <p>Password: <br>
         <input type="password" name="password"></p>
         <p class="center"><input type="submit" value="Iniciar Sesión"></p>
+        <p class="center"><input type="submit" value="Registrarse"></p>
     </form>
 </body>
 </html>

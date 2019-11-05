@@ -31,17 +31,22 @@
     $user = new User();
 
     if (isset($_SESSION['user'])){
-        echo "Hay sesion";
+        $user->setUser($userSession->getCurrentUser($user));
+        include_once 'pages/home.php';
     } else if (isset($_POST['usuario']) && isset($_POST['password'])){
+        echo "set";
         $userForm = $_POST['usuario'];
         $passForm = $_POST['password'];
 
         if($user->userExists($userForm, $passForm)){
-            echo "usuario validado";
+            $userSession->setCurrentUser($userForm);
+            $user->setUser($userForm);
+            include_once 'pages/home.php';
         } else {
-            echo "Ta todo mal";
+            echo "Usuario y/o contraseña incorrecta";
+            include_once 'pages/login.php';
         }
     } else {
-        include_once 'vistas/login.php';
+        include_once 'pages/login.php';
     }
 ?>
