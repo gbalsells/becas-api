@@ -1,3 +1,7 @@
+<link rel="stylesheet" href="main.css">
+<link href='https://fonts.googleapis.com/css?family=Alef' rel='stylesheet'>
+<script type="text/javascript" src="index.js"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <?php
 /*
     $dominio = "localhost";
@@ -29,6 +33,7 @@
 
     $userSession = new UserSession();
     $user = new User();
+    $incorrecto = false;
 
     if (isset($_SESSION['user'])){
         $user->setUser($userSession->getCurrentUser($user));
@@ -40,12 +45,14 @@
         if($user->userExists($userForm, $passForm)){
             $userSession->setCurrentUser($userForm);
             $user->setUser($userForm);
+            /*
             if($user->getTipoUsuario() === 0) {
                 echo $user->getIdUsuario();
             }
+            */
             include_once 'pages/home.php';
         } else {
-            echo "Usuario y/o contraseña incorrecta";
+            $incorrecto = true;
             include_once 'pages/login.php';
         }
     } else {

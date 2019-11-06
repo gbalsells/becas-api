@@ -7,6 +7,16 @@ body{
 
 }
 
+.incorrecto{
+  color: red;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.titulo{
+  cursor: pointer;
+}
+
 input{
   padding: 10px;
   border: none;

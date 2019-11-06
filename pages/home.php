@@ -4,20 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Home</title>
-    <link rel="stylesheet" href="main.css">
+    <title>Home - Becas Juan B. Teran</title>
 </head>
 <body>
-    <div id="menu">
-        <ul>
-            <li>Home</li>
-            <li class="cerrar-sesion"><a href="models/logout.php">Cerrar sesión</a></li>
-        </ul>
-    </div>
+    <nav class="top-bar">
+        Bienvenido, <?php echo $user->getNombre(); ?>
+        <a href="models/logout.php">Cerrar sesión</a>
+    </nav>
+    <?php 
+        if($user->hayAlumno()){
+            include_once 'CaratulaAlumno.php';
+        } else {
+            include_once 'solicitud.php';
+        }
+    ?>
 
-    <section>
-        <h1>Bienvenido <?php echo $user->getNombre();  ?></h1>
-    </section>
+
     
 </body>
 </html>

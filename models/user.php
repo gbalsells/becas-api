@@ -35,6 +35,16 @@ class User extends DB{
         }
     }
 
+    public function hayAlumno(){
+        $query = $this->connect()->prepare('SELECT * FROM alumno WHERE Usuario_idUsuario = :user');
+        $query->execute(['user' => $this->id]);
+        if($query->rowCount()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public function getUsuario(){
         return $this->usuario;
     }
