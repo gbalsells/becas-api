@@ -11,15 +11,16 @@
         Bienvenido, <?php echo $user->getNombre(); ?>
         <a href="models/logout.php">Cerrar sesión</a>
     </nav>
-    <?php 
+    <?php
+    if ($user->getTipoUsuario() === 0) {
+        include_once 'listaAlumnos.php';
+    } else {
         if($user->hayAlumno()){
             include_once 'CaratulaAlumno.php';
         } else {
             include_once 'solicitud.php';
         }
+    }
     ?>
-
-
-    
 </body>
 </html>

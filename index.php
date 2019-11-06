@@ -45,11 +45,6 @@
         if($user->userExists($userForm, $passForm)){
             $userSession->setCurrentUser($userForm);
             $user->setUser($userForm);
-            /*
-            if($user->getTipoUsuario() === 0) {
-                echo $user->getIdUsuario();
-            }
-            */
             include_once 'pages/home.php';
         } else {
             $incorrecto = true;
