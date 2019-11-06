@@ -50,8 +50,7 @@ input{
   color: white;
   list-style-type: none;
   margin-top: 0;
-  padding: 0;
-  overflow: hidden;
+  padding: 0 10px 0 10px;
   align-items: center;
   text-align: center;
 }
@@ -64,6 +63,17 @@ input{
   text-decoration: none;
   height: 70px;
   width: auto;
+}
+
+.top-bar a{
+  margin-right: 20px;
+  text-decoration: none;
+  color: white;
+}
+
+.top-bar a:hover{
+  color: #e0f2f1;
+  font-weight: 400;
 }
 
 /* ---------------  REGISTRO  -------------- */
@@ -119,7 +129,7 @@ input:focus{
 
 
 .login-div{
-  height: 100vh;
+  height: calc(100vh - 70px);
   display: flex;
   align-items: center;
   background: #e0f2f1;
@@ -167,6 +177,43 @@ input:focus{
 
 .registrarse:hover{
   background: #00675b;
+}
+
+/* ---------- CARATULA ---------- */
+
+.caratula{
+  padding-top: 70px;
+  background-color: #e0f2f1;
+  height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.caratula__contenido{
+  background-color: white;
+  min-width: 70%;
+  -webkit-box-shadow: 0px 0px 35px -9px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 35px -9px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 35px -9px rgba(0,0,0,0.75);
+}
+
+.caratula__header{
+  background: #009688;
+  padding: 10px;
+  color: white;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.caratula__datos{
+  padding-left: 20px;
+}
+
+.caratula__datos__info{
+  display: flex;
+  flex-direction: column;
 }
 
 /* -------------  MEDIA QUERIES ------------ */
@@ -225,6 +272,39 @@ input:focus{
 
   .registro__button{
     margin-bottom: 20px;
+  }
+
+  /* CARATULA */
+
+  .caratula{
+    padding-top: 70px;
+    background-color: #e0f2f1;
+    height: calc(100vh - 70px);
+  }
+  
+  .caratula__contenido{
+    background-color: white;
+    min-width: 100%;
+    -webkit-box-shadow: 0px 0px 35px -9px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 35px -9px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 35px -9px rgba(0,0,0,0.75);
+  }
+  
+  .caratula__header{
+    padding: 10px;
+    color: white;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .caratula__datos{
+    padding-left: 20px;
+  }
+  
+  .caratula__datos__info{
+    display: flex;
+    flex-direction: column;
   }
 }
 
