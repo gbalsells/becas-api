@@ -5,11 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sesiones</title>
-
+    <link href='https://fonts.googleapis.com/css?family=Alef' rel='stylesheet'>
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <form action="" method="POST">
+    <nav class="top-bar">
+        <div><img src="../assets/sae.jpg" /></div>
+        <div>Becas Juan B Terán</div>
+        <div><img src="../assets/unt.jpg" /></div>
+    </nav>
+    <form action="" method="POST" class="registro">
         <?php
             if(isset($errorLogin)){
                 echo $errorLogin;
