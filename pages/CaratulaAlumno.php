@@ -24,9 +24,9 @@
             <div class="caratula__datos">
                 <h3>Datos personales</h3>
                 <ul class="caratula__datos__info">
-                    <li><b>DNI: </b>39142069</li>
-                    <li><b>Email: </b>galeb95rnr@gmail.com</li>
-                    <li><b>Telefono: </b>+5493813153759</li>
+                    <li><b>DNI: </b><?php echo $user->getDNI();?></li>
+                    <li><b>Email: </b><?php echo $user->getEmail();?></li>
+                    <li><b>Telefono: </b><?php echo $user->getTelefono();?></li>
                 </ul>
                 <h3>Datos académicos</h3>
                 <ul class="caratula__datos__info">

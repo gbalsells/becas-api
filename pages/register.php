@@ -20,13 +20,12 @@
       <p class="registro__user">Nombre de usuario: <br>
         <input type="text" name="usuario">
       </p>
-
       <div class="registro__flex">
         <p>Contraseña: <br>
           <input type="password" name="password">
         </p>
         <p>Repetir contraseña: <br>
-          <input type="password" name="password">
+          <input type="password" name="password2">
         </p>
       </div>
       <div class="registro__flex">
@@ -53,3 +52,30 @@
   </form>
 </body>
 </html>
+
+<?php
+  include_once '../models/user.php';
+  include_once '../models/user_session.php';
+
+  $userSession = new UserSession();
+  $newUser = new User();
+  
+if (isset($_POST['usuario']) && isset($_POST['password']) && isset($_POST['nombres']) && isset($_POST['apellidos']) && isset($_POST['dni']) && isset($_POST['email'])){
+  if ($_POST['usuario'] === '' || $_POST['password'] === '' && $_POST['nombres'] === '' && $_POST['apellidos'] === '' && $_POST['dni'] === '' && $_POST['email'] === ''){
+    echo 'Debe ingresar todos los datos';
+  } elseif ($_POST['password'] === $_POST['password2']){
+    $apellidos = $_POST['apellidos'];
+    $nombres = $_POST['nombres'];
+    $email = $_POST['email'];
+    $dni = $_POST['dni'];
+    $user = $_POST['usuario'];
+    $pass = $_POST['password'];
+    $telefono = $_POST['telefono'];
+    $md5pass = md5($pass);
+    
+    $newUser->createUser($apellidos, $nombres, $email, $dni, $md5pass, $user, $telefono);
+  } else {
+    echo 'PASSWORDS DISTINTAS';
+  }
+}
+?>

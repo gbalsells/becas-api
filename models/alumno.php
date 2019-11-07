@@ -1,27 +1,19 @@
 <?php
 
 include_once 'db.php';
-class User extends DB{
+class Alumno extends User{
 
     private $nombre;
     private $username;
 
-    public function userExists($user, $pass){
-        $md5pass = md5($pass);
-
-        $query = $this->connect()->prepare('SELECT * FROM usuario WHERE Usuario = :user AND password = :pass');
-        $query->execute(['user'=> $user, 'pass' => $md5pass]);
-
-        if($query->rowCount()){
-            return true;
-        }else{
-            return false;
-        }
+    public function datosAcademicos($id, $facultad, $carrera, $ingreso, $promedio, $aprobadas, $totales, $rendidos){
+        $query = $this->connect()->prepare('INSERT INTO alumno VALUES(:id, :facultad, :carrera, null, :ingreso, :totales, :promedio, :rendidos, :aprobadas, null, null, null)');
+        $query->execute(['id'=> $id, 'facultad' => $facultad, 'carrera' => $carrera, 'ingreso' => $ingreso, 'promedio' => $promedio, 'aprobadas' => $aprobadas, 'totales' => $totales, 'rendidos' => $rendidos]);
     }
 
-    public function createUser($apellidos, $nombres, $email, $dni, $pass, $user, $telefono){
-        $query = $this->connect()->prepare('INSERT INTO usuario VALUES(null, :apellidos, :nombres, :email, 1, :dni, :user, :pass, :telefono)');
-        $query->execute(['user'=> $user, 'pass' => $pass, 'apellidos' => $apellidos, 'nombres' => $nombres, 'email' => $email, 'dni' => $dni, 'telefono' => $telefono ]);
+    public function datosFamiliares($id, $integrantes, $ingresos, $egresos){
+        $query = $this->connect()->prepare('UPDATE alumno SET IntegrantesFamilia = :integrantes, Ingresos = :ingresos, Egresos = :egresos WHERE idUsuario = :id');
+        $query->execute(['id'=> $id, 'integrantes' => $integrantes, 'ingresos' => $ingresos, 'egresos' => $egresos);
     }
 
     public function setUser($user){
@@ -29,7 +21,6 @@ class User extends DB{
         $query->execute(['user' => $user]);
 
         foreach ($query as $currentUser) {
-            //echo $currentUser;
             $this->nombre = $currentUser['Nombres'];
             $this->usuario = $currentUser['Usuario'];
             $this->apellido = $currentUser['Apellidos'];
