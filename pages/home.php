@@ -15,11 +15,7 @@
     if ($user->getTipoUsuario() === 0) {
         include_once 'listaAlumnos.php';
     } else {
-        if($user->hayAlumno()){
-            include_once 'CaratulaAlumno.php';
-        } else {
-            include_once 'solicitud.php';
-        }
+        include_once 'components/datosAcademicos.php';
     }
     ?>
 </body>

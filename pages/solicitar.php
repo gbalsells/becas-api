@@ -1,5 +1,5 @@
 <?php 
-include_once 'datosAcademicos.php';
+include_once 'components/datosAcademicos.php';
 include 'models/alumno.php';
 
 $alumno = new Alumno();
