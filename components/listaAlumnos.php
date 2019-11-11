@@ -15,25 +15,22 @@
     </nav>
     <div class="lista_alumnos">
       <h2>Alumnos registrados:</h2>
-      <div class="alumno">
-        <span>Balsells, Guido Alejandro</span>
-        <span>39142069</span>
-        <span>Facultad de Ciencias Exactas y Tecnología</span>
-        <span>Ingeniería en Computación</span>
-      </div>
+      <?php
 
-      <div class="alumno">
-          <span>Balsells, Guido Alejandro</span>
-          <span>39142069</span>
-          <span>Facultad de Ciencias Exactas y Tecnología</span>
-          <span>Ingeniería en Instrumentación de vientos destinados al choto más largo que te pueda llegar a entrar en la garganta la concha puta de tu santa madre</span>
-        </div>
-
-        <div class="alumno">
-            <span>Balsells, Guido Alejandro</span>
-              <span>39142069</span>
-              <span>Facultad de Ciencias Exactas y Tecnología</span>
-              <span>Ingeniería en Computación</span>
-          </div>
+      include_once 'models/db.php';
+      $db = new DB();
+      $alumnos = $db->getAlumnos();
+      foreach($alumnos as $alumno){
+        echo '
+        <div class="alumno" onclick="';
+        echo 'A ver';
+        echo'">
+          <span>' .$alumno['Apellidos'] .', ' .$alumno['Nombres'] . '</span>
+          <span>' .$alumno['DNI'] .'</span>
+          <span>' .$alumno['Facultad'] .'</span>
+          <span>' .$alumno['Carrera'] .'</span>
+        </div>';
+      }
+      ?>
     </div>
 </body>

@@ -32,6 +32,12 @@ class DB{
             print_r('Error connection: ' . $e->getMessage());
         }   
     }
+
+    public function getAlumnos(){
+        $query = $this->connect()->prepare('SELECT * FROM usuario JOIN alumno ON alumno.idUsuario = usuario.IdUsuario');
+        $query->execute();
+        return $query;
+    }
 }
 
 

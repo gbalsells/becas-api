@@ -7,6 +7,10 @@ body{
 
 }
 
+.select {
+  font-size: 20px;
+}
+
 .incorrecto{
   color: red;
   margin-bottom: 20px;
@@ -123,6 +127,10 @@ input{
 input:focus{
   border:none;
   border-bottom: solid 3px #0277bd;
+}
+
+.familiares p{
+  width: 50%;
 }
 
 /* --------------- LOGIN --------------- */

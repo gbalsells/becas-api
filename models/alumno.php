@@ -11,7 +11,7 @@ class Alumno extends User{
         $query->execute(['id'=> $id, 'facultad' => $facultad, 'carrera' => $carrera, 'ingreso' => $ingreso, 'promedio' => $promedio, 'aprobadas' => $aprobadas, 'totales' => $totales, 'rendidos' => $rendidos]);
     }
 
-    public function datosFamiliares($id, $integrantes, $ingresos, $egresos){
+    public function datosFamiliares($id, $ingresos, $egresos, $integrantes){
         $query = $this->connect()->prepare('UPDATE alumno SET IntegrantesFamilia = :integrantes, Ingresos = :ingresos, Egresos = :egresos WHERE idUsuario = :id');
         $query->execute(['id'=> $id, 'integrantes' => $integrantes, 'ingresos' => $ingresos, 'egresos' => $egresos]);
     }
