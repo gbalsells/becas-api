@@ -13,7 +13,7 @@
     </nav>
     <?php
     if ($user->getTipoUsuario() === 0) {
-        include_once 'listaAlumnos.php';
+        include_once 'components/listaAlumnos.php';
     } else {
         include_once 'components/datosAcademicos.php';
     }
