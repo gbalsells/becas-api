@@ -10,7 +10,7 @@
     } else if (isset($_POST['usuario']) && isset($_POST['password'])){
         if (isset($_POST['nombres']) && isset($_POST['apellidos']) && isset($_POST['dni']) && isset($_POST['email'])){
           if ($_POST['usuario'] === '' || $_POST['password'] === '' && $_POST['nombres'] === '' && $_POST['apellidos'] === '' && $_POST['dni'] === '' && $_POST['email'] === ''){
-            echo 'Debe ingresar todos los datos';
+            echo '<span class="incorrecto" style="margin-left: 50px; margin-top: 0px;">Debe ingresar todos los datos</span>';
           } elseif ($_POST['password'] === $_POST['password2']){
             $apellidos = $_POST['apellidos'];
             $nombres = $_POST['nombres'];

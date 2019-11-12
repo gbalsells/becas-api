@@ -17,7 +17,7 @@ if (isset($_POST['facultad']) && isset($_POST['carrera']) && isset($_POST['ingre
         
         $alumno->datosAcademicos($id, $facultad, $carrera, $ingreso, $promedio, $aprobadas, $totales, $rendidos);
     } else {
-        echo 'Debe ingresar todos los datos';
+        echo '<span class="incorrecto" style="margin-left: 50px; margin-top: 0px;">Debe ingresar todos los datos</span>';
     }
 }
 ?>

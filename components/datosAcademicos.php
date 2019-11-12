@@ -120,7 +120,7 @@
             include_once 'components/datosFamiliares.php';
           }
         } else {
-            echo 'Debe ingresar todos los datos';
+            echo '<span class="incorrecto" style="margin-left: 50px; margin-top: 0px;">Debe ingresar todos los datos</span>';
         }
     } else {
         echo '
