@@ -31,14 +31,12 @@ echo '
     </div>
   </div>
 </form>';
-if (isset($_POST['ingresos']) && !isset($_POST['egresos']) && !isset($_POST['integrantes'])){
-  echo 'Uretra';
+if (isset($_POST['ingresos']) && isset($_POST['egresos']) && isset($_POST['integrantes'])){
   $ingresos = $_POST['ingresos'];
   $egresos = $_POST['egresos'];
   $integrantes = $_POST['integrantes'];
   $alumno->datosFamiliares($id, $ingresos, $egresos, $integrantes);
-  include_once 'components/caratulaAlumno.php';
-}
+  header("Location: index.php");}
 ?>
   
 </body>

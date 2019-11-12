@@ -7,10 +7,7 @@
     <title>Home - Becas Juan B. Teran</title>
 </head>
 <body>
-    <nav class="top-bar">
-        Bienvenido, <?php echo $user->getNombre(); ?>
-        <a href="models/logout.php">Cerrar sesión</a>
-    </nav>
+
     <?php
     if ($user->getTipoUsuario() === 0) {
         include_once 'components/listaAlumnos.php';

@@ -25,7 +25,7 @@
             $userSession->setCurrentUser($usuario);
             $user->setUser($usuario);
             $logear = true;
-            include_once 'pages/home.php';
+            header("Location: index.php");
           } else {
             echo 'PASSWORDS DISTINTAS';
           }
