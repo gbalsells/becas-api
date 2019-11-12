@@ -40,7 +40,7 @@
       <p>Email: <br>
         <input type="email" name="email">
       </p>
-      <p class="registro__tel">Telefono: <br>
+      <p class="registro__tel">Teléfono: <br>
         <input type="tel" name="telefono">
       </p>
       <div class="registro__button">

@@ -60,7 +60,7 @@
                 <ul class="caratula__datos__info">
                     <li><b>DNI: </b><?php echo $alumno->getDNI();?></li>
                     <li><b>Email: </b><?php echo $alumno->getEmail();?></li>
-                    <li><b>Telefono: </b><?php echo $alumno->getTelefono();?></li>
+                    <li><b>Teléfono: </b><?php echo $alumno->getTelefono();?></li>
                 </ul>
                 <h3>Datos académicos</h3>
                 <ul class="caratula__datos__info">
