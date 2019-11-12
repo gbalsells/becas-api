@@ -19,13 +19,11 @@
 
       include_once 'models/db.php';
       $db = new DB();
-      $dir = 'components/CaratulaAlumno.php';
       $alumnos = $db->getAlumnos();
       foreach($alumnos as $alumno){
+        $id = $alumno['idUsuario'];
         echo '
-        <div class="alumno" onclick="location=';
-        echo $dir;
-        echo'">
+        <div class="alumno" onclick="location=`components/CaratulaAlumno.php?id=' .$id .'`">
           <span>' .$alumno['Apellidos'] .', ' .$alumno['Nombres'] . '</span>
           <span>' .$alumno['DNI'] .'</span>
           <span>' .$alumno['Facultad'] .'</span>

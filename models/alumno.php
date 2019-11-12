@@ -2,11 +2,17 @@
 
 class Alumno extends User{
 
-    public function setAlumno($id){
-        $query = $this->connect()->prepare('SELECT * FROM alumno WHERE idUsuario = :id');
+    public function setAlumnoByUser($id){
+        $query = $this->connect()->prepare('SELECT * FROM alumno JOIN usuario ON alumno.idUsuario = usuario.idUsuario WHERE alumno.idUsuario = :id');
         $query->execute(['id' => $id]);
 
         foreach ($query as $currentAlumno) {
+            $this->nombre = $currentAlumno['Nombres'];
+            $this->usuario = $currentAlumno['Usuario'];
+            $this->apellido = $currentAlumno['Apellidos'];
+            $this->email = $currentAlumno['Email'];
+            $this->dni = $currentAlumno['DNI'];
+            $this->telefono = $currentAlumno['Telefono'];
             $this->Facultad = $currentAlumno['Facultad'];
             $this->Carrera = $currentAlumno['Carrera'];
             $this->AnioIngreso = $currentAlumno['AnioIngreso'];
@@ -19,6 +25,23 @@ class Alumno extends User{
             $this->Egresos = $currentAlumno['Egresos'];
             $this->Estado = $currentAlumno['Estado'];
         }
+    }
+
+    public function getNombre(){
+        return $this->nombre;
+    }
+    public function getApellido(){
+        return $this->apellido;
+    }
+    public function getEmail(){
+        return $this->email;
+    }
+    public function getDNI(){
+        return $this->dni;
+    }
+
+    public function getTelefono(){
+        return $this->telefono;
     }
 
     public function getFacultad(){

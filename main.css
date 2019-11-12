@@ -7,6 +7,12 @@ body{
 
 }
 
+.atras {
+  float: right;
+  margin: 20px;
+  font-size: 18px;
+}
+
 .select {
   font-size: 20px;
 }
@@ -246,6 +252,7 @@ input:focus{
   align-items: center;
   cursor: pointer;
   transition: 0.4s;
+  min-width: 80%;
 }
 
 .alumno:hover{

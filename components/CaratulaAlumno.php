@@ -12,20 +12,36 @@
 </head>
 <body>
     <?php
+    if (isset($_REQUEST['id'])) {
+        include_once '../models/user_session.php';
+        require_once '../models/user.php';
+        require_once '../models/alumno.php';
 
+        $id = $_REQUEST['id'];
+        $logout = "../models/logout.php";
+
+        $userSession = new UserSession();
+        $user = new User();
+
+        if (isset($_SESSION['user'])){
+            $user->setUser($userSession->getCurrentUser($user));
+        }
+    } else {
+        $id = $user->getIdUsuario();
+        $logout = "models/logout.php";
+    }
     $alumno = new Alumno();
-    $id = $user->getIdUsuario();
 
-    $alumno->setAlumno($id);
+    $alumno->setAlumnoByUser($id);
     ?>
     <nav class="top-bar">
         Bienvenido, <?php echo $user->getNombre(); ?>
-        <a href="models/logout.php">Cerrar sesión</a>
+        <a href=<?php echo $logout; ?>>Cerrar sesión</a>
     </nav>
     <div class="caratula">
         <div class="caratula__contenido">
             <div class="caratula__header">
-                <span class="caratula__header__nombre"><?php echo $user->getApellido() .', ' .$user->getNombre(); ?></span>
+                <span class="caratula__header__nombre"><?php echo $alumno->getApellido() .', ' .$alumno->getNombre(); ?></span>
                 <span class="caratula__header__estado">
                     <?php
                     $estado = $alumno->getEstado();
@@ -42,9 +58,9 @@
             <div class="caratula__datos">
                 <h3>Datos personales</h3>
                 <ul class="caratula__datos__info">
-                    <li><b>DNI: </b><?php echo $user->getDNI();?></li>
-                    <li><b>Email: </b><?php echo $user->getEmail();?></li>
-                    <li><b>Telefono: </b><?php echo $user->getTelefono();?></li>
+                    <li><b>DNI: </b><?php echo $alumno->getDNI();?></li>
+                    <li><b>Email: </b><?php echo $alumno->getEmail();?></li>
+                    <li><b>Telefono: </b><?php echo $alumno->getTelefono();?></li>
                 </ul>
                 <h3>Datos académicos</h3>
                 <ul class="caratula__datos__info">
@@ -65,6 +81,7 @@
                     <li><b>Integrantes del grupo familiar: </b><?php echo $alumno->getIntegrantesFamilia();?></li>
                 </ul>
             </div>
+            <button class="button atas" onclick="location='../index.php'">Atras</button>
     </div>
 </body>
 </html>
