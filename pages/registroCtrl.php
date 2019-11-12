@@ -20,7 +20,7 @@
             $pass = $_POST['password'];
             $telefono = $_POST['telefono'];
             $md5pass = md5($pass);
-            
+
             $user->createUser($apellidos, $nombres, $email, $dni, $md5pass, $usuario, $telefono);
             $userSession->setCurrentUser($usuario);
             $user->setUser($usuario);

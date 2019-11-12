@@ -10,9 +10,7 @@
 </head>
 <body>
   <nav class="top-bar">
-      <div><img src="../assets/sae.jpg" /></div>
       <div onclick="location='../index.php'" class="titulo" >Becas Juan B Terán</div>
-      <div><img src="../assets/unt.jpg" /></div>
   </nav>
   <form action="" method="POST" class="registro">
     <h2>Registrarse</h2>

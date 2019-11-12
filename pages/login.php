@@ -12,9 +12,7 @@
 </head>
 <body>
     <nav class="top-bar">
-        <div><img src="assets/sae.jpg" /></div>
         <a onclick="location='index.php'" class="titulo">Becas Juan B Terán</a>
-        <div><img src="assets/unt.jpg" /></div>
     </nav>
     <div class="login-div">
       <form action="" method="POST" class="login">
