@@ -46,7 +46,7 @@
               <p>Año de ingreso a la facultad: <br>
                 <input type="number" name="ingreso">
               </p>
-              <p>Promedio: <br>
+              <p>Promedio (Separar decimales con punto. <b>Ejemplo: 8.50</b>): <br>
                 <input type="number" step="0.01" name="promedio">
               </p>
               <p>Cantidad de materias aprobadas en el último ciclo lectivo: <br>

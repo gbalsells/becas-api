@@ -36,7 +36,7 @@
     ?>
     <nav class="top-bar">
         Bienvenido, <?php echo $user->getNombre(); ?>
-        <a href=<?php echo $logout; ?>>Cerrar sesión</a>
+        <a class="cerrar-sesion" href=<?php echo $logout; ?>>Cerrar sesión</a>
     </nav>
     <div class="caratula">
         <div class="caratula__contenido">

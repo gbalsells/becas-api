@@ -72,6 +72,8 @@ if (isset($_POST['usuario']) && isset($_POST['password']) && isset($_POST['nombr
     $md5pass = md5($pass);
     
     $newUser->createUser($apellidos, $nombres, $email, $dni, $md5pass, $user, $telefono);
+    $poronga = mysql_error($newUser) .'>>>>>Urita';
+    echo $poronga;
   } else {
     echo 'PASSWORDS DISTINTAS';
   }

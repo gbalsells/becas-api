@@ -9,7 +9,7 @@
 <body>
     <nav class="top-bar">
         Bienvenido, <?php echo $user->getNombre(); ?>
-        <a href="models/logout.php">Cerrar sesión</a>
+        <a class="cerrar-sesion" href="models/logout.php">Cerrar sesión</a>
     </nav>
     <?php
     if ($user->getTipoUsuario() === 0) {

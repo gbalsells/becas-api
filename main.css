@@ -1,6 +1,5 @@
 body{
   font-family: 'Alef';
-  /*padding-left: 10px;*/
   background-color: white;
   margin:0;
   padding: 0;
@@ -21,10 +20,6 @@ body{
   color: red;
   margin-bottom: 20px;
   font-size: 18px;
-}
-
-.titulo{
-  cursor: pointer;
 }
 
 input{
@@ -75,7 +70,7 @@ input{
   width: auto;
 }
 
-.top-bar a{
+.top-bar .cerrar-sesion{
   margin-right: 20px;
   text-decoration: none;
   color: white;
@@ -84,6 +79,15 @@ input{
 .top-bar a:hover{
   color: #e0f2f1;
   font-weight: 400;
+  transition: 0.2s;
+}
+
+.titulo{
+  cursor: pointer;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 20px;
 }
 
 /* ---------------  REGISTRO  -------------- */
@@ -107,6 +111,7 @@ input{
 .registro__flex{
   display: flex;
   justify-content: flex-start;
+  align-items: center;
 }
 
 .registro__flex p{
@@ -137,6 +142,10 @@ input:focus{
 
 .familiares p{
   width: 50%;
+}
+
+.familiares input{
+  width: 20%;
 }
 
 /* --------------- LOGIN --------------- */

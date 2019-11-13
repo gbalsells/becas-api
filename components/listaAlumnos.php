@@ -11,7 +11,7 @@
 <body>
     <nav class="top-bar">
         Bienvenido, <?php echo $user->getNombre(); ?>
-        <a href="models/logout.php">Cerrar sesión</a>
+        <a class="cerrar-sesion" href="models/logout.php">Cerrar sesión</a>
     </nav>
     <div class="lista_alumnos">
       <h2>Alumnos registrados:</h2>

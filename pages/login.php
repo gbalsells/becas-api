@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login - Becas Juan B. Teran</title>
 
-    <link rel="stylesheet" href="../main.css">
+    <link rel="stylesheet" href="main.css">
     <link href='https://fonts.googleapis.com/css?family=Alef' rel='stylesheet'>
 
 </head>
