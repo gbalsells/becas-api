@@ -156,7 +156,7 @@ input:focus{
   display: flex;
   align-items: center;
   background: #e0f2f1;
-
+  padding-top: 70px;
 }
 .login{
   vertical-align: middle;
