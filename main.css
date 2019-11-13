@@ -144,9 +144,13 @@ input:focus{
   width: 50%;
 }
 
-.familiares input{
-  width: 20%;
+.monto{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 50%;
 }
+
 
 /* --------------- LOGIN --------------- */
 
@@ -293,8 +297,6 @@ input:focus{
   .login-div{
     width: 100%;
     margin: 0;
-    padding: 0;
-
   }
 
 
@@ -304,6 +306,11 @@ input:focus{
 
   .login__buttons{
     width: 100%;
+  }
+
+  .login__buttons input{
+    margin-left: 20px;
+    margin-right: 20px;
   }
 
   /* REGISTRO */
@@ -362,6 +369,19 @@ input:focus{
     display: flex;
     flex-direction: column;
   }
+
+  .familiares p{
+    width: 80%;
+  }
+  
+  .monto{
+    width: 80%;
+  }
+
+  select{
+    width: 100%;
+  }
+
 }
 
 

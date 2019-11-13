@@ -19,13 +19,13 @@ echo '
   <div class="registro__form familiares">
     <p>
     Ingresos totales en pesos (Sumatoria de los ingresos económicos de todos los integrantes del grupo familiar): <br>
-      <div class="registro__flex" style="width: 50%;">
+      <div class="monto">
         <span>$</span>
         <input type="number" name="ingresos">
       </div>
     </p>
     <p>Egresos totales en pesos (Sumatoria de los servicios, impuestos y créditos del grupo familiar):  <br>
-      <div class="registro__flex" style="width: 50%;">
+      <div class="monto">
         <span>$</span>
         <input type="number" name="egresos">
       </div>
