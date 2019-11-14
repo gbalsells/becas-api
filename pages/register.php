@@ -10,8 +10,15 @@
 </head>
 <body>
   <nav class="top-bar">
-      <div onclick="location='../index.php'" class="titulo" >Becas Juan B Terán</div>
-  </nav>
+        <div class="top-bar__unt">
+          <img src="../assets/untletras.png" alt="" style="padding:10px;">          
+        </div>
+        <a onclick="location='../index.php'" class="titulo">Becas Juan B Terán</a>
+        <div class="top-bar__organismos">
+          <span>Secretaría de Asuntos Estudiantiles</span>
+          <span>Dirección General de Becas</span>
+        </div>
+    </nav>
   <form action="" method="POST" class="registro">
     <h2>Registrarse</h2>
     <div class="registro__form">

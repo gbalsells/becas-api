@@ -12,7 +12,14 @@
 </head>
 <body>
     <nav class="top-bar">
-        <div onclick="location='../index.php'" class="titulo" >Becas Juan B Terán</div>
+        <div class="top-bar__unt">
+          <img src="../assets/untletras.png" alt="" style="padding:10px;">          
+        </div>
+        <a onclick="location='../index.php'" class="titulo">Becas Juan B Terán</a>
+        <div class="top-bar__organismos">
+          <span>Secretaría de Asuntos Estudiantiles</span>
+          <span>Dirección General de Becas</span>
+        </div>
     </nav>
     <div class="solicitud__background">
         <div class="solicitud__text">

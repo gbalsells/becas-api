@@ -18,19 +18,19 @@ echo '
   <h2>Datos Familiares</h2>
   <div class="registro__form familiares">
     <p>
-    Ingresos totales en pesos (Sumatoria de los ingresos económicos de todos los integrantes del grupo familiar): <br>
+    Ingresos totales en pesos (Sumatoria de los ingresos económicos de todos los integrantes del grupo familiar. Escriba el número <b>sin puntos</b>, salvo para indicar centavos): <br>
       <div class="monto">
         <span>$</span>
-        <input type="number" name="ingresos">
+        <input type="number" step="0.01" name="ingresos">
       </div>
     </p>
-    <p>Egresos totales en pesos (Sumatoria de los servicios, impuestos y créditos del grupo familiar):  <br>
+    <p>Egresos totales en pesos (Sumatoria de los servicios, impuestos y créditos del grupo familiar. Escriba el número <b>sin puntos</b>, salvo para indicar centavos):  <br>
       <div class="monto">
         <span>$</span>
-        <input type="number" name="egresos">
+        <input type="number" step="0.01" name="egresos">
       </div>
     </p>
-    <p>Cantidad de integrantes de su grupo familiar (No debe contarse a usted mismo): <br>
+    <p>Cantidad de integrantes de su grupo familiar (Contándose a usted mismo): <br>
       <input type="number" name="integrantes">
     </p>
     <div class="registro__button">

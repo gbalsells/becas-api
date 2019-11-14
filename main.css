@@ -1,5 +1,5 @@
 body{
-  font-family: 'Alef';
+  font-family: 'Arial';
   background-color: white;
   margin:0;
   padding: 0;
@@ -58,15 +58,20 @@ input{
   padding: 0 10px 0 10px;
   align-items: center;
   text-align: center;
+  flex-basis: 30%;
+}
+
+.top-bar__unt {
+  width: 30%;
 }
 
 .top-bar img {
+  float: left;
   margin-top: 0;
   color: white;
-  text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  height: 70px;
+  height: 50px;
   width: auto;
 }
 
@@ -78,16 +83,26 @@ input{
 
 .top-bar a:hover{
   color: #e0f2f1;
-  font-weight: 400;
   transition: 0.2s;
 }
 
+.top-bar__organismos{
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 30%;
+  font-size: 14px;
+}
+
 .titulo{
+  width: 30%;
   cursor: pointer;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-  font-size: 20px;
+  font-size: 30px;
+  font-weight: 700;
 }
 
 /* ---------------  REGISTRO  -------------- */
@@ -105,7 +120,9 @@ input{
 
 .registro p{
   font-size: 14px;
-  width: 25%;
+  width: 50%;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .registro__flex{
@@ -185,6 +202,11 @@ input:focus{
   display: flex;
   align-items: center;
   background: #e0f2f1;
+  background-image: url("assets/untlogo.png");
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: center;
+  background-size: contain;
   padding-top: 70px;
 }
 .login{
@@ -201,6 +223,7 @@ input:focus{
 
 .login__form{
   background: white;
+
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -322,6 +345,8 @@ input:focus{
   .login-div{
     width: 100%;
     margin: 0;
+    background-size: contain;
+    padding-top: 50px;
   }
 
 

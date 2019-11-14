@@ -80,8 +80,17 @@
                     <li><b>Egresos: </b>$<?php echo $alumno->getEgresos();?></li>
                     <li><b>Integrantes del grupo familiar: </b><?php echo $alumno->getIntegrantesFamilia();?></li>
                 </ul>
+                <div style="display:flex; align-items:center;">
+                    <h3>Creado el <?php echo $alumno->getFechaCreacion() ?> </h3>
+                </div>
             </div>
-            <button class="button atras" onclick="location='../index.php'">Atras</button>
+            <?php
+                if ($user->getTipoUsuario() === 0) {
+                    echo '
+                    <button class="button atras" onclick="location=`index.php`">Atras</button>
+                    ';
+                }
+            ?>
     </div>
 </body>
 </html>

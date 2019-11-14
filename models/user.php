@@ -37,6 +37,7 @@ class User extends DB{
             $this->tipoUsuario = $currentUser['TipoUsuario'];
             $this->id = $currentUser['idUsuario'];
             $this->telefono = $currentUser['Telefono'];
+
         }
     }
 
