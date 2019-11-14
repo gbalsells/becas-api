@@ -69,7 +69,7 @@
                     <li><b>Cantidad de materias de la carrera: </b><?php echo $alumno->getCantidadMaterias();?></li>
                     <li><b>Año de ingreso a la facultad: </b><?php echo $alumno->getAnioIngreso();?></li>
                     <li><b>Promedio: </b><?php echo $alumno->getPromedio();?></li>
-                    <li><b>Materias aprobadas el último ciclo lectivo: </b><?php echo $alumno->getMateriasAprobadas();?></li>
+                    <li><b>Materias aprobadas el último ciclo lectivo (01/04/2018 al 31/03/2019): </b><?php echo $alumno->getMateriasAprobadas();?></li>
                     <li><b>Cantidad de materias rendidas: </b><?php echo $alumno->getExamenesRendidos();?></li>
 
 
@@ -81,7 +81,7 @@
                     <li><b>Integrantes del grupo familiar: </b><?php echo $alumno->getIntegrantesFamilia();?></li>
                 </ul>
             </div>
-            <button class="button atas" onclick="location='../index.php'">Atras</button>
+            <button class="button atras" onclick="location='../index.php'">Atras</button>
     </div>
 </body>
 </html>

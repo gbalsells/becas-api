@@ -43,7 +43,7 @@ if (isset($_POST['ingresos']) && isset($_POST['egresos']) && isset($_POST['integ
   $egresos = $_POST['egresos'];
   $integrantes = $_POST['integrantes'];
   $alumno->datosFamiliares($id, $ingresos, $egresos, $integrantes);
-  header("Location: index.php");}
+  header("Location: components/solicitudEnviada.php");}
 ?>
   
 </body>

@@ -151,6 +151,31 @@ input:focus{
   width: 50%;
 }
 
+.solicitud__background{
+  height: calc(100vh - 70px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #e0f2f1;
+  padding-top: 70px;
+}
+
+.solicitud__text{
+  background: white;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  -webkit-box-shadow: 0px 0px 35px -9px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 35px -9px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 35px -9px rgba(0,0,0,0.75);
+}
+
+.link{
+  font-weight: 900;
+  color: blue;
+  cursor: pointer;
+}
 
 /* --------------- LOGIN --------------- */
 
