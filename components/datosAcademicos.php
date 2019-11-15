@@ -49,7 +49,7 @@
               <p>Promedio (Separar decimales con punto. <b>Ejemplo: 8.50</b>): <br>
                 <input type="number" step="0.01" name="promedio">
               </p>
-              <p>Cantidad de materias aprobadas en el último ciclo lectivo (01/04/2018 al 31/03/2019): <br>
+              <p>Cantidad de materias aprobadas en el último ciclo lectivo <b>(01/04/2018 al 31/03/2019)</b>: <br>
                 <input type="number" name="aprobadas">
               </p>
               <p>Cantidad de materias de la carrera: <br>

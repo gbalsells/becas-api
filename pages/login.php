@@ -30,7 +30,7 @@
           ?>
           <div class="login__form">
             <h2>Iniciar sesión</h2>
-            <p>Nombre de usuario: <br>
+            <p>Nombre de usuario o DNI: <br>
               <input type="text" name="usuario" class="login__input">
             </p>
             <p>Password: <br>
