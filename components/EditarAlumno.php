@@ -82,7 +82,7 @@
                     echo
                     '</select>
                 </p>
-                <div class="registro__button">
+                <div class="registro__button" style="padding-bottom: 20px;">
                     <input type="submit" value="Siguiente" class="button">
                     <a class="button registrarse" style="margin-left:10px;" onclick="location=`../index.php`">Cancelar</a>
                 </div>
@@ -335,7 +335,7 @@
                     <p>Duración de la carrera en años: <br>
                         <input type="number" name="aniosCarrera" value="' .$alumnoDecoded['AniosCarrera'] .'">
                     </p>
-                    <div class="registro__button">
+                    <div class="registro__button" style="padding-bottom: 20px;">
                         <input type="submit" value="Siguiente" class="button">
                         <a class="button registrarse" style="margin-left:10px;" onclick="location=`../index.php`">Cancelar</a>
                     </div>
@@ -456,7 +456,7 @@
                         <p>Cantidad de integrantes de su grupo familiar (Contándose a usted mismo): <br>
                             <input type="number" name="integrantes" value="' .$alumnoDecoded['IntegrantesFamilia'] .'">
                         </p>
-                        <div class="registro__button">
+                        <div class="registro__button" style="padding-bottom: 20px;">
                             <input type="submit" value="Siguiente" class="button">
                             <a class="button registrarse" style="margin-left:10px;" onclick="location=`../index.php`">Cancelar</a>
                         </div>

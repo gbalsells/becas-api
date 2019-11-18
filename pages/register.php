@@ -51,7 +51,7 @@
       <p class="registro__tel">Teléfono: <br>
         <input type="tel" name="telefono">
       </p>
-      <div class="registro__button">
+      <div class="registro__button" style="padding-bottom: 20px;">
         <input type="submit" value="Registrarse" class="button">
       </div>
     </div>
