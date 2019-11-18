@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login - Becas Juan B. Teran</title>
+    <title>Home - Becas Juan B. Teran</title>
+    <link rel="shortcut icon" href="http://www.unt.edu.ar/favicon.ico" type="image/x-icon">
     <link href='https://fonts.googleapis.com/css?family=Alef' rel='stylesheet'>
     <link rel="stylesheet" href="../main.css">
 </head>

@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login - Becas Juan B. Teran</title>
-
+    <title>Home - Becas Juan B. Teran</title>
+    <link rel="shortcut icon" href="http://www.unt.edu.ar/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../main.css">
     <link href='https://fonts.googleapis.com/css?family=Alef' rel='stylesheet'>
 
@@ -81,16 +81,23 @@
                     <li><b>Egresos: </b>$<?php echo $alumno->getEgresos();?></li>
                     <li><b>Integrantes del grupo familiar: </b><?php echo $alumno->getIntegrantesFamilia();?></li>
                 </ul>
-                <div style="display:flex; align-items:center;">
+                <div>
                     <h3>Creado el <?php echo $alumno->getFechaCreacion() ?> </h3>
+                    <?php
+                        if ($alumno->getFechaEdicion()) {
+                            echo '<h3>Editado el ' .$alumno->getFechaCreacion() .'</h3>';
+                        }
+                    ?>
                 </div>
             </div>
             <?php
-                echo '<button class="button atras" onclick="location=`components/EditarAlumno.php?id=' .$id .'`">Editar</button>';
                 if ($user->getTipoUsuario() === 0) {
                     echo '
-                    <button class="button atras" onclick="location=`index.php`">Atras</button>
+                    <button class="button atras" onclick="location=`../index.php`">Atras</button>
+                    <button class="button atras registrarse" onclick="location=`EditarAlumno.php?id=' .$id .'`">Editar</button>
                     ';
+                } else if ($alumno->getFechaEdicion() === null) {
+                    echo '<button class="button atras" onclick="location=`components/EditarAlumno.php?id=' .$id .'`">Editar</button>';                    
                 }
             ?>
     </div>

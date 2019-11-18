@@ -25,7 +25,7 @@ class Alumno extends User{
             $this->Egresos = $currentAlumno['Egresos'];
             $this->Estado = $currentAlumno['Estado'];
             $this->FechaCreacion = $currentAlumno['FechaCreacion'];
-
+            $this->FechaEdicion = $currentAlumno['FechaEdicion'];
         }
     }
 
@@ -92,6 +92,10 @@ class Alumno extends User{
 
     public function getFechaCreacion(){
         return $this->FechaCreacion;
+    }
+
+    public function getFechaEdicion(){
+        return $this->FechaEdicion;
     }
 
     public function datosAcademicos($id, $facultad, $carrera, $ingreso, $promedio, $aprobadas, $totales, $rendidos){
