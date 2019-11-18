@@ -34,6 +34,10 @@
         header("Location: ../index.php");
     }
 
+    if (isset($_SESSION['merito'])){
+        $merito = $_SESSION['merito'];
+    }
+
     $alumno = new Alumno();
 
 
@@ -47,7 +51,7 @@
 if (isset($_POST['vulnerabilidad']) && isset($_POST['distancia'] )){
     $vulnerabilidad = $_POST['vulnerabilidad'];
     $distancia = $_POST['distancia'];
-    $alumno->agregarDatos($id, $vulnerabilidad, $distancia);
+    $alumno->agregarDatos($id, $vulnerabilidad, $distancia, $merito);
     $_SESSION['alumno'] = null;
     header("Location: ../index.php");
 } else {

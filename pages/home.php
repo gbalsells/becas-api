@@ -15,7 +15,6 @@
     <?php
     if ($user->getTipoUsuario() === 0) {
         include_once 'components/listaAlumnos.php';
-        echo $user->getTipoUsuario();
     } else {
         include_once 'components/datosAcademicos.php';
     }

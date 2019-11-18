@@ -12,6 +12,7 @@
 <body>
     <div class="lista_alumnos">
       <h2>Alumnos registrados:</h2>
+      <button class="button registrarse" style="margin-top:30px; margin-bottom: 20px;margin-left: auto; margin-right: auto;" onclick="location=`components/excel.php`">Descargar Excel</button>
       <?php
 
       include_once 'models/db.php';
@@ -25,7 +26,8 @@
           <span>' .$alumno['DNI'] .'</span>
           <span>' .$alumno['Facultad'] .'</span>
           <span>' .$alumno['Carrera'] .'</span>
-        </div>';
+        </div>
+        ';
       }
       ?>
     </div>

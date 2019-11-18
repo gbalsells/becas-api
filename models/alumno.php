@@ -138,9 +138,9 @@ class Alumno extends User{
         $query->execute(['id'=> $id, 'apellidos' => $apellidos, 'nombres' => $nombres, 'dni' => $dni, 'email' => $email, 'telefono' => $telefono]);
     }
 
-    public function agregarDatos($id, $vulnerabilidad, $distancia){  
-        $query = $this->connect()->prepare('UPDATE alumno SET Vulnerabilidad = :vulnerabilidad, Distancia = :distancia WHERE idUsuario = :id');
-        $query->execute(['id'=> $id, 'vulnerabilidad' => $vulnerabilidad, 'distancia' => $distancia]);
+    public function agregarDatos($id, $vulnerabilidad, $distancia, $merito){  
+        $query = $this->connect()->prepare('UPDATE alumno SET Vulnerabilidad = :vulnerabilidad, Distancia = :distancia, Puntaje = :merito WHERE idUsuario = :id');
+        $query->execute(['id'=> $id, 'vulnerabilidad' => $vulnerabilidad, 'distancia' => $distancia, 'merito' => $merito]);
     }
 
     public function editarEstado($id, $estado){  

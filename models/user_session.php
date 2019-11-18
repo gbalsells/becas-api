@@ -13,6 +13,10 @@ class UserSession{
     public function setAlumno($alumno){
         $_SESSION['alumno'] = $alumno;
     }
+
+    public function setMerito($merito){
+        $_SESSION['merito'] = $merito;
+    }
     public function getCurrentUser(){
         return $_SESSION['user'];
     }
@@ -22,7 +26,4 @@ class UserSession{
         session_destroy();
     }
 }
-
-
-
 ?>

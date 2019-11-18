@@ -167,6 +167,7 @@
             <?php
                 if ($user->getTipoUsuario() === 0) {
                     $userSession->setAlumno($alumnoJson);
+                    $userSession->setMerito($merito);
                     echo '
                     <div class="button_flex">
                         <button class="button atras registrarse" onclick="location=`../index.php`">Atras</button>
