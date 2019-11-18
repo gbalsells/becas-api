@@ -26,7 +26,7 @@
     }
     ?>
     <nav class="top-bar">
-        Bienvenido, <?php echo $user->getNombre(); ?>
+        Bienvenido/a, <?php echo $user->getNombre(); ?>
         <a class="cerrar-sesion" href=<?php echo $logout; ?>>Cerrar sesión</a>
     </nav>
     <div class="solicitud__background">

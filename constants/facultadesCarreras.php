@@ -1,7 +1,5 @@
 <?php
 
-include_once 'models/facultad.php';
-
 $agro = new Facultad();
 $arq = new Facultad();
 $art = new Facultad();

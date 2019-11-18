@@ -12,8 +12,10 @@ body{
   font-size: 18px;
 }
 
-.select {
-  font-size: 20px;
+select {
+  margin-top: 10px;
+  font-size: 16px;
+  width: 100%;
 }
 
 .incorrecto{
@@ -38,6 +40,9 @@ input{
   display: inline-block;
   cursor: pointer;
   text-transform: uppercase;
+  box-sizing: border-box;
+  font-size: 14px;
+  width: 200px;
 }
 
 .button:hover {
@@ -120,9 +125,13 @@ input{
 
 .registro p{
   font-size: 14px;
-  width: 50%;
+  width: 40%;
   margin-top: 30px;
   margin-bottom: 30px;
+}
+
+.registro p input{
+  width: 100%;
 }
 
 .registro__flex{
@@ -324,6 +333,34 @@ input:focus{
   width: 23%;
 }
 
+.editar__buttons{
+  margin-top: 3em;
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
+  margin-bottom: 3em;
+}
+
+.editar__p{
+  font-size: 18px;
+}
+
+.editar__warning{
+  padding: 20px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  -webkit-box-shadow: 0px 0px 35px -9px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 35px -9px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 35px -9px rgba(0,0,0,0.75);
+}
+
+h2.warning{
+  color: red;
+  font-size: 30px;
+}
+
 /* -------------  MEDIA QUERIES ------------ */
 
 @media (max-width: 767px) {
@@ -346,7 +383,6 @@ input:focus{
     width: 100%;
     margin: 0;
     background-size: contain;
-    padding-top: 50px;
   }
 
 
@@ -390,7 +426,7 @@ input:focus{
   /* CARATULA */
 
   .caratula{
-    padding-top: 70px;
+    padding-top: 85px;
     background-color: #e0f2f1;
     height: calc(100vh - 70px);
   }
@@ -432,6 +468,33 @@ input:focus{
     width: 100%;
   }
 
+  .top-bar__organismos{
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 20%;
+    font-size: 7px;
+  }
+
+  .titulo{
+    font-size: 20px;
+    width: 50%;
+  }
+
+  .top-bar__unt {
+    width: 20%;
+  }
+
+  .top-bar img {
+    position: relative;
+    height: 30px;
+  }
+
+  .solicitud__text{
+    padding: 10px;
+    text-align: center;
+  }
 }
 
 

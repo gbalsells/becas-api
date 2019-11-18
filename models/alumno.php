@@ -103,6 +103,14 @@ class Alumno extends User{
         $query = $this->connect()->prepare('UPDATE alumno SET IntegrantesFamilia = :integrantes, Ingresos = :ingresos, Egresos = :egresos, FechaCreacion = now() WHERE idUsuario = :id');
         $query->execute(['id'=> $id, 'integrantes' => $integrantes, 'ingresos' => $ingresos, 'egresos' => $egresos]);
     }
+
+    public function editarAlumno($id, $facultad, $apellidos, $nombres, $dni, $email, $telefono, $carrera, $ingreso, $promedio, $aprobadas, $totales, $rendidos, $ingresos, $egresos, $integrantes){
+        $query = $this->connect()->prepare('UPDATE alumno SET Facultad = :facultad, Carrera = :carrera, AnioIngreso = :ingreso, Promedio = :promedio, MateriasAprobadas = :aprobadas, CantidadMaterias = :totales, ExamenesRendidos = :rendidos, IntegrantesFamilia = :integrantes, Ingresos = :ingresos, Egresos = :egresos, FechaEdicion = now() WHERE idUsuario = :id');
+        $query->execute(['id'=> $id, 'facultad' => $facultad, 'carrera' => $carrera, 'ingreso' => $ingreso, 'promedio' => $promedio, 'aprobadas' => $aprobadas, 'totales' => $totales, 'rendidos' => $rendidos, 'integrantes' => $integrantes, 'ingresos' => $ingresos, 'egresos' => $egresos]);
+        
+        $query = $this->connect()->prepare('UPDATE usuario SET Apellidos = :apellidos, Nombres = :nombres, DNI = :dni, Email = :email, Telefono = :telefono WHERE idUsuario = :id');
+        $query->execute(['id'=> $id, 'apellidos' => $apellidos, 'nombres' => $nombres, 'dni' => $dni, 'email' => $email, 'telefono' => $telefono]);
+    }
 }
 
 ?>

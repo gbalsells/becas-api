@@ -49,7 +49,7 @@
               <p>Promedio (Separar decimales con punto. <b>Ejemplo: 8.50</b>): <br>
                 <input type="number" step="0.01" name="promedio">
               </p>
-              <p>Cantidad de materias aprobadas en el último ciclo lectivo <b>(01/04/2018 al 31/03/2019)</b>: <br>
+              <p>Cantidad de materias aprobadas en el último ciclo lectivo <br><b>(Del 01/04/2018 al 31/03/2019)</b>: <br>
                 <input type="number" name="aprobadas">
               </p>
               <p>Cantidad de materias de la carrera: <br>
@@ -64,7 +64,7 @@
             </div>
           </form>';
       } else if (isset($_POST['carrera']) && isset($_POST['ingreso']) && isset($_POST['promedio']) && isset($_POST['aprobadas']) && isset($_POST['totales']) && isset($_POST['rendidos'])){
-        if ($_POST['carrera'] !== '' || $_POST['ingreso'] !== '' || $_POST['promedio'] !== '' || $_POST['aprobadas'] !== '' || $_POST['totales'] !== '' || $_POST['rendidos'] !== ''){
+        if ($_POST['carrera'] !== '' && $_POST['ingreso'] !== 0 && $_POST['promedio'] !== 0 && $_POST['aprobadas'] !== '' && $_POST['totales'] !== 0 && $_POST['rendidos'] !== ''){
           if ($_POST['promedio'] > 10 || $_POST['aprobadas'] > $_POST['rendidos'] || $_POST['aprobadas'] > $_POST['totales'] || $_POST['rendidos'] > $_POST['totales'] || $_POST['ingreso'] > 2019) {
             $facultad = $_POST['facultad'];
             foreach ($facultades as &$fac){
@@ -93,7 +93,7 @@
                 <p>Promedio: <br>
                   <input type="number" step="0.01" name="promedio">
                 </p>
-                <p>Cantidad de materias aprobadas en el último ciclo lectivo (01/04/2018 al 31/03/2019): <br>
+                <p>Cantidad de materias aprobadas en el último ciclo lectivo <br><b>(Del 01/04/2018 al 31/03/2019): </b><br>
                   <input type="number" name="aprobadas">
                 </p>
                 <p>Cantidad de materias de la carrera: <br>

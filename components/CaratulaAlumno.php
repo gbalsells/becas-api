@@ -13,6 +13,7 @@
 <body>
     <?php
     if (isset($_REQUEST['id'])) {
+        $desdeEdicion = true;
         include_once '../models/user_session.php';
         require_once '../models/user.php';
         require_once '../models/alumno.php';
@@ -35,7 +36,7 @@
     $alumno->setAlumnoByUser($id);
     ?>
     <nav class="top-bar">
-        Bienvenido, <?php echo $user->getNombre(); ?>
+        Bienvenido/a, <?php echo $user->getNombre(); ?>
         <a class="cerrar-sesion" href=<?php echo $logout; ?>>Cerrar sesión</a>
     </nav>
     <div class="caratula">
@@ -85,6 +86,7 @@
                 </div>
             </div>
             <?php
+                echo '<button class="button atras" onclick="location=`components/EditarAlumno.php?id=' .$id .'`">Editar</button>';
                 if ($user->getTipoUsuario() === 0) {
                     echo '
                     <button class="button atras" onclick="location=`index.php`">Atras</button>

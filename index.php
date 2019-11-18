@@ -28,6 +28,8 @@
 
     include_once 'models/user.php';
     include_once 'models/user_session.php';
+    include_once 'models/facultad.php';
+
 
     $userSession = new UserSession();
     $user = new User();
