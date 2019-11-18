@@ -26,6 +26,7 @@ class Alumno extends User{
             $this->Estado = $currentAlumno['Estado'];
             $this->FechaCreacion = $currentAlumno['FechaCreacion'];
             $this->FechaEdicion = $currentAlumno['FechaEdicion'];
+            $this->idAlumno = $id;
         }
     }
 
@@ -109,6 +110,7 @@ class Alumno extends User{
     }
 
     public function editarAlumno($id, $facultad, $apellidos, $nombres, $dni, $email, $telefono, $carrera, $ingreso, $promedio, $aprobadas, $totales, $rendidos, $ingresos, $egresos, $integrantes){
+        
         $query = $this->connect()->prepare('UPDATE alumno SET Facultad = :facultad, Carrera = :carrera, AnioIngreso = :ingreso, Promedio = :promedio, MateriasAprobadas = :aprobadas, CantidadMaterias = :totales, ExamenesRendidos = :rendidos, IntegrantesFamilia = :integrantes, Ingresos = :ingresos, Egresos = :egresos, FechaEdicion = now() WHERE idUsuario = :id');
         $query->execute(['id'=> $id, 'facultad' => $facultad, 'carrera' => $carrera, 'ingreso' => $ingreso, 'promedio' => $promedio, 'aprobadas' => $aprobadas, 'totales' => $totales, 'rendidos' => $rendidos, 'integrantes' => $integrantes, 'ingresos' => $ingresos, 'egresos' => $egresos]);
         

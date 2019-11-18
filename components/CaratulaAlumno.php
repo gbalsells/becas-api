@@ -13,7 +13,6 @@
 <body>
     <?php
     if (isset($_REQUEST['id'])) {
-        $desdeEdicion = true;
         include_once '../models/user_session.php';
         require_once '../models/user.php';
         require_once '../models/alumno.php';
@@ -34,6 +33,7 @@
     $alumno = new Alumno();
 
     $alumno->setAlumnoByUser($id);
+    $alumnoJson = json_encode($alumno);
     ?>
     <nav class="top-bar">
         Bienvenido/a, <?php echo $user->getNombre(); ?>
@@ -92,12 +92,14 @@
             </div>
             <?php
                 if ($user->getTipoUsuario() === 0) {
+                    $userSession->setAlumno($alumnoJson);
                     echo '
                     <button class="button atras" onclick="location=`../index.php`">Atras</button>
-                    <button class="button atras registrarse" onclick="location=`EditarAlumno.php?id=' .$id .'`">Editar</button>
+                    <button class="button atras registrarse" onclick="location=`EditarAlumno.php`">Editar</button>
                     ';
                 } else if ($alumno->getFechaEdicion() === null) {
-                    echo '<button class="button atras" onclick="location=`components/EditarAlumno.php?id=' .$id .'`">Editar</button>';                    
+                    $userSession->setAlumno($alumnoJson);
+                    echo '<button class="button atras" onclick="location=`components/EditarAlumno.php`">Editar</button>';                    
                 }
             ?>
     </div>

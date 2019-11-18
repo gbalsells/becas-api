@@ -6,6 +6,11 @@ body{
 
 }
 
+.precaucion{
+  font-size: 20px;
+  color: red;
+}
+
 .atras {
   float: right;
   margin: 20px;
@@ -402,7 +407,6 @@ h2.warning{
   /* REGISTRO */
 
   .registro{
-
     padding-top: 50px;
   }
   .registro h2{

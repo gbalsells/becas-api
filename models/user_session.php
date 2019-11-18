@@ -10,6 +10,9 @@ class UserSession{
         $_SESSION['user'] = $user;
     }
 
+    public function setAlumno($alumno){
+        $_SESSION['alumno'] = $alumno;
+    }
     public function getCurrentUser(){
         return $_SESSION['user'];
     }

@@ -182,15 +182,4 @@ $facultades = [
     $econ
 ];
 
-/*
-foreach ($facultades as $facu){
-    echo '<b>' .$facu->getNombre() .'</b><br/>';
-    $carreras = $facu->getCarreras();
-    foreach ($carreras as $carr) {
-        echo $carr .'<br/>';
-    }
-}
-
-*/
-
 ?>

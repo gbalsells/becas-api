@@ -12,15 +12,13 @@
 </head>
 <body>
 <?php
-
-if (isset($_REQUEST['id'])) {
     include_once '../models/facultad.php';
     include_once '../constants/facultadesCarreras.php';
     include_once '../models/user_session.php';
     require_once '../models/user.php';
     require_once '../models/alumno.php';
 
-    $id = $_REQUEST['id'];
+
     $logout = "../models/logout.php";
 
     $userSession = new UserSession();
@@ -30,10 +28,18 @@ if (isset($_REQUEST['id'])) {
         $user->setUser($userSession->getCurrentUser($user));
     }
 
+    if (isset($_SESSION['alumno'])){
+        $alumnoSession = $_SESSION['alumno'];
+        $alumnoDecoded = json_decode($alumnoSession, true);
+        $id = $alumnoDecoded['idAlumno'];
+    } else {
+        header("Location: ../index.php");
+    }
+
     $alumno = new Alumno();
 
-    $alumno->setAlumnoByUser($id);
-}
+
+    $alumno->setAlumnoByUser($alumnoSession);
 ?>
 <nav class="top-bar">
     Bienvenido/a, <?php echo $user->getNombre(); ?>
@@ -44,28 +50,34 @@ if (isset($_REQUEST['id'])) {
         echo '
         <form action="" method="POST" class="registro">
             <h2>Editar datos</h2>
+            ';
+            echo '
             <div class="registro__form">
                 <div class="registro__flex">
                     <p>Apellidos: <br>
-                    <input type="text" name="apellidos">
+                    <input type="text" name="apellidos" value="' .$alumnoDecoded['apellido'] .'">
                     </p>
                     <p>Nombres: <br>
-                    <input type="text" name="nombres">
+                    <input type="text" name="nombres" value="' .$alumnoDecoded['nombre'] .'">
                     </p>
                 </div>
                 <p>DNI: <br>
-                    <input type="number" name="dni">
+                    <input type="number" name="dni" value="' .$alumnoDecoded['dni'] .'">
                 </p>
                 <p>Email: <br>
-                    <input type="email" name="email">
+                    <input type="email" name="email" value="' .$alumnoDecoded['email'] .'">
                 </p>
                 <p class="registro__tel">Teléfono: <br>
-                    <input type="tel" name="telefono">
+                    <input type="tel" name="telefono" value="' .$alumnoDecoded['telefono'] .'">
                 </p>
                 <p>Seleccione su facultad <br>
-                    <select name="facultad">';
+                    <select name="facultad" value="' .$alumnoDecoded['Facultad'] .'">';
                     foreach ($facultades as &$fac){
-                    echo '<option value="' .$fac->getNombre() .'">' .$fac->getNombre() .'</option>';
+                        if ($fac->getNombre() === $alumnoDecoded['Facultad']){
+                            echo '<option selected="selected" value="' .$fac->getNombre() .'">' .$fac->getNombre() .'</option>';
+                        } else {
+                            echo '<option value="' .$fac->getNombre() .'">' .$fac->getNombre() .'</option>';
+                        }
                     };
                     echo
                     '</select>
@@ -97,7 +109,11 @@ if (isset($_REQUEST['id'])) {
         echo '
             <form action="" method="POST" class="registro">
                 <h2>Datos Ingresados</h2>
-                <p class="precaucion"><b>Por favor, revise los datos con precaución antes de aceptar los cambios. No podrá volver a editarlos en el futuro:</b></p>
+                ';
+                if ($user->getTipoUsuario() === 1) {
+                    echo '<span class="precaucion"><b>Por favor, revise los datos con precaución antes de aceptar los cambios. No podrá volver a editarlos en el futuro.</b></span>';
+                }
+                echo '
                 <p><b>Nombre:</b> ' .$nombres .'</p>
                 <p><b>Apellido:</b> ' .$apellidos .'</p>
                 <p><b>DNI:</b> ' .$dni .'</p>
@@ -113,7 +129,7 @@ if (isset($_REQUEST['id'])) {
                 <p><b>Ingresos del grupo familiar:</b> ' .$ingresos .'</p>
                 <p><b>Egresos del grupo familiar:</b> ' .$egresos .'</p>
                 <p><b>Integrantes del grupo familiar:</b> ' .$integrantes .'</p>
-                <p>¿Guardar cambios?</p>
+                <p style="padding-top: 10px;font-size: 20px; font-weight: 700;">¿Guardar cambios?</p>
 
                 <select name="facultad" style="display:none;">';
                 echo '<option value="' .$facultad .'">' .$facultad .'</option>';
@@ -220,6 +236,7 @@ if (isset($_REQUEST['id'])) {
 
         $alumno->editarAlumno($id, $facultad, $apellidos, $nombres, $dni, $email, $telefono, $carrera, $ingreso, $promedio, $aprobadas, $totales, $rendidos, $ingresos, $egresos, $integrantes);
 
+        $_SESSION['alumno'] = null;
         header("Location: ../index.php");
     } else if (isset($_POST['facultad']) && isset($_POST['nombres']) && isset($_POST['apellidos']) && isset($_POST['dni']) && isset($_POST['email']) && !isset($_POST['carrera'])){
         if ($_POST['nombres'] === '' || $_POST['apellidos'] === '' || $_POST['dni'] === '' || $_POST['email'] === ''){
@@ -243,7 +260,7 @@ if (isset($_REQUEST['id'])) {
             $telefono = $_POST['telefono'];
             foreach ($facultades as &$fac){
                 if ($fac->getNombre() === $_POST['facultad']){
-                $carreras = $fac->getCarreras();
+                    $carreras = $fac->getCarreras();
                 }
             };
             echo '
@@ -282,24 +299,28 @@ if (isset($_REQUEST['id'])) {
                     <p>Carrera <br>
                         <select name="carrera">';
                         foreach ($carreras as &$carr){
-                            echo '<option value="' .$carr .'">' .$carr .'</option>';
+                            if ($carr === $alumnoDecoded['Carrera']){
+                                echo '<option selected="selected" value="' .$carr .'">' .$carr .'</option>';
+                            } else {
+                                echo '<option value="' .$carr .'">' .$carr .'</option>';
+                            }
                         };
                     echo '</select>
                     </p>
                     <p>Año de ingreso a la facultad: <br>
-                        <input type="number" name="ingreso">
+                        <input type="number" name="ingreso" value="' .$alumnoDecoded['AnioIngreso'] .'">
                     </p>
                     <p>Promedio (Separar decimales con punto. <b>Ejemplo: 8.50</b>): <br>
-                        <input type="number" step="0.01" name="promedio">
+                        <input type="number" step="0.01" name="promedio" value="' .$alumnoDecoded['Promedio'] .'">
                     </p>
                     <p>Cantidad de materias aprobadas en el último ciclo lectivo <br><b>(Del 01/04/2018 al 31/03/2019)</b>: <br>
-                        <input type="number" name="aprobadas">
+                        <input type="number" name="aprobadas" value="' .$alumnoDecoded['MateriasAprobadas'] .'">
                     </p>
                     <p>Cantidad de materias de la carrera: <br>
-                        <input type="number" name="totales">
+                        <input type="number" name="totales" value="' .$alumnoDecoded['CantidadMaterias'] .'">
                     </p>
                     <p>Cantidad de examenes rendidos en total: <br>
-                        <input type="number" name="rendidos">
+                        <input type="number" name="rendidos" value="' .$alumnoDecoded['ExamenesRendidos'] .'">
                     </p>
                     <div class="registro__button">
                         <input type="submit" value="Siguiente" class="button">
@@ -403,17 +424,17 @@ if (isset($_REQUEST['id'])) {
                         Ingresos totales en pesos (Sumatoria de los ingresos económicos de todos los integrantes del grupo familiar. Escriba el número <b>sin puntos</b>, salvo para indicar centavos): <br>
                             <div class="monto">
                             <span>$</span>
-                            <input type="number" step="0.01" name="ingresos">
+                            <input type="number" step="0.01" name="ingresos" value="' .$alumnoDecoded['Ingresos'] .'">
                             </div>
                         </p>
                         <p>Egresos totales en pesos (Sumatoria de los servicios, impuestos y créditos del grupo familiar. Escriba el número <b>sin puntos</b>, salvo para indicar centavos):  <br>
                             <div class="monto">
                             <span>$</span>
-                            <input type="number" step="0.01" name="egresos">
+                            <input type="number" step="0.01" name="egresos" value="' .$alumnoDecoded['Egresos'] .'">
                             </div>
                         </p>
                         <p>Cantidad de integrantes de su grupo familiar (Contándose a usted mismo): <br>
-                            <input type="number" name="integrantes">
+                            <input type="number" name="integrantes" value="' .$alumnoDecoded['IntegrantesFamilia'] .'">
                         </p>
                         <div class="registro__button">
                             <input type="submit" value="Siguiente" class="button">
