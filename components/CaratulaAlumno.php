@@ -14,6 +14,7 @@
     <?php
     if (isset($_REQUEST['id'])) {
         include_once '../models/user_session.php';
+        include_once '../constants/salarioMinimo.php';
         require_once '../models/user.php';
         require_once '../models/alumno.php';
 
@@ -45,15 +46,19 @@
                 <span class="caratula__header__nombre"><?php echo $alumno->getApellido() .', ' .$alumno->getNombre(); ?></span>
                 <span class="caratula__header__estado">
                     <?php
-                    $estado = $alumno->getEstado();
-                    if ($estado === null) {
-                        echo 'Solicitud enviada';
-                    } else if ($estado === 1) {
-                        echo 'Aprobada';
-                    } else if ($estado === 2) {
-                        echo 'Rechazada';
-                    }
-                     ?>
+                        $estado = $alumno->getEstado();
+                        if ($estado === null || $estado === 0 ) {
+                            echo 'Solicitud enviada';
+                        } else if ($estado === 1) {
+                            echo 'Preselección';
+                        } else if ($estado === 2) {
+                            echo 'Fuera de concurso (Supera permanencia)';
+                        } else if ($estado === 3) {
+                            echo 'Fuera de concurso (Faltan datos)';
+                        } else if ($estado === 4) {
+                            echo 'Fuera de concurso (No es usuario registrado)';
+                        }
+                    ?>
                     </span>
             </div>
             <div class="caratula__datos">
@@ -72,8 +77,7 @@
                     <li><b>Promedio: </b><?php echo $alumno->getPromedio();?></li>
                     <li><b>Materias aprobadas el último ciclo lectivo (01/04/2018 al 31/03/2019): </b><?php echo $alumno->getMateriasAprobadas();?></li>
                     <li><b>Cantidad de materias rendidas: </b><?php echo $alumno->getExamenesRendidos();?></li>
-
-
+                    <li><b>Duración de la carrera: </b><?php echo $alumno->getAniosCarrera();?> años</li>
                 </ul>
                 <h3>Datos familiares</h3>
                 <ul class="caratula__datos__info">
@@ -81,11 +85,81 @@
                     <li><b>Egresos: </b>$<?php echo $alumno->getEgresos();?></li>
                     <li><b>Integrantes del grupo familiar: </b><?php echo $alumno->getIntegrantesFamilia();?></li>
                 </ul>
+                <?php
+                    if($user->getTipoUsuario() === 0){
+                        echo '
+                        <h3>Otros datos</h3>
+                        <ul class="caratula__datos__info">
+                            <li><b>Vulnerabilidad: </b>';
+                            if ($alumno->getVulnerabilidad()){
+                                echo $alumno->getVulnerabilidad();
+                            } else {
+                                echo '<span style="color: red; font-weight: 700;">Vunerabilidad no cargada</span>';
+                            }
+                            echo '</li>
+                            <li><b>Distancia: </b>';
+                            if ($alumno->getDistancia()){
+                                echo $alumno->getDistancia();
+                            } else {
+                                echo '<span style="color: red; font-weight: 700;">Distancia no cargada</span>';
+                            }
+                            echo '</li>
+                        </ul>
+                        ';
+                    }
+                ?>
+
                 <div>
-                    <h3>Creado el <?php echo $alumno->getFechaCreacion() ?> </h3>
+                    <h4>Creado el <?php echo $alumno->getFechaCreacion() ?> </h4>
                     <?php
                         if ($alumno->getFechaEdicion()) {
-                            echo '<h3>Editado el ' .$alumno->getFechaCreacion() .'</h3>';
+                            echo '<h4>Editado el ' .$alumno->getFechaCreacion() .'</h4>';
+                        }
+                        if ($user->getTipoUsuario() === 0){
+
+                        // ALGORITMO DE CALCULO DE MERITOS
+
+                        //MERITO FAMILIAR
+                        $factorCorreccion = ($alumno->getIntegrantesFamilia() - 4) * $salarioMinimo /5;
+                        if ($factorCorreccion < 0) {
+                            $factorCorreccion = 0;
+                        }
+
+                        if (($alumno->getIngresos() - $factorCorreccion) <= $salarioMinimo ) {
+                            $meritoFamiliar = 40;
+                        } else if (($alumno->getIngresos() - $factorCorreccion) < 3 * $salarioMinimo){
+                            $meritoFamiliar = -20 * ($alumno->getIngresos() - $factorCorreccion) / $salarioMinimo + 60;
+                        } else {
+                            $meritoFamiliar = 0;
+                        }
+
+                        // MERITO POR PROMEDIO  
+
+                        if ($alumno->getPromedio() > 5){
+                            $meritoPromedio = 4 * $alumno->getPromedio() - 20;                         
+                        } else {
+                            $meritoPromedio = 0;                        
+                        }
+
+                        // MERITO POR REGULARIDAD
+
+                        $materiasPorAnio = $alumno->getCantidadMaterias()/$alumno->getAniosCarrera();
+                        if ($alumno->getMateriasAprobadas() <= 2) {
+                            $condicionMaterias = 0;
+                        } else {
+                            $condicionMaterias = ($alumno->getMateriasAprobadas() - 2)/$materiasPorAnio;
+                        }
+
+                        if ($condicionMaterias > 1) {
+                            $meritoRegularidad = 10;
+                        } else {
+                            $meritoRegularidad = round(10 * $condicionMaterias, 4);
+                        }
+
+                        // SUMA DE MERITOS
+
+                        $merito = $meritoPromedio + $meritoFamiliar + $meritoRegularidad + $alumno->getVulnerabilidad() + $alumno->getDistancia();
+                            echo '<h3 class="puntuacion">Puntuación estimada: ' .$merito .'</h3>';
                         }
                     ?>
                 </div>
@@ -94,8 +168,13 @@
                 if ($user->getTipoUsuario() === 0) {
                     $userSession->setAlumno($alumnoJson);
                     echo '
-                    <button class="button atras" onclick="location=`../index.php`">Atras</button>
-                    <button class="button atras registrarse" onclick="location=`EditarAlumno.php`">Editar</button>
+                    <div class="button_flex">
+                        <button class="button atras registrarse" onclick="location=`../index.php`">Atras</button>
+                        <button class="button atras" onclick="location=`EditarAlumno.php`">Editar</button>
+                        <button class="button atras" onclick="location=`AgregarDatos.php`">Agregar datos</button>
+                        <button class="button atras" onclick="location=`Estado.php`">Estado</button>
+
+                    </div>
                     ';
                 } else if ($alumno->getFechaEdicion() === null) {
                     $userSession->setAlumno($alumnoJson);

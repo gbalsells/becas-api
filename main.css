@@ -11,6 +11,9 @@ body{
   color: red;
 }
 
+.puntuacion{
+  color: #0277bd;
+}
 .atras {
   float: right;
   margin: 20px;
@@ -48,6 +51,12 @@ input{
   box-sizing: border-box;
   font-size: 14px;
   width: 200px;
+}
+
+.button__flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .button:hover {

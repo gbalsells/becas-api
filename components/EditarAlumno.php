@@ -49,7 +49,7 @@
     if (isset($_POST['aceptar']) || $user->getTipoUsuario() === 0 && !isset($_POST['facultad']) ) {
         echo '
         <form action="" method="POST" class="registro">
-            <h2>Editar datos</h2>
+            <h2>Editar datos de  ' .$alumnoDecoded['apellido'] .', ' .$alumnoDecoded['nombre'] .'</h2>
             ';
             echo '
             <div class="registro__form">
@@ -105,6 +105,7 @@
         $ingresos = $_POST['ingresos'];
         $egresos = $_POST['egresos'];
         $integrantes = $_POST['integrantes'];
+        $aniosCarrera = $_POST['aniosCarrera'];
 
         echo '
             <form action="" method="POST" class="registro">
@@ -126,6 +127,8 @@
                 <p><b>Materias aprobadas el último ciclo lectivo:</b> ' .$aprobadas .'</p>
                 <p><b>Exámenes rendidos:</b> ' .$rendidos .'</p>
                 <p><b>Cantidad de materias de la carrera:</b> ' .$totales .'</p>
+                <p><b>Duración de la carrera:</b> ' .$aniosCarrera .' años</p>
+
                 <p><b>Ingresos del grupo familiar:</b> ' .$ingresos .'</p>
                 <p><b>Egresos del grupo familiar:</b> ' .$egresos .'</p>
                 <p><b>Integrantes del grupo familiar:</b> ' .$integrantes .'</p>
@@ -171,6 +174,11 @@
                 echo
                 '</select>
 
+                <select name="aniosCarrera" style="display:none;">';
+                echo '<option value="' .$aniosCarrera .'">' .$aniosCarrera .'</option>';
+                echo
+                '</select>
+                
                 <select name="ingreso" style="display:none;">';
                 echo '<option value="' .$ingreso .'">' .$ingreso .'</option>';
                 echo
@@ -233,8 +241,10 @@
         $ingresos = $_POST['ingresos'];
         $egresos = $_POST['egresos'];
         $integrantes = $_POST['integrantes'];
+        $aniosCarrera = $_POST['aniosCarrera'];
 
-        $alumno->editarAlumno($id, $facultad, $apellidos, $nombres, $dni, $email, $telefono, $carrera, $ingreso, $promedio, $aprobadas, $totales, $rendidos, $ingresos, $egresos, $integrantes);
+
+        $alumno->editarAlumno($id, $facultad, $apellidos, $nombres, $dni, $email, $telefono, $carrera, $ingreso, $promedio, $aprobadas, $totales, $rendidos, $ingresos, $egresos, $integrantes, $aniosCarrera);
 
         $_SESSION['alumno'] = null;
         header("Location: ../index.php");
@@ -265,7 +275,7 @@
             };
             echo '
                 <form action="" method="POST" class="registro">
-                <h2>Editar datos</h2>
+                <h2>Editar datos de  ' .$alumnoDecoded['apellido'] .', ' .$alumnoDecoded['nombre'] .'</h2>
                 <div class="registro__form">
                     <select name="facultad" style="display:none;">';
                     echo '<option value="' .$facultad .'">' .$facultad .'</option>';
@@ -310,8 +320,8 @@
                     <p>Año de ingreso a la facultad: <br>
                         <input type="number" name="ingreso" value="' .$alumnoDecoded['AnioIngreso'] .'">
                     </p>
-                    <p>Promedio (Separar decimales con punto. <b>Ejemplo: 8.50</b>): <br>
-                        <input type="number" step="0.01" name="promedio" value="' .$alumnoDecoded['Promedio'] .'">
+                    <p>Promedio (Separar decimales con punto. <b>Ejemplo: 8.265</b>): <br>
+                        <input type="number" step="0.001" name="promedio" value="' .$alumnoDecoded['Promedio'] .'">
                     </p>
                     <p>Cantidad de materias aprobadas en el último ciclo lectivo <br><b>(Del 01/04/2018 al 31/03/2019)</b>: <br>
                         <input type="number" name="aprobadas" value="' .$alumnoDecoded['MateriasAprobadas'] .'">
@@ -321,6 +331,9 @@
                     </p>
                     <p>Cantidad de examenes rendidos en total: <br>
                         <input type="number" name="rendidos" value="' .$alumnoDecoded['ExamenesRendidos'] .'">
+                    </p>
+                    <p>Duración de la carrera en años: <br>
+                        <input type="number" name="aniosCarrera" value="' .$alumnoDecoded['AniosCarrera'] .'">
                     </p>
                     <div class="registro__button">
                         <input type="submit" value="Siguiente" class="button">
@@ -357,9 +370,11 @@
                     $aprobadas = $_POST['aprobadas'];
                     $totales = $_POST['totales'];
                     $rendidos = $_POST['rendidos'];
+                    $aniosCarrera = $_POST['aniosCarrera'];
+
                     echo '
                     <form action="" method="POST" class="registro">
-                        <h2>Datos Familiares</h2>
+                        <h2>Editar datos de ' .$alumnoDecoded['apellido'] .', ' .$alumnoDecoded['nombre'] .'</h2>
                         <select name="facultad" style="display:none;">';
                         echo '<option value="' .$facultad .'">' .$facultad .'</option>';
                         echo
@@ -377,6 +392,11 @@
     
                         <select name="dni" style="display:none;">';
                         echo '<option value="' .$dni .'">' .$dni .'</option>';
+                        echo
+                        '</select>
+
+                        <select name="aniosCarrera" style="display:none;">';
+                        echo '<option value="' .$aniosCarrera .'">' .$aniosCarrera .'</option>';
                         echo
                         '</select>
     
@@ -438,6 +458,7 @@
                         </p>
                         <div class="registro__button">
                             <input type="submit" value="Siguiente" class="button">
+                            <a class="button registrarse" style="margin-left:10px;" onclick="location=`../index.php`">Cancelar</a>
                         </div>
                         </div>
                     </form>

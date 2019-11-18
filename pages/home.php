@@ -8,10 +8,14 @@
     <link rel="shortcut icon" href="http://www.unt.edu.ar/favicon.ico" type="image/x-icon">
 </head>
 <body>
-
+<nav class="top-bar">
+    Bienvenido/a, <?php echo $user->getNombre(); ?>
+    <a class="cerrar-sesion" href="models/logout.php">Cerrar sesión</a>
+</nav>
     <?php
     if ($user->getTipoUsuario() === 0) {
         include_once 'components/listaAlumnos.php';
+        echo $user->getTipoUsuario();
     } else {
         include_once 'components/datosAcademicos.php';
     }

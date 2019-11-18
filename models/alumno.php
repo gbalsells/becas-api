@@ -26,6 +26,10 @@ class Alumno extends User{
             $this->Estado = $currentAlumno['Estado'];
             $this->FechaCreacion = $currentAlumno['FechaCreacion'];
             $this->FechaEdicion = $currentAlumno['FechaEdicion'];
+            $this->AniosCarrera = $currentAlumno['AniosCarrera'];
+            $this->Distancia = $currentAlumno['Distancia'];
+            $this->Vulnerabilidad = $currentAlumno['Vulnerabilidad'];
+            $this->Puntaje = $currentAlumno['Puntaje'];
             $this->idAlumno = $id;
         }
     }
@@ -99,9 +103,25 @@ class Alumno extends User{
         return $this->FechaEdicion;
     }
 
-    public function datosAcademicos($id, $facultad, $carrera, $ingreso, $promedio, $aprobadas, $totales, $rendidos){
-        $query = $this->connect()->prepare('INSERT INTO alumno VALUES(:id, :facultad, :carrera, null, :ingreso, :totales, :promedio, :rendidos, :aprobadas, null, null, null, null, now(), null)');
-        $query->execute(['id'=> $id, 'facultad' => $facultad, 'carrera' => $carrera, 'ingreso' => $ingreso, 'promedio' => $promedio, 'aprobadas' => $aprobadas, 'totales' => $totales, 'rendidos' => $rendidos]);
+    public function getAniosCarrera(){
+        return $this->AniosCarrera;
+    }
+
+    public function getVulnerabilidad(){
+        return $this->Vulnerabilidad;
+    }
+
+    public function getDistancia(){
+        return $this->Distancia;
+    }
+
+    public function getPuntaje(){
+        return $this->Puntaje;
+    }
+
+    public function datosAcademicos($id, $facultad, $carrera, $ingreso, $promedio, $aprobadas, $totales, $rendidos, $aniosCarrera){
+        $query = $this->connect()->prepare('INSERT INTO alumno VALUES(:id, :facultad, :carrera, null, :ingreso, :totales, :promedio, :rendidos, :aprobadas, null, null, null, null, now(), null, :aniosCarrera, null, null, null)');
+        $query->execute(['id'=> $id, 'facultad' => $facultad, 'carrera' => $carrera, 'ingreso' => $ingreso, 'promedio' => $promedio, 'aprobadas' => $aprobadas, 'totales' => $totales, 'rendidos' => $rendidos, 'aniosCarrera' => $aniosCarrera]);
     }
 
     public function datosFamiliares($id, $ingresos, $egresos, $integrantes){
@@ -109,13 +129,23 @@ class Alumno extends User{
         $query->execute(['id'=> $id, 'integrantes' => $integrantes, 'ingresos' => $ingresos, 'egresos' => $egresos]);
     }
 
-    public function editarAlumno($id, $facultad, $apellidos, $nombres, $dni, $email, $telefono, $carrera, $ingreso, $promedio, $aprobadas, $totales, $rendidos, $ingresos, $egresos, $integrantes){
+    public function editarAlumno($id, $facultad, $apellidos, $nombres, $dni, $email, $telefono, $carrera, $ingreso, $promedio, $aprobadas, $totales, $rendidos, $ingresos, $egresos, $integrantes, $aniosCarrera){
         
-        $query = $this->connect()->prepare('UPDATE alumno SET Facultad = :facultad, Carrera = :carrera, AnioIngreso = :ingreso, Promedio = :promedio, MateriasAprobadas = :aprobadas, CantidadMaterias = :totales, ExamenesRendidos = :rendidos, IntegrantesFamilia = :integrantes, Ingresos = :ingresos, Egresos = :egresos, FechaEdicion = now() WHERE idUsuario = :id');
-        $query->execute(['id'=> $id, 'facultad' => $facultad, 'carrera' => $carrera, 'ingreso' => $ingreso, 'promedio' => $promedio, 'aprobadas' => $aprobadas, 'totales' => $totales, 'rendidos' => $rendidos, 'integrantes' => $integrantes, 'ingresos' => $ingresos, 'egresos' => $egresos]);
+        $query = $this->connect()->prepare('UPDATE alumno SET Facultad = :facultad, Carrera = :carrera, AnioIngreso = :ingreso, Promedio = :promedio, MateriasAprobadas = :aprobadas, CantidadMaterias = :totales, ExamenesRendidos = :rendidos, IntegrantesFamilia = :integrantes, Ingresos = :ingresos, Egresos = :egresos, AniosCarrera = :aniosCarrera, FechaEdicion = now() WHERE idUsuario = :id');
+        $query->execute(['id'=> $id, 'facultad' => $facultad, 'carrera' => $carrera, 'ingreso' => $ingreso, 'promedio' => $promedio, 'aprobadas' => $aprobadas, 'totales' => $totales, 'rendidos' => $rendidos, 'integrantes' => $integrantes, 'ingresos' => $ingresos, 'egresos' => $egresos, 'aniosCarrera' => $aniosCarrera]);
         
         $query = $this->connect()->prepare('UPDATE usuario SET Apellidos = :apellidos, Nombres = :nombres, DNI = :dni, Email = :email, Telefono = :telefono WHERE idUsuario = :id');
         $query->execute(['id'=> $id, 'apellidos' => $apellidos, 'nombres' => $nombres, 'dni' => $dni, 'email' => $email, 'telefono' => $telefono]);
+    }
+
+    public function agregarDatos($id, $vulnerabilidad, $distancia){  
+        $query = $this->connect()->prepare('UPDATE alumno SET Vulnerabilidad = :vulnerabilidad, Distancia = :distancia WHERE idUsuario = :id');
+        $query->execute(['id'=> $id, 'vulnerabilidad' => $vulnerabilidad, 'distancia' => $distancia]);
+    }
+
+    public function editarEstado($id, $estado){  
+        $query = $this->connect()->prepare('UPDATE alumno SET Estado = :estado WHERE idUsuario = :id');
+        $query->execute(['id'=> $id, 'estado' => $estado]);
     }
 }
 
