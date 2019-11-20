@@ -47,16 +47,20 @@
         }
         else {
           $alumnos_buscados = $db->buscarAlumno($busqueda);
-          foreach($alumnos_buscados as $alumno){
-            $id = $alumno['idUsuario'];
-            echo '
-            <div class="alumno" onclick="location=`components/CaratulaAlumno.php?id=' .$id .'`">
-              <span>' .$alumno['Apellidos'] .', ' .$alumno['Nombres'] . '</span>
-              <span>' .$alumno['DNI'] .'</span>
-              <span>' .$alumno['Facultad'] .'</span>
-              <span>' .$alumno['Carrera'] .'</span>
-            </div>
-            ';
+          if($alumnos_buscados->rowCount()){
+            foreach($alumnos_buscados as $alumno){
+              $id = $alumno['idUsuario'];
+              echo '
+              <div class="alumno" onclick="location=`components/CaratulaAlumno.php?id=' .$id .'`">
+                <span>' .$alumno['Apellidos'] .', ' .$alumno['Nombres'] . '</span>
+                <span>' .$alumno['DNI'] .'</span>
+                <span>' .$alumno['Facultad'] .'</span>
+                <span>' .$alumno['Carrera'] .'</span>
+              </div>
+              ';
+            }
+          } else {
+              echo "<div class='incorrecto'>No se han obtenido resultados para la búsqueda.</div>";
           }
         }
       } 
