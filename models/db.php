@@ -38,6 +38,12 @@ class DB{
         $query->execute();
         return $query;
     }
+
+    public function buscarAlumno($param_busqueda){
+        $query = $this->connect()->prepare('SELECT * FROM `usuario` JOIN `alumno` ON alumno.idUsuario = usuario.IdUsuario WHERE Apellidos LIKE "cortez"');
+        $query->execute();
+        return $query;
+    }
 }
 
 

@@ -382,6 +382,31 @@ h2.warning{
   font-size: 30px;
 }
 
+#form-busqueda{
+  width: fit-content;
+  display: block;
+  float: right;
+  margin-top: 1.9em;
+}
+
+#btn-busqueda{
+  background-color: #009688;
+  color: white;
+  font-size: 0.8em;
+  border-radius: 3px;
+}
+
+#btn-excel, #form-busqueda{
+  display: inline-block;
+}
+
+#busqueda{
+  font-size: 0.8em;
+  border: 1px solid grey !important;
+  border-radius: 3px;
+}
+
+
 /* -------------  MEDIA QUERIES ------------ */
 
 @media (max-width: 1370px) {
@@ -521,6 +546,16 @@ h2.warning{
     padding: 10px;
     text-align: center;
   }
+
+}
+
+@media (max-width: 450px) {
+
+  #form-busqueda{
+    width: 100%;
+    margin-top: 0.7em;
+  }
+
 }
 
 

@@ -12,23 +12,71 @@
 <body>
     <div class="lista_alumnos">
       <h2>Alumnos registrados:</h2>
-      <button class="button registrarse" style="margin-top:30px; margin-bottom: 20px;margin-left: auto; margin-right: auto;" onclick="location=`components/excel.php`">Descargar Excel</button>
+      <div id="btn-excel">
+        <button class="button registrarse" style="margin-top:30px; margin-bottom: 20px;margin-left: auto; margin-right: auto;" onclick="location=`components/excel.php`">Descargar Excel</button>
+      </div>
+      <div id="form-busqueda">
+        <form action="" method="POST">
+          <input type="text" name="busqueda" id="busqueda" placeholder="Buscar alumno">
+          <input type="submit" value="BUSCAR" id="btn-busqueda">
+        </form>
+      </div>
+  
       <?php
-
       include_once 'models/db.php';
       $db = new DB();
-      $alumnos = $db->getAlumnos();
-      foreach($alumnos as $alumno){
-        $id = $alumno['idUsuario'];
-        echo '
-        <div class="alumno" onclick="location=`components/CaratulaAlumno.php?id=' .$id .'`">
-          <span>' .$alumno['Apellidos'] .', ' .$alumno['Nombres'] . '</span>
-          <span>' .$alumno['DNI'] .'</span>
-          <span>' .$alumno['Facultad'] .'</span>
-          <span>' .$alumno['Carrera'] .'</span>
-        </div>
-        ';
+
+      if(isset($_POST['busqueda'])){
+        $busqueda = strtolower($_POST['busqueda']);
+        if($busqueda == ''){
+          
+          echo "<div class='incorrecto'>Por favor, ingrese un parámetro para la búsqueda.</div>";
+          $alumnos = $db->getAlumnos();
+          foreach($alumnos as $alumno){
+            $id = $alumno['idUsuario'];
+            echo '
+            <div class="alumno" onclick="location=`components/CaratulaAlumno.php?id=' .$id .'`">
+              <span>' .$alumno['Apellidos'] .', ' .$alumno['Nombres'] . '</span>
+              <span>' .$alumno['DNI'] .'</span>
+              <span>' .$alumno['Facultad'] .'</span>
+              <span>' .$alumno['Carrera'] .'</span>
+            </div>
+            ';
+          }
+
+        }
+        else {
+          $alumnos_buscados = $db->buscarAlumno($busqueda);
+          foreach($alumnos_buscados as $alumno){
+            $id = $alumno['idUsuario'];
+            echo '
+            <div class="alumno" onclick="location=`components/CaratulaAlumno.php?id=' .$id .'`">
+              <span>' .$alumno['Apellidos'] .', ' .$alumno['Nombres'] . '</span>
+              <span>' .$alumno['DNI'] .'</span>
+              <span>' .$alumno['Facultad'] .'</span>
+              <span>' .$alumno['Carrera'] .'</span>
+            </div>
+            ';
+          }
+        }
+      } 
+      else {
+        
+        $alumnos = $db->getAlumnos();
+        foreach($alumnos as $alumno){
+          $id = $alumno['idUsuario'];
+          echo '
+          <div class="alumno" onclick="location=`components/CaratulaAlumno.php?id=' .$id .'`">
+            <span>' .$alumno['Apellidos'] .', ' .$alumno['Nombres'] . '</span>
+            <span>' .$alumno['DNI'] .'</span>
+            <span>' .$alumno['Facultad'] .'</span>
+            <span>' .$alumno['Carrera'] .'</span>
+          </div>
+          ';
+        }
+      
       }
+
       ?>
     </div>
 </body>

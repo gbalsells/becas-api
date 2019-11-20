@@ -9,7 +9,7 @@
 </head>
 <body>
 <nav class="top-bar">
-    Bienvenido/a, <?php echo $user->getNombre(); ?>
+    Bienvenido/a,  <?php echo $user->getNombre(); ?>
     <a class="cerrar-sesion" href="models/logout.php">Cerrar sesión</a>
 </nav>
     <?php
