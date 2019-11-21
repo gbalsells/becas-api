@@ -22,8 +22,25 @@ class User extends DB{
     }
 
     public function createUser($apellidos, $nombres, $email, $dni, $pass, $user, $telefono){
-        $query = $this->connect()->prepare('INSERT INTO usuario VALUES(null, :apellidos, :nombres, :email, 1, :dni, :user, :pass, :telefono)');
-        $query->execute(['user'=> $user, 'pass' => $pass, 'apellidos' => $apellidos, 'nombres' => $nombres, 'email' => $email, 'dni' => $dni, 'telefono' => $telefono ]);
+        $query1 = $this->connect()->prepare('SELECT DNI, Usuario, Email FROM usuario WHERE (DNI = :dni OR Usuario = :user OR Email = :email OR Apellidos = :apellidos)');
+        $query1->execute(['user'=> $user, 'email' => $email, 'dni' => $dni, 'apellidos' => $apellidos]);
+        $result = $query1->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            if ($result['Usuario'] === $user){
+                return 'El nombre de usuario ingresado ya fue registrado previamente. Por favor seleccione otro.';
+            }
+            if ($result['DNI'] === $dni){
+                return 'El DNI ingresado ya fue registrado previamente.';
+            }
+            if ($result['Email'] === $email){
+                return 'El Email ingresado ya fue registrado previamente.';
+            }
+        } else {
+            $query = $this->connect()->prepare('INSERT INTO usuario VALUES(null, :apellidos, :nombres, :email, 1, :dni, :user, :pass, :telefono)');
+            $query->execute(['user'=> $user, 'pass' => $pass, 'apellidos' => $apellidos, 'nombres' => $nombres, 'email' => $email, 'dni' => $dni, 'telefono' => $telefono ]);
+        }
+
     }
 
     public function setUser($user){

@@ -30,6 +30,7 @@ select {
   color: red;
   margin-bottom: 20px;
   font-size: 18px;
+  padding-left: 20px;
 }
 
 input{

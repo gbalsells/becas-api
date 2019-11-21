@@ -79,10 +79,14 @@ if (isset($_POST['usuario']) && isset($_POST['password']) && isset($_POST['nombr
     $telefono = $_POST['telefono'];
     $md5pass = md5($pass);
     
-    $newUser->createUser($apellidos, $nombres, $email, $dni, $md5pass, $user, $telefono);
-    header("Location: ../components/registroCompleto.php");
+    $nuevoUsuario = $newUser->createUser($apellidos, $nombres, $email, $dni, $md5pass, $user, $telefono);
+    if ($nuevoUsuario === NULL) {
+      header("Location: ../components/registroCompleto.php");
+    } else {
+      echo '<span class="incorrecto" style="margin-left: 50px;">' .$nuevoUsuario .'</span>';
+    }
   } else {
-    echo 'PASSWORDS DISTINTAS';
+    echo '<span class="incorrecto" style="margin-left: 50px;">Las contraseñas ingresadas no coinciden. Por favor inténtelo nuevamente.</span>';
   }
 }
 ?>
