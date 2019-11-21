@@ -82,7 +82,7 @@ if (isset($_POST['usuario']) && isset($_POST['password']) && isset($_POST['nombr
     if ($nuevoUsuario === NULL) {
       header("Location: ../components/registroCompleto.php");
     } else {
-      echo '<span class="incorrecto" style="margin-left: 50px;">' .$nuevoUsuario .'</span>';
+      echo '<span class="incorrecto" style="margin-left: 50px;">' .$nuevoUsuario.'</span>';
     }
   } else {
     echo '<span class="incorrecto" style="margin-left: 50px;">Las contraseñas ingresadas no coinciden. Por favor inténtelo nuevamente.</span>';
