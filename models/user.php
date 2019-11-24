@@ -22,9 +22,8 @@ class User extends DB{
     }
 
     public function createUser($apellidos, $nombres, $email, $dni, $pass, $user, $telefono){
-        $query1 = $this->connect()->prepare('SELECT DNI, Usuario, Email FROM usuario WHERE (DNI = :dni OR Usuario = :user OR Email = :email OR Apellidos = :apellidos)');
-
-        $query1->execute(['user'=> $user, 'email' => $email, 'dni' => $dni, 'apellidos' => $apellidos]);
+        $query1 = $this->connect()->prepare('SELECT DNI, Usuario, Email FROM usuario WHERE (DNI = :dni OR Usuario = :user OR Email = :email)');
+        $query1->execute(['user'=> $user, 'email' => $email, 'dni' => $dni]);
 
         $result = $query1->fetch(PDO::FETCH_ASSOC);
         if ($result) {
@@ -38,7 +37,7 @@ class User extends DB{
             if ($result['Email'] === $email){
                 return 'El Email ingresado ya fue registrado previamente.';
             } else {
-                return 'Alguno de los datos pertenece a un usuario ya registrado. Por favor intente nuevamente.';
+                return 'El nombre de usuario ingresado ya fue registrado previamente. Por favor seleccione otro.';
             }
         } else {
             $query = $this->connect()->prepare('INSERT INTO usuario VALUES(null, :apellidos, :nombres, :email, 1, :dni, :user, :pass, :telefono)');
