@@ -7,12 +7,12 @@ class User extends DB{
     private $username;
 
     public function userExists($user, $pass){
-        $md5pass = md5($pass);
+        //$md5pass = md5($pass);
 
         $dni = $user;
 
         $query = $this->connect()->prepare('SELECT * FROM usuario WHERE (Usuario = :user OR CAST(DNI AS UNSIGNED) = :dni) AND password = :pass');
-        $query->execute(['user'=> $user, 'pass' => $md5pass, 'dni'=> $dni]);
+        $query->execute(['user'=> $user, 'pass' => /*$md5pass*/$pass, 'dni'=> $dni]);
 
         if($query->rowCount()){
             return true;

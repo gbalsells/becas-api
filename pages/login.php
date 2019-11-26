@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login - Becas Juan B. Teran</title>
     <link rel="shortcut icon" href="http://www.unt.edu.ar/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="/main.css">
     <link href='https://fonts.googleapis.com/css?family=Alef' rel='stylesheet'>
 
 </head>
@@ -36,9 +36,16 @@
             <p>Password: <br>
               <input type="password" name="password" class="login__input">
             </p>
+            <div id="div-link-olvide">
+              <a href="" id="link-olvide">Olvidé mi contraseña</a>
+            </div>
             <div class="login__buttons">
               <input type="submit" value="Iniciar Sesión" class="button">
               <input onclick="location='./pages/register.php'" type="button" value="Registrarse" class="button registrarse">
+            </div>
+            <div id="mensaje-recordatorio">
+              <p id="atencion"><b>¡ATENCIÓN!</b></p>
+              <p id="recordar">La convocatoria finaliza el 30/11/19 a las 00:00. A partir de ese momento no se aceptarán más inscripciones.</p>
             </div>
             <?php
             if($incorrecto === true){

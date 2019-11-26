@@ -278,6 +278,49 @@ input:focus{
   background: #00675b;
 }
 
+#div-link-olvide{
+  margin-top: 1em;
+}
+
+#link-olvide{
+  color: #009688;
+  font-style: italic;
+  text-decoration: none;
+}
+
+#mensaje-recordatorio{
+  max-width: 25em;
+  margin-top: -2.5em;
+  align-self: auto;
+}
+
+#atencion{
+  font-size: 0.9em;
+  width: 100%;
+  color: #990000;
+  text-align: center;
+}
+
+#recordar{
+  color: #cc0000;
+  width: 100%;
+  font-style: oblique;
+  margin-top: -0.4em;
+}
+
+/* ---------- RECUPERAR CONTRASEÑA ---------- */
+
+#btn-reestablecer-pass{
+  width: 20em;
+  margin: auto;
+}
+
+#alerta-mail{
+  display: block;
+  margin: auto;
+}
+
+
 /* ---------- CARATULA ---------- */
 
 .caratula{
@@ -476,6 +519,12 @@ h2.warning{
     padding-bottom: 20px;
   }
 
+  /* REC CONTRASEÑA */
+
+  #titulo-reestablecer{
+    text-align: center;
+  }
+  
   /* CARATULA */
 
   .caratula{
@@ -556,6 +605,7 @@ h2.warning{
     width: 100%;
     margin-top: 0.7em;
   }
+
 
 }
 
