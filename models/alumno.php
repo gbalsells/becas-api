@@ -30,6 +30,7 @@ class Alumno extends User{
             $this->Distancia = $currentAlumno['Distancia'];
             $this->Vulnerabilidad = $currentAlumno['Vulnerabilidad'];
             $this->Puntaje = $currentAlumno['Puntaje'];
+            $this->Resultado = $currentAlumno['Resultado'];
             $this->idAlumno = $id;
         }
     }
@@ -117,6 +118,10 @@ class Alumno extends User{
 
     public function getPuntaje(){
         return $this->Puntaje;
+    }
+
+    public function getResultado(){
+        return $this->Resultado;
     }
 
     public function datosAcademicos($id, $facultad, $carrera, $ingreso, $promedio, $aprobadas, $totales, $rendidos, $aniosCarrera){

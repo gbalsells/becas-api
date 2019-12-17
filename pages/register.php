@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="../main.css">
 </head>
 <body>
+<h2 style="margin-left: 20px;">Página no encontrada</h2>
+<!--
   <nav class="top-bar">
         <div class="top-bar__unt">
           <img src="../assets/untletras.png" alt="" style="padding:10px;">          
@@ -56,6 +58,7 @@
       </div>
     </div>
   </form>
+  -->
 </body>
 </html>
 

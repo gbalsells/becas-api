@@ -13,6 +13,7 @@
     <div class="lista_alumnos">
       <h2>Alumnos registrados:</h2>
       <div id="btn-excel">
+      <button class="button registrarse" style="margin-top:30px; margin-bottom: 20px;margin-left: auto; margin-right: auto;" onclick="location=`components/Calculo.php`">Fin de Excel</button>
         <button class="button registrarse" style="margin-top:30px; margin-bottom: 20px;margin-left: auto; margin-right: auto;" onclick="location=`components/excel.php`">Descargar Excel</button>
       </div>
       <div id="form-busqueda">

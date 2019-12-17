@@ -47,15 +47,15 @@
            <th>Carrera</th>
            <th>Año de ingreso a la facultad</th>
            <th>Cantidad de materias de la carrera</th>
+           <th>Duración en años de la carrera</th>
            <th>Promedio</th>
-           <th>Examenes rendidos en total</th>
            <th>Materias aprobadas en total</th>
+           <th>Materias aprobadas en 2018</th>
            <th>Integrantes de grupo familiar</th>
            <th>Ingresos</th>
            <th>Egresos</th>
            <th>Fecha de creacion</th>
            <th>Fecha de edicion</th>
-           <th>Años de la carrera</th>
            <th>Distancia</th>
            <th>Vulnerabilidad</th>
            <th>Puntaje</th>
@@ -74,6 +74,7 @@
             <td>' .$alumno['Carrera'] .'</td>
             <td>' .$alumno['AnioIngreso'] .'</td>
             <td>' .$alumno['CantidadMaterias'] .'</td>
+            <td>' .$alumno['AniosCarrera'] .'</td>
             <td>' .$alumno['Promedio'] .'</td>
             <td>' .$alumno['ExamenesRendidos'] .'</td>
             <td>' .$alumno['MateriasAprobadas'] .'</td>
@@ -82,7 +83,6 @@
             <td>' .$alumno['Egresos'] .'</td>
             <td>' .$alumno['FechaCreacion'] .'</td>
             <td>' .$alumno['FechaEdicion'] .'</td>
-            <td>' .$alumno['AniosCarrera'] .'</td>
             <td>' .$alumno['Distancia'] .'</td>
             <td>' .$alumno['Vulnerabilidad'] .'</td>
             <td>' .$alumno['Puntaje'] .'</td>

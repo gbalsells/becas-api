@@ -19,9 +19,9 @@
 
     if($hayAlumno === 0){
       include_once 'components/CaratulaAlumno.php';
-    } else if ($hayAlumno === 1) {
-      include_once 'components/datosFamiliares.php';
-    } else {
+    } else{
+      include_once 'components/solicitudEnviada.php';
+      /*
       if (isset($_POST['facultad']) && !isset($_POST['carrera'])){
         $facultad = $_POST['facultad'];
         foreach ($facultades as &$fac){
@@ -149,6 +149,7 @@
           </div>
         </form>';
       }
+      */
     }
   ?>
 </body>

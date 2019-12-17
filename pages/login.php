@@ -38,11 +38,13 @@
             </p>
             <div class="login__buttons">
               <input type="submit" value="Iniciar Sesión" class="button">
+              <!--
               <input onclick="location='./pages/register.php'" type="button" value="Registrarse" class="button registrarse">
+              -->
             </div>
             <div id="mensaje-recordatorio">
               <p id="atencion"><b>¡ATENCIÓN!</b></p>
-              <p id="recordar">La convocatoria finaliza el 30/11/19 a las 00:00. A partir de ese momento no se aceptarán más inscripciones.</p>
+              <p id="recordar">La convocatoria ha cerrado. Puede ingresar para consultar el estado de su solicitud.</p>
             </div>
             <?php
             if($incorrecto === true){

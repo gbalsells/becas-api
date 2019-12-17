@@ -39,6 +39,28 @@ class DB{
         return $query;
     }
 
+    public function getAlumnosModificados(){
+        $query = $this->connect()->prepare('SELECT * FROM importacion');
+        $query->execute();
+        $query2 = $this->connect()->prepare('SELECT * FROM importacion2');
+        $query2->execute();
+        $query3 = $this->connect()->prepare('SELECT * FROM importacion3');
+        $query3->execute();
+        return $query;
+    }
+
+    public function getResultados(){
+        $query = $this->connect()->prepare('SELECT * FROM final1');
+        $query->execute();
+        return $query;
+    }
+
+    public function setResultados($id, $resultado){
+        $query = $this->connect()->prepare('UPDATE alumno SET Resultado = :resultado WHERE idUsuario = :id');
+        $query->execute(['id'=> $id, 'resultado' => $resultado]);
+        return $query;
+    }
+
     public function buscarAlumno($param_busqueda){
         $query = $this->connect()->prepare('SELECT * FROM `usuario` JOIN `alumno` ON alumno.idUsuario = usuario.IdUsuario WHERE (Apellidos = :param_busqueda1) OR (Nombres = :param_busqueda2) OR (DNI = :param_busqueda3)');
         $query->execute(['param_busqueda1'=> $param_busqueda, 'param_busqueda2'=> $param_busqueda, 'param_busqueda3'=> $param_busqueda]);

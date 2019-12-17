@@ -46,6 +46,7 @@
                 <span class="caratula__header__nombre"><?php echo $alumno->getApellido() .', ' .$alumno->getNombre(); ?></span>
                 <span class="caratula__header__estado">
                     <?php
+                    /*
                         $estado = $alumno->getEstado();
                         if ($estado === null || $estado === 0 ) {
                             echo 'Solicitud enviada';
@@ -58,8 +59,25 @@
                         } else if ($estado === 4) {
                             echo 'Fuera de concurso (No es usuario registrado)';
                         }
+                        */
                     ?>
                     </span>
+            </div>
+            <div class="resultado__container">
+                <h1 class="resultado__texto">
+                    RESULTADO: 
+                </h1>
+                <h1 class="resultado__texto">
+                <?php 
+                if ($alumno->getResultado() === 'FUERA DE CONCURSO: MENOS DE 2 MATERIAS APROBADAS EN 2018') {
+                    echo 'FUERA DE CONCURSO: MENOS DE 2 MATERIAS APROBADAS EN 2018 SEGÚN UNIDAD ACADÉMICA';
+                } else if ($alumno->getResultado() === 'FUERA DE CONCURSO.PROMEDIO INFERIOR A 5' || $alumno->getResultado() === 'FUERA DE CONCURSO: PROMEDIO INFERIOR A 5') {
+                    echo 'FUERA DE CONCURSO: PROMEDIO INFERIOR A 5 SEGÚN UNIDAD ACADÉMICA';
+                } else {
+                    echo $alumno->getResultado();
+                }
+                
+                ?></h1>
             </div>
             <div class="caratula__datos">
                 <h3>Datos personales</h3>
@@ -112,6 +130,7 @@
                 <div>
                     <h4>Creado el <?php echo $alumno->getFechaCreacion() ?> </h4>
                     <?php
+                    /*
                         if ($alumno->getFechaEdicion()) {
                             echo '<h4>Editado el ' .$alumno->getFechaCreacion() .'</h4>';
                         }
@@ -159,15 +178,16 @@
                         // SUMA DE MERITOS
 
                         $merito = $meritoPromedio + $meritoFamiliar + $meritoRegularidad + $alumno->getVulnerabilidad() + $alumno->getDistancia();
-                            echo '<h3 class="puntuacion">Puntuación estimada: ' .$merito .'</h3>';
+                            echo '<h3 class="puntuacion">' .$alumno->getResultado() .'</h3>';
                         }
+                        */
                     ?>
                 </div>
             </div>
             <?php
                 if ($user->getTipoUsuario() === 0) {
                     $userSession->setAlumno($alumnoJson);
-                    $userSession->setMerito($merito);
+                    // $userSession->setMerito($merito);
                     echo '
                     <div class="button_flex">
                         <button class="button atras registrarse" onclick="location=`../index.php`">Atras</button>
