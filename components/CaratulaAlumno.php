@@ -178,8 +178,7 @@
                     </div>
                     ';
                 } else if ($alumno->getFechaEdicion() === null) {
-                    $userSession->setAlumno($alumnoJson);
-                    echo '<button class="button atras" onclick="location=`components/EditarAlumno.php`">Editar</button>';                    
+                    echo '<div class="incorrecto">La convocatoria ha cerrado. Ya no se permite la edición de datos.</div>';                    
                 }
             ?>
     </div>
