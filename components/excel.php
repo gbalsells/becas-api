@@ -59,6 +59,7 @@
            <th>Distancia</th>
            <th>Vulnerabilidad</th>
            <th>Puntaje</th>
+           <th>Resultado</th>
         </tr>';
         foreach($alumnos as $alumno){
         echo '
@@ -86,6 +87,7 @@
             <td>' .$alumno['Distancia'] .'</td>
             <td>' .$alumno['Vulnerabilidad'] .'</td>
             <td>' .$alumno['Puntaje'] .'</td>
+            <td>' .$alumno['Resultado'] .'</td>
         </tr>
         ';
         }
