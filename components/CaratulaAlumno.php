@@ -73,11 +73,20 @@
                     echo 'FUERA DE CONCURSO: MENOS DE 2 MATERIAS APROBADAS EN 2018 SEGÚN UNIDAD ACADÉMICA';
                 } else if ($alumno->getResultado() === 'FUERA DE CONCURSO.PROMEDIO INFERIOR A 5' || $alumno->getResultado() === 'FUERA DE CONCURSO: PROMEDIO INFERIOR A 5') {
                     echo 'FUERA DE CONCURSO: PROMEDIO INFERIOR A 5 SEGÚN UNIDAD ACADÉMICA';
+                } else if ($alumno->getResultado() === 'BECA APROBADA. A LA BREVEDAD LE COMUNICAREMOS LUGAR Y FECHA DE COBRO.') {
+                    echo 'BECA APROBADA';
                 } else {
                     echo $alumno->getResultado();
                 }
                 
                 ?></h1>
+                <h1 style="text-align: center;">
+                <?php
+                    if ($alumno->getResultado() === 'BECA APROBADA. A LA BREVEDAD LE COMUNICAREMOS LUGAR Y FECHA DE COBRO.') {
+                        echo 'El pago se efectuará en la tesorería de su facultad. Consulte allí mismo la fecha de pago. ';
+                    }
+                ?>
+                </h1>
             </div>
             <div class="caratula__datos">
                 <h3>Datos personales</h3>
