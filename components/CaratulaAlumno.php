@@ -63,6 +63,7 @@
                     ?>
                     </span>
             </div>
+            <!-- para cuando esten los resultados
             <div class="resultado__container">
                 <h1 class="resultado__texto">
                     RESULTADO: 
@@ -88,6 +89,7 @@
                 ?>
                 </h1>
             </div>
+            -->
             <div class="caratula__datos">
                 <h3>Datos personales</h3>
                 <ul class="caratula__datos__info">
@@ -139,7 +141,6 @@
                 <div>
                     <h4>Creado el <?php echo $alumno->getFechaCreacion() ?> </h4>
                     <?php
-                    /*
                         if ($alumno->getFechaEdicion()) {
                             echo '<h4>Editado el ' .$alumno->getFechaCreacion() .'</h4>';
                         }
@@ -189,7 +190,6 @@
                         $merito = $meritoPromedio + $meritoFamiliar + $meritoRegularidad + $alumno->getVulnerabilidad() + $alumno->getDistancia();
                             echo '<h3 class="puntuacion">' .$alumno->getResultado() .'</h3>';
                         }
-                        */
                     ?>
                 </div>
             </div>
@@ -207,7 +207,9 @@
                     </div>
                     ';
                 } else if ($alumno->getFechaEdicion() === null) {
-                    echo '<div class="incorrecto">La convocatoria ha cerrado. Ya no se permite la edición de datos.</div>';                    
+                    //echo '<div class="incorrecto">La convocatoria ha cerrado. Ya no se permite la edición de datos.</div>';                    
+                    $userSession->setAlumno($alumnoJson);
+                    echo '<button class="button atras" onclick="location=`components/EditarAlumno.php`">Editar</button>';                    
                 }
             ?>
     </div>

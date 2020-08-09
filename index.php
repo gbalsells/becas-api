@@ -1,7 +1,6 @@
 <link rel="stylesheet" href="main.css">
 <link href='https://fonts.googleapis.com/css?family=Alef' rel='stylesheet'>
 <?php
-/*
     $dominio = "localhost";
     $nombreusuario = "root";
     $password = "gbalsells";
@@ -23,8 +22,6 @@
     } else {
         echo $conexion ->error;
     }
-
-    */
 
     include_once 'models/user.php';
     include_once 'models/user_session.php';

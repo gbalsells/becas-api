@@ -11,7 +11,6 @@
 </head>
 <body>
 <?php 
-/*
 include_once 'models/alumno.php';
 $alumno = new Alumno();
 $id = $user->getIdUsuario();
@@ -46,7 +45,6 @@ if (isset($_POST['ingresos']) && isset($_POST['egresos']) && isset($_POST['integ
   $integrantes = $_POST['integrantes'];
   $alumno->datosFamiliares($id, $ingresos, $egresos, $integrantes);
   header("Location: components/solicitudEnviada.php");}
-  */
 ?>
   
 </body>
