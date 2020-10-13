@@ -46,7 +46,6 @@
                 <span class="caratula__header__nombre"><?php echo $alumno->getApellido() .', ' .$alumno->getNombre(); ?></span>
                 <span class="caratula__header__estado">
                     <?php
-                    /*
                         $estado = $alumno->getEstado();
                         if ($estado === null || $estado === 0 ) {
                             echo 'Solicitud enviada';
@@ -59,7 +58,6 @@
                         } else if ($estado === 4) {
                             echo 'Fuera de concurso (No es usuario registrado)';
                         }
-                        */
                     ?>
                     </span>
             </div>
@@ -90,128 +88,147 @@
                 </h1>
             </div>
             -->
-            <div class="caratula__datos">
-                <h3>Datos personales</h3>
-                <ul class="caratula__datos__info">
-                    <li><b>DNI: </b><?php echo $alumno->getDNI();?></li>
-                    <li><b>Email: </b><?php echo $alumno->getEmail();?></li>
-                    <li><b>Teléfono: </b><?php echo $alumno->getTelefono();?></li>
-                </ul>
-                <h3>Datos académicos</h3>
-                <ul class="caratula__datos__info">
-                    <li><b>Facultad: </b><?php echo $alumno->getFacultad();?></li>
-                    <li><b>Carrera: </b><?php echo $alumno->getCarrera();?></li>
-                    <li><b>Cantidad de materias de la carrera: </b><?php echo $alumno->getCantidadMaterias();?></li>
-                    <li><b>Año de ingreso a la facultad: </b><?php echo $alumno->getAnioIngreso();?></li>
-                    <li><b>Promedio: </b><?php echo $alumno->getPromedio();?></li>
-                    <li><b>Materias aprobadas el último ciclo lectivo (01/04/2018 al 31/03/2019): </b><?php echo $alumno->getMateriasAprobadas();?></li>
-                    <li><b>Cantidad de materias rendidas: </b><?php echo $alumno->getExamenesRendidos();?></li>
-                    <li><b>Duración de la carrera: </b><?php echo $alumno->getAniosCarrera();?> años</li>
-                </ul>
-                <h3>Datos familiares</h3>
-                <ul class="caratula__datos__info">
-                    <li><b>Ingresos: </b>$<?php echo $alumno->getIngresos();?></li>
-                    <li><b>Egresos: </b>$<?php echo $alumno->getEgresos();?></li>
-                    <li><b>Integrantes del grupo familiar: </b><?php echo $alumno->getIntegrantesFamilia();?></li>
-                </ul>
-                <?php
-                    if($user->getTipoUsuario() === 0){
-                        echo '
-                        <h3>Otros datos</h3>
-                        <ul class="caratula__datos__info">
-                            <li><b>Vulnerabilidad: </b>';
-                            if ($alumno->getVulnerabilidad()){
-                                echo $alumno->getVulnerabilidad();
-                            } else {
-                                echo '<span style="color: red; font-weight: 700;">Vunerabilidad no cargada</span>';
-                            }
-                            echo '</li>
-                            <li><b>Distancia: </b>';
-                            if ($alumno->getDistancia()){
-                                echo $alumno->getDistancia();
-                            } else {
-                                echo '<span style="color: red; font-weight: 700;">Distancia no cargada</span>';
-                            }
-                            echo '</li>
-                        </ul>
-                        ';
-                    }
-                ?>
-
-                <div>
-                    <h4>Creado el <?php echo $alumno->getFechaCreacion() ?> </h4>
+            <div class="caratula__container">
+                <div class="caratula__datos">
+                    <h3>Datos personales</h3>
+                    <ul class="caratula__datos__info">
+                        <li><b>DNI: </b><?php echo $alumno->getDNI();?></li>
+                        <li><b>Email: </b><?php echo $alumno->getEmail();?></li>
+                        <li><b>Teléfono: </b><?php echo $alumno->getTelefono();?></li>
+                    </ul>
+                    <h3>Datos académicos</h3>
+                    <ul class="caratula__datos__info">
+                        <li><b>Facultad: </b><?php echo $alumno->getFacultad();?></li>
+                        <li><b>Carrera: </b><?php echo $alumno->getCarrera();?></li>
+                        <li><b>Cantidad de materias de la carrera: </b><?php echo $alumno->getCantidadMaterias();?></li>
+                        <li><b>Año de ingreso a la facultad: </b><?php echo $alumno->getAnioIngreso();?></li>
+                        <li><b>Promedio: </b><?php echo $alumno->getPromedio();?></li>
+                        <li><b>Materias aprobadas el último ciclo lectivo (01/04/2018 al 31/03/2019): </b><?php echo $alumno->getMateriasAprobadas();?></li>
+                        <li><b>Cantidad de materias rendidas: </b><?php echo $alumno->getExamenesRendidos();?></li>
+                        <li><b>Duración de la carrera: </b><?php echo $alumno->getAniosCarrera();?> años</li>
+                    </ul>
+                    <h3>Datos familiares</h3>
+                    <ul class="caratula__datos__info">
+                        <li><b>Ingresos: </b>$<?php echo $alumno->getIngresos();?></li>
+                        <li><b>Egresos: </b>$<?php echo $alumno->getEgresos();?></li>
+                        <li><b>Integrantes del grupo familiar: </b><?php echo $alumno->getIntegrantesFamilia();?></li>
+                    </ul>
                     <?php
-                        if ($alumno->getFechaEdicion()) {
-                            echo '<h4>Editado el ' .$alumno->getFechaCreacion() .'</h4>';
-                        }
-                        if ($user->getTipoUsuario() === 0){
-
-                        // ALGORITMO DE CALCULO DE MERITOS
-
-                        //MERITO FAMILIAR
-                        $factorCorreccion = ($alumno->getIntegrantesFamilia() - 4) * $salarioMinimo /5;
-                        if ($factorCorreccion < 0) {
-                            $factorCorreccion = 0;
-                        }
-
-                        if (($alumno->getIngresos() - $factorCorreccion) <= $salarioMinimo ) {
-                            $meritoFamiliar = 40;
-                        } else if (($alumno->getIngresos() - $factorCorreccion) < 3 * $salarioMinimo){
-                            $meritoFamiliar = -20 * ($alumno->getIngresos() - $factorCorreccion) / $salarioMinimo + 60;
-                        } else {
-                            $meritoFamiliar = 0;
-                        }
-
-                        // MERITO POR PROMEDIO  
-
-                        if ($alumno->getPromedio() > 5){
-                            $meritoPromedio = 4 * $alumno->getPromedio() - 20;                         
-                        } else {
-                            $meritoPromedio = 0;                        
-                        }
-
-                        // MERITO POR REGULARIDAD
-
-                        $materiasPorAnio = $alumno->getCantidadMaterias()/$alumno->getAniosCarrera();
-                        if ($alumno->getMateriasAprobadas() <= 2) {
-                            $condicionMaterias = 0;
-                        } else {
-                            $condicionMaterias = ($alumno->getMateriasAprobadas() - 2)/$materiasPorAnio;
-                        }
-
-                        if ($condicionMaterias > 1) {
-                            $meritoRegularidad = 10;
-                        } else {
-                            $meritoRegularidad = round(10 * $condicionMaterias, 4);
-                        }
-
-                        // SUMA DE MERITOS
-
-                        $merito = $meritoPromedio + $meritoFamiliar + $meritoRegularidad + $alumno->getVulnerabilidad() + $alumno->getDistancia();
-                            echo '<h3 class="puntuacion">' .$alumno->getResultado() .'</h3>';
+                        if($user->getTipoUsuario() === 0){
+                            echo '
+                            <h3>Otros datos</h3>
+                            <ul class="caratula__datos__info">
+                                <li><b>Vulnerabilidad: </b>';
+                                if ($alumno->getVulnerabilidad()){
+                                    echo $alumno->getVulnerabilidad();
+                                } else {
+                                    echo '<span style="color: red; font-weight: 700;">Vunerabilidad no cargada</span>';
+                                }
+                                echo '</li>
+                                <li><b>Distancia: </b>';
+                                if ($alumno->getDistancia()){
+                                    echo $alumno->getDistancia();
+                                } else {
+                                    echo '<span style="color: red; font-weight: 700;">Distancia no cargada</span>';
+                                }
+                                echo '</li>
+                            </ul>
+                            ';
                         }
                     ?>
+                    <div>
+                        <h4>Creado el <?php echo $alumno->getFechaCreacion() ?> </h4>
+                        <?php
+                            if ($alumno->getFechaEdicion()) {
+                                echo '<h4>Editado el ' .$alumno->getFechaCreacion() .'</h4>';
+                            }
+                            if ($user->getTipoUsuario() === 0){
+                                
+                                // ALGORITMO DE CALCULO DE MERITOS
+                                
+                                //MERITO FAMILIAR
+                                $factorCorreccion = ($alumno->getIntegrantesFamilia() - 4) * $salarioMinimo /5;
+                                if ($factorCorreccion < 0) {
+                                    $factorCorreccion = 0;
+                                }
+                                
+                                if (($alumno->getIngresos() - $factorCorreccion) <= $salarioMinimo ) {
+                                    $meritoFamiliar = 40;
+                                } else if (($alumno->getIngresos() - $factorCorreccion) < 3 * $salarioMinimo){
+                                    $meritoFamiliar = -20 * ($alumno->getIngresos() - $factorCorreccion) / $salarioMinimo + 60;
+                                } else {
+                                    $meritoFamiliar = 0;
+                                }
+                                
+                                // MERITO POR PROMEDIO  
+                                
+                                if ($alumno->getPromedio() > 5){
+                                    $meritoPromedio = 4 * $alumno->getPromedio() - 20;                         
+                                } else {
+                                    $meritoPromedio = 0;                        
+                                }
+                                
+                                // MERITO POR REGULARIDAD
+                                
+                                $materiasPorAnio = $alumno->getCantidadMaterias()/$alumno->getAniosCarrera();
+                                if ($alumno->getMateriasAprobadas() <= 2) {
+                                    $condicionMaterias = 0;
+                                } else {
+                                    $condicionMaterias = ($alumno->getMateriasAprobadas() - 2)/$materiasPorAnio;
+                                }
+                                
+                                if ($condicionMaterias > 1) {
+                                    $meritoRegularidad = 10;
+                                } else {
+                                    $meritoRegularidad = round(10 * $condicionMaterias, 4);
+                                }
+                                
+                                // SUMA DE MERITOS
+                                
+                                $merito = $meritoPromedio + $meritoFamiliar + $meritoRegularidad + $alumno->getVulnerabilidad() + $alumno->getDistancia();
+                                echo '<h3 class="puntuacion">Puntuacion: ' .$merito .'</h3>';
+                            }
+                        ?>
+                    </div>
                 </div>
-            </div>
             <?php
                 if ($user->getTipoUsuario() === 0) {
                     $userSession->setAlumno($alumnoJson);
-                    // $userSession->setMerito($merito);
+                    $userSession->setMerito($merito);
                     echo '
                     <div class="button_flex">
-                        <button class="button atras registrarse" onclick="location=`../index.php`">Atras</button>
                         <button class="button atras" onclick="location=`EditarAlumno.php`">Editar</button>
                         <button class="button atras" onclick="location=`AgregarDatos.php`">Agregar datos</button>
-                        <button class="button atras" onclick="location=`Estado.php`">Estado</button>
-
-                    </div>
+                        <button class="button atras" onclick="location=`Estado.php`">Estado</button>';
+                    $id = $alumno->getId();
+                    $tieneDoc = $alumno->tieneDocumentacion($id);
+                    if ($tieneDoc) {
+                        echo '<button class="button atras" onclick="location=`Documentacion.php`">Ver Documentación Adjuntada</button>';
+                    } else {
+                        echo '<button class="button atras" onclick="location=`AdjuntarArchivos.php`">Adjuntar Documentación</button>';
+                    }
+                    echo '<button class="button atras registrarse" onclick="location=`../index.php`">Atras</button></div>
                     ';
-                } else if ($alumno->getFechaEdicion() === null) {
-                    //echo '<div class="incorrecto">La convocatoria ha cerrado. Ya no se permite la edición de datos.</div>';                    
+                } else {
+                    echo '
+                    <div class="button_flex">
+                    ';
+                    if ($alumno->getFechaEdicion() === null) {
+                        //echo '<div class="incorrecto">La convocatoria ha cerrado. Ya no se permite la edición de datos.</div>';                    
+                        $userSession->setAlumno($alumnoJson);
+                        echo '<button class="button atras" onclick="location=`components/EditarAlumno.php`">Editar</button>';                    
+                    }
                     $userSession->setAlumno($alumnoJson);
-                    echo '<button class="button atras" onclick="location=`components/EditarAlumno.php`">Editar</button>';                    
+                    $id = $alumno->getId();
+                    $tieneDoc = $alumno->tieneDocumentacion($id);
+                    if ($tieneDoc) {
+                        echo '<button class="button atras" onclick="location=`components/Documentacion.php`">Ver Documentación Adjuntada</button>';
+                    } else {
+                        echo '<button class="button atras" onclick="location=`components/AdjuntarArchivos.php`">Adjuntar Documentación</button>';
+                    }
                 }
             ?>
+            </div>
     </div>
 </body>
 </html>

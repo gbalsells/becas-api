@@ -83,8 +83,13 @@
                     '</select>
                 </p>
                 <div class="registro__button" style="padding-bottom: 20px;">
-                    <input type="submit" value="Siguiente" class="button">
-                    <a class="button registrarse" style="margin-left:10px;" onclick="location=`../index.php`">Cancelar</a>
+                    <input type="submit" value="Siguiente" class="button">';
+                    if ($user->getTipoUsuario() === 0) {
+                        echo '<a class="button registrarse" style="margin-top: 20px" href="javascript:history.go(-1);">Cancelar</a>';
+                    } else {
+                        echo '<a class="button registrarse" onclick="location=`../index.php`">Cancelar</a>';
+                    }
+                echo '
                 </div>
             </div>
         </form>

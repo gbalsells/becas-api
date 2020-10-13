@@ -35,6 +35,9 @@ class Alumno extends User{
         }
     }
 
+    public function getId(){
+        return $this->idAlumno;
+    }
     public function getNombre(){
         return $this->nombre;
     }
@@ -151,6 +154,54 @@ class Alumno extends User{
     public function editarEstado($id, $estado){  
         $query = $this->connect()->prepare('UPDATE alumno SET Estado = :estado WHERE idUsuario = :id');
         $query->execute(['id'=> $id, 'estado' => $estado]);
+    }
+
+    public function adjuntarPDF($id, $nombre, $tamanio){
+        $query1 = $this->connect()->prepare('SELECT Nombre FROM documento WHERE (idAlumno = :id)');
+        $query1->execute(['id'=>$id]);
+
+        $result = $query1->fetch(PDO::FETCH_ASSOC);
+        if ($result) {
+            return true;
+        } else {
+            $query = $this->connect()->prepare('INSERT INTO documento VALUES(null, :id, :nombre, :tamanio)');
+            $query->execute(['id'=> $id, 'nombre' => $nombre, 'tamanio' => $tamanio]);
+            return false;
+        }
+
+    }
+
+    public function tieneDocumentacion($id){
+        $query1 = $this->connect()->prepare('SELECT Nombre FROM documento WHERE (idAlumno = :id)');
+        $query1->execute(['id'=>$id]);
+        
+        $result = $query1->fetch(PDO::FETCH_ASSOC);
+        if ($result) {
+            return true;
+        }
+        return false;
+    }
+
+    public function listaDocumentacion($id){
+        $query1 = $this->connect()->prepare('SELECT Nombre FROM documento WHERE (idAlumno = :id)');
+        $query1->execute(['id'=>$id]);
+
+        $result = $query1;
+        if ($result) {
+            return $result;
+        }
+        return false;
+    }
+
+    public function eliminarDocumentacion($id){
+        $query1 = $this->connect()->prepare('DELETE FROM documento WHERE (idAlumno = :id)');
+        $query1->execute(['id'=>$id]);
+
+        $result = $query1;
+        if ($result) {
+            return true;
+        }
+        return false;
     }
 }
 

@@ -43,6 +43,17 @@ select {
   padding-left: 20px;
 }
 
+.correcto{
+  color: #0277bd;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.adjunto-incorrecto{
+  padding-left: 0;
+}
+
+
 input{
   padding: 10px;
   border: none;
@@ -344,13 +355,27 @@ input:focus{
   justify-content: space-between;
 }
 
+.caratula__container{
+  display: flex;
+}
+
 .caratula__datos{
   padding-left: 20px;
+  max-width: 50%;
 }
 
 .caratula__datos__info{
   display: flex;
   flex-direction: column;
+}
+
+.button_flex{
+  float: right;
+  width: 49%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
 }
 
 /* ------------- LISTA DE ALUMNOS ----------- */
@@ -390,7 +415,7 @@ input:focus{
   margin-top: 3em;
   display: flex;
   justify-content: space-between;
-  width: 40%;
+  max-width: 600px;
   margin-bottom: 3em;
 }
 
@@ -438,6 +463,36 @@ h2.warning{
   border-radius: 3px;
 }
 
+/* ADJUNTAR ARCHIVOS */
+.document-form{
+  background-color: #80deea;
+  max-width: 580px;
+  min-width: 300px;
+  padding: 10px;
+}
+
+.document-input{
+  border: none;
+}
+
+.document-link{
+  cursor: pointer;
+}
+
+.document-link:hover{
+  text-decoration: underline;
+}
+
+.adjuntar{
+  padding-top: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+iframe{
+  width: 100%;
+  height: calc(100vh - 150px);
+}
 
 /* -------------  MEDIA QUERIES ------------ */
 
@@ -577,6 +632,38 @@ h2.warning{
   .solicitud__text{
     padding: 10px;
     text-align: center;
+  }
+
+  .solicitud__background{
+    height: 100vh;
+    background-color: white;
+    display: block;
+
+  }
+  .editar__warning{
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    padding: 20px;
+    background: white;
+    display: block;
+  }
+
+  h2.warning{
+    color: red;
+    font-size: 26px;
+  }
+
+  .editar__p{
+    font-size: 12px;
+  }
+  .editar__buttons{
+    width: auto;
+  }
+
+  .adjuntar{
+    padding-left: 15px;
+    padding-right: 15px;
   }
 
 }
