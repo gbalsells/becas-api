@@ -46,39 +46,39 @@
                   };
               echo '</select>
               </p>
-              <p>Año de ingreso a la facultad: <br>
-                <input type="number" name="ingreso">
-              </p>
-              <p>Promedio (Hasta tres decimales separados por un punto. <b>Ejemplo: 8.265</b>): <br>
-              <input type="number" step="0.001" name="promedio">
-              </p>
-              <p>Cantidad de materias aprobadas en el último ciclo lectivo <br><b>(Del 01/04/2018 al 31/03/2019)</b>: <br>
-              <input type="number" name="aprobadas">
-              </p>
-              <p>Cantidad de examenes rendidos en total: <br>
-              <input type="number" name="rendidos">
-              </p>
-              <p>Cantidad de materias de la carrera: <br>
-                <input type="number" name="totales">
-              </p>
               <p>Duración de la carrera en años: <br>
-              <input type="number" name="aniosCarrera">
+                <input type="number" name="aniosCarrera">
               </p>
+              <p>
+                  Materias que cursa actualmente>
+              </p>';
+              for ($i = 1; $i <= 6; $i++) {
+                echo '<p>Materia ' .$i .': <br>
+                  <input name="materias[]">
+                </p>';
+              };
+              echo '
               <div class="registro__button">
                 <input type="submit" value="Siguiente" class="button">
               </div>
             </div>
           </form>';
-      } else if (isset($_POST['carrera']) && isset($_POST['ingreso']) && isset($_POST['promedio']) && isset($_POST['aprobadas']) && isset($_POST['totales']) && isset($_POST['rendidos'])){
-        if ($_POST['carrera'] !== '' || $_POST['ingreso'] !== 0 || $_POST['promedio'] !== 0 || $_POST['aprobadas'] !== '' || $_POST['totales'] !== 0 || $_POST['rendidos'] !== '' || $_POST['aniosCarrera'] === 0){
-          if ($_POST['promedio'] > 10 || $_POST['aprobadas'] > $_POST['rendidos'] || $_POST['aprobadas'] > $_POST['totales'] || $_POST['rendidos'] > $_POST['totales'] || $_POST['ingreso'] > 2019) {
-            $facultad = $_POST['facultad'];
-            foreach ($facultades as &$fac){
-              if ($fac->getNombre() === $_POST['facultad']){
-                $carreras = $fac->getCarreras();
-              }
-            };
-            echo '
+      } else if (isset($_POST['carrera']) && isset($_POST['materias']) && isset($_POST['aniosCarrera'])) {
+        $materias = implode(", ",array_unique(array_filter($_POST['materias'])));
+        if ($_POST['aniosCarrera'] !== '' && $_POST['aniosCarrera'] !== 0 && $materias !== ''){
+          $carrera = $_POST['carrera'];
+          $aniosCarrera = $_POST['aniosCarrera'];
+          $facultadAlumno = $_POST['facultad'];
+          $alumno->datosAcademicos($id, $facultadAlumno, $carrera, $aniosCarrera, $materias);
+          include_once 'components/datosFamiliares.php';
+        } else {
+          $facultad = $_POST['facultad'];
+          foreach ($facultades as &$fac){
+            if ($fac->getNombre() === $_POST['facultad']){
+              $carreras = $fac->getCarreras();
+            }
+          };
+          echo '
             <form action="" method="POST" class="registro">
               <h2>Completar Datos Académicos</h2>
               <div class="registro__form">
@@ -93,46 +93,31 @@
                     };
                 echo '</select>
                 </p>
-                <p>Año de ingreso a la facultad: <br>
-                  <input type="number" name="ingreso">
-                </p>
-                <p>Promedio (Hasta tres decimales separados por un punto. <b>Ejemplo: 8.265</b>): <br>
-                  <input type="number" step="0.001" name="promedio">
-                </p>
-                <p>Cantidad de materias aprobadas en el último ciclo lectivo <br><b>(Del 01/04/2018 al 31/03/2019): </b><br>
-                  <input type="number" name="aprobadas">
-                </p>
-                <p>Cantidad de examenes rendidos en total: <br>
-                <input type="number" name="rendidos">
-                </p>
-                <p>Cantidad de materias de la carrera: <br>
-                  <input type="number" name="totales">
-                </p>
                 <p>Duración de la carrera en años: <br>
-                <input type="number" name="aniosCarrera">
+                  <input type="number" name="aniosCarrera">
                 </p>
+                <p style="font-weight: bold;">
+                    Materias que cursa actualmente:
+                </p>';
+                for ($i = 1; $i <= 6; $i++) {
+                  echo '<p>Materia ' .$i .': <br>
+                    <input name="materias[]">
+                  </p>';
+                };
+                echo '
                 <div class="registro__button">
                   <input type="submit" value="Siguiente" class="button">
                 </div>
               </div>
             </form>';
-            echo '<div class="incorrecto" style="margin-left: 50px;">Error en los datos ingresados. Por favor, Intente nuevamente.</div>';
-          } else {
-            $carrera = $_POST['carrera'];
-            $ingreso = $_POST['ingreso'];
-            $promedio = $_POST['promedio'];
-            $aprobadas = $_POST['aprobadas'];
-            $totales = $_POST['totales'];
-            $rendidos = $_POST['rendidos'];
-            $facultadAlumno = $_POST['facultad'];
-            $aniosCarrera = $_POST['aniosCarrera'];
-            $alumno->datosAcademicos($id, $facultadAlumno, $carrera, $ingreso, $promedio, $aprobadas, $totales, $rendidos, $aniosCarrera);
-            include_once 'components/datosFamiliares.php';
-          }
-        } else {
-            echo '<span class="incorrecto" style="margin-left: 50px; margin-top: 0px;">Debe ingresar todos los datos</span>';
+            if ($_POST['aniosCarrera'] === '' || $_POST['aniosCarrera'] === 0) {
+              echo '<div class="incorrecto" style="margin-left: 50px; padding-left: 0px;">Debe ingresar la duración en años de su carrera</div>';
+            }
+            if ($materias === ''){
+              echo '<div class="incorrecto" style="margin-left: 50px; padding-left: 0px;">Debe ingresar al menos una materia</div>';
+            }
         }
-    } else {
+      } else {
         echo '
         <form action="" method="POST" class="registro">
           <h2>Completar Datos Académicos</h2>

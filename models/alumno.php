@@ -15,11 +15,12 @@ class Alumno extends User{
             $this->telefono = $currentAlumno['Telefono'];
             $this->Facultad = $currentAlumno['Facultad'];
             $this->Carrera = $currentAlumno['Carrera'];
-            $this->AnioIngreso = $currentAlumno['AnioIngreso'];
-            $this->CantidadMaterias = $currentAlumno['CantidadMaterias'];
-            $this->Promedio = $currentAlumno['Promedio'];
-            $this->ExamenesRendidos = $currentAlumno['ExamenesRendidos'];
-            $this->MateriasAprobadas = $currentAlumno['MateriasAprobadas'];
+            $this->Materias = $currentAlumno['MateriasCursando'];
+            // $this->AnioIngreso = $currentAlumno['AnioIngreso'];
+            // $this->CantidadMaterias = $currentAlumno['CantidadMaterias'];
+            // $this->Promedio = $currentAlumno['Promedio'];
+            // $this->ExamenesRendidos = $currentAlumno['ExamenesRendidos'];
+            // $this->MateriasAprobadas = $currentAlumno['MateriasAprobadas'];
             $this->IntegrantesFamilia = $currentAlumno['IntegrantesFamilia'];
             $this->Ingresos = $currentAlumno['Ingresos'];
             $this->Egresos = $currentAlumno['Egresos'];
@@ -27,10 +28,10 @@ class Alumno extends User{
             $this->FechaCreacion = $currentAlumno['FechaCreacion'];
             $this->FechaEdicion = $currentAlumno['FechaEdicion'];
             $this->AniosCarrera = $currentAlumno['AniosCarrera'];
-            $this->Distancia = $currentAlumno['Distancia'];
-            $this->Vulnerabilidad = $currentAlumno['Vulnerabilidad'];
-            $this->Puntaje = $currentAlumno['Puntaje'];
-            $this->Resultado = $currentAlumno['Resultado'];
+            // $this->Distancia = $currentAlumno['Distancia'];
+            // $this->Vulnerabilidad = $currentAlumno['Vulnerabilidad'];
+            // $this->Puntaje = $currentAlumno['Puntaje'];
+            // $this->Resultado = $currentAlumno['Resultado'];
             $this->idAlumno = $id;
         }
     }
@@ -127,10 +128,19 @@ class Alumno extends User{
         return $this->Resultado;
     }
 
-    public function datosAcademicos($id, $facultad, $carrera, $ingreso, $promedio, $aprobadas, $totales, $rendidos, $aniosCarrera){
-        $query = $this->connect()->prepare('INSERT INTO alumno VALUES(:id, :facultad, :carrera, null, :ingreso, :totales, :promedio, :rendidos, :aprobadas, null, null, null, null, now(), null, :aniosCarrera, null, null, null, null)');
-        $query->execute(['id'=> $id, 'facultad' => $facultad, 'carrera' => $carrera, 'ingreso' => $ingreso, 'promedio' => $promedio, 'aprobadas' => $aprobadas, 'totales' => $totales, 'rendidos' => $rendidos, 'aniosCarrera' => $aniosCarrera]);
+    public function getMaterias(){
+        return $this->Materias;
     }
+
+    public function datosAcademicos($id, $facultad, $carrera, $aniosCarrera, $materias){
+        $query = $this->connect()->prepare('INSERT INTO alumno VALUES(:id, :facultad, :carrera, :aniosCarrera, :materias, now(), null, null, null, null, null)');
+        $query->execute(['id'=> $id, 'facultad' => $facultad, 'carrera' => $carrera, 'materias' => $materias, 'aniosCarrera' => $aniosCarrera]);
+    }
+
+    // public function datosAcademicos($id, $facultad, $carrera, $ingreso, $promedio, $aprobadas, $totales, $rendidos, $aniosCarrera){
+    //     $query = $this->connect()->prepare('INSERT INTO alumno VALUES(:id, :facultad, :carrera, null, :ingreso, :totales, :promedio, :rendidos, :aprobadas, null, null, null, null, now(), null, :aniosCarrera, null, null, null, null)');
+    //     $query->execute(['id'=> $id, 'facultad' => $facultad, 'carrera' => $carrera, 'ingreso' => $ingreso, 'promedio' => $promedio, 'aprobadas' => $aprobadas, 'totales' => $totales, 'rendidos' => $rendidos, 'aniosCarrera' => $aniosCarrera]);
+    // }
 
     public function datosFamiliares($id, $ingresos, $egresos, $integrantes){
         $query = $this->connect()->prepare('UPDATE alumno SET IntegrantesFamilia = :integrantes, Ingresos = :ingresos, Egresos = :egresos, FechaCreacion = now() WHERE idUsuario = :id');

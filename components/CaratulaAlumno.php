@@ -100,12 +100,17 @@
                     <ul class="caratula__datos__info">
                         <li><b>Facultad: </b><?php echo $alumno->getFacultad();?></li>
                         <li><b>Carrera: </b><?php echo $alumno->getCarrera();?></li>
-                        <li><b>Cantidad de materias de la carrera: </b><?php echo $alumno->getCantidadMaterias();?></li>
-                        <li><b>Año de ingreso a la facultad: </b><?php echo $alumno->getAnioIngreso();?></li>
-                        <li><b>Promedio: </b><?php echo $alumno->getPromedio();?></li>
-                        <li><b>Materias aprobadas el último ciclo lectivo (01/04/2018 al 31/03/2019): </b><?php echo $alumno->getMateriasAprobadas();?></li>
-                        <li><b>Cantidad de materias rendidas: </b><?php echo $alumno->getExamenesRendidos();?></li>
                         <li><b>Duración de la carrera: </b><?php echo $alumno->getAniosCarrera();?> años</li>
+                        <li><b>Materias cursando actualmente: </b>
+                            <ul>
+                                <?php
+                                    $materias = explode(", ", $alumno->getMaterias());
+                                    foreach ($materias as &$mat){
+                                        echo '<li>' .$mat .'</li>';
+                                    };
+                                ?>
+                            </ul>
+                        </li>
                     </ul>
                     <h3>Datos familiares</h3>
                     <ul class="caratula__datos__info">
@@ -214,7 +219,6 @@
                     <div class="button_flex">
                     ';
                     if ($alumno->getFechaEdicion() === null) {
-                        //echo '<div class="incorrecto">La convocatoria ha cerrado. Ya no se permite la edición de datos.</div>';                    
                         $userSession->setAlumno($alumnoJson);
                         echo '<button class="button atras" onclick="location=`components/EditarAlumno.php`">Editar</button>';                    
                     }
@@ -230,5 +234,8 @@
             ?>
             </div>
     </div>
+    <?php
+        // echo '<div class="incorrecto">La convocatoria ha cerrado. Ya no se permite la edición de datos.</div>';
+    ?>                  
 </body>
 </html>
