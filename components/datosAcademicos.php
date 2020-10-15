@@ -49,8 +49,8 @@
               <p>Duración de la carrera en años: <br>
                 <input type="number" name="aniosCarrera">
               </p>
-              <p>
-                  Materias que cursa actualmente>
+              <p style="font-weight: bold;">
+                  Materias que cursa actualmente:
               </p>';
               for ($i = 1; $i <= 6; $i++) {
                 echo '<p>Materia ' .$i .': <br>
