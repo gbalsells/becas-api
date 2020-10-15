@@ -48,12 +48,22 @@
 <div class="adjuntar">
     <h2>Adjuntar PDF</h2>
     <h3>A continuación, puede adjuntar la documentación requerida. </h3>
-    <p style="font-size: 16px;">El documento adjuntado:
+    <p style="font-size: 16px;">Se permite:
         <ul>
-            <li>Debe estar en formato PDF</li>
-            <li>Debe pesar menos de 20MB</li>
-        </ul>
+            <li>Sólo un archivo por alumno</li>
+            <li>Archivos únicamente en formato PDF</li>
+            <li>El archivo debe pesar menos de 1MB</li>
+        </ul>    
     </p>
+    <div style="font-style: italic;">
+        <p >Sugerencias: 
+            <ul>
+                <li>Puede utilizar apps para combinar todas sus imágenes en un único PDF </li>
+                <li>Verifique que todas las imágenes tengan la misma orientación</li>
+                <li>Si su archivo es mayor a 1MB, deberá comprimirlo</li>
+            </ul>
+        </p>
+    </div>
     <form method="post" action="" enctype="multipart/form-data">
         <p class="document-form">Archivo: <br>
             <input type="file" name="archivo" class="document-input">
@@ -82,7 +92,7 @@
             }
             $destino = $carpetaAlumno .'/' . $nombre;
             if ($nombre !== '') {
-                if ($tipo === 'application/pdf' && $tamanio < 20000000) {
+                if ($tipo === 'application/pdf' && $tamanio < 1000000) {
                     if(!is_dir($carpetaAlumno)){
                         $crear = mkdir($carpetaAlumno, 0777, true);
                     }
@@ -97,7 +107,7 @@
                         echo '<span class="incorrecto adjunto-incorrecto">Error al adjuntar archivo.</span>';
                     }        
                 } else {
-                    echo '<span class="incorrecto adjunto-incorrecto">No se puede subir un documento que no sea de extensión PDF ni que pese más de 20MB.</span>';
+                    echo '<span class="incorrecto adjunto-incorrecto">No se puede subir un documento que no sea de extensión PDF ni que pese más de 1MB.</span>';
                 }
             }
         }
