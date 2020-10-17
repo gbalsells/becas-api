@@ -64,7 +64,8 @@
             </div>
           </form>';
       } else if (isset($_POST['carrera']) && isset($_POST['materias']) && isset($_POST['aniosCarrera'])) {
-        $materias = implode(", ",array_unique(array_filter($_POST['materias'])));
+        $materiasUppercase=array_map(function($word) { return ucwords(strtolower($word)); }, $_POST['materias']);
+        $materias = implode(", ",array_unique(array_filter($materiasUppercase)));
         if ($_POST['aniosCarrera'] !== '' && $_POST['aniosCarrera'] !== 0 && $materias !== ''){
           $carrera = $_POST['carrera'];
           $aniosCarrera = $_POST['aniosCarrera'];

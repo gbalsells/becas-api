@@ -147,10 +147,10 @@ class Alumno extends User{
         $query->execute(['id'=> $id, 'integrantes' => $integrantes, 'ingresos' => $ingresos, 'egresos' => $egresos]);
     }
 
-    public function editarAlumno($id, $facultad, $apellidos, $nombres, $dni, $email, $telefono, $carrera, $ingreso, $promedio, $aprobadas, $totales, $rendidos, $ingresos, $egresos, $integrantes, $aniosCarrera){
+    public function editarAlumno($id, $facultad, $apellidos, $nombres, $dni, $email, $telefono, $carrera, $ingresos, $egresos, $integrantes, $aniosCarrera, $materias){
         
-        $query = $this->connect()->prepare('UPDATE alumno SET Facultad = :facultad, Carrera = :carrera, AnioIngreso = :ingreso, Promedio = :promedio, MateriasAprobadas = :aprobadas, CantidadMaterias = :totales, ExamenesRendidos = :rendidos, IntegrantesFamilia = :integrantes, Ingresos = :ingresos, Egresos = :egresos, AniosCarrera = :aniosCarrera, FechaEdicion = now() WHERE idUsuario = :id');
-        $query->execute(['id'=> $id, 'facultad' => $facultad, 'carrera' => $carrera, 'ingreso' => $ingreso, 'promedio' => $promedio, 'aprobadas' => $aprobadas, 'totales' => $totales, 'rendidos' => $rendidos, 'integrantes' => $integrantes, 'ingresos' => $ingresos, 'egresos' => $egresos, 'aniosCarrera' => $aniosCarrera]);
+        $query = $this->connect()->prepare('UPDATE alumno SET Facultad = :facultad, Carrera = :carrera, IntegrantesFamilia = :integrantes, Ingresos = :ingresos, Egresos = :egresos, AniosCarrera = :aniosCarrera, FechaEdicion = now(), MateriasCursando = :materias WHERE idUsuario = :id');
+        $query->execute(['id'=> $id, 'facultad' => $facultad, 'carrera' => $carrera, 'integrantes' => $integrantes, 'ingresos' => $ingresos, 'egresos' => $egresos, 'aniosCarrera' => $aniosCarrera, 'materias' => $materias]);
         
         $query = $this->connect()->prepare('UPDATE usuario SET Apellidos = :apellidos, Nombres = :nombres, DNI = :dni, Email = :email, Telefono = :telefono WHERE idUsuario = :id');
         $query->execute(['id'=> $id, 'apellidos' => $apellidos, 'nombres' => $nombres, 'dni' => $dni, 'email' => $email, 'telefono' => $telefono]);

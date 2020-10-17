@@ -111,6 +111,7 @@
         $egresos = $_POST['egresos'];
         $integrantes = $_POST['integrantes'];
         $aniosCarrera = $_POST['aniosCarrera'];
+        $materias = $_POST['materias'];
 
         echo '
             <form action="" method="POST" class="registro">
@@ -127,12 +128,8 @@
                 <p><b>Telefono:</b> ' .$telefono .'</p>
                 <p><b>Facultad:</b> ' .$facultad .'</p>
                 <p><b>Carrera:</b> ' .$carrera .'</p>
-                <p><b>Año de ingreso:</b> ' .$ingreso .'</p>
-                <p><b>Promedio:</b> ' .$promedio .'</p>
-                <p><b>Materias aprobadas el último ciclo lectivo:</b> ' .$aprobadas .'</p>
-                <p><b>Exámenes rendidos:</b> ' .$rendidos .'</p>
-                <p><b>Cantidad de materias de la carrera:</b> ' .$totales .'</p>
                 <p><b>Duración de la carrera:</b> ' .$aniosCarrera .' años</p>
+                <p><b>Materias que se encuentra cursando:</b> ' .$materias .' </p>
 
                 <p><b>Ingresos del grupo familiar:</b> ' .$ingresos .'</p>
                 <p><b>Egresos del grupo familiar:</b> ' .$egresos .'</p>
@@ -224,6 +221,11 @@
                 echo
                 '</select>
 
+                <select name="materias" style="display:none;">';
+                echo '<option value="' .$materias .'">' .$materias .'</option>';
+                echo
+                '</select>
+
                 <div class="registro__button" style="margin-bottom: 20px;">
                 <input type="submit" value="Aceptar" class="button">
                 <a class="button registrarse" style="margin-left:10px;" onclick="location=`../index.php`">Cancelar</a>
@@ -238,18 +240,13 @@
         $email = $_POST['email'];
         $telefono = $_POST['telefono'];
         $carrera = $_POST['carrera'];
-        $ingreso = $_POST['ingreso'];
-        $promedio = $_POST['promedio'];
-        $aprobadas = $_POST['aprobadas'];
-        $totales = $_POST['totales'];
-        $rendidos = $_POST['rendidos'];
         $ingresos = $_POST['ingresos'];
         $egresos = $_POST['egresos'];
         $integrantes = $_POST['integrantes'];
         $aniosCarrera = $_POST['aniosCarrera'];
+        $materias = $_POST['materias'];
 
-
-        $alumno->editarAlumno($id, $facultad, $apellidos, $nombres, $dni, $email, $telefono, $carrera, $ingreso, $promedio, $aprobadas, $totales, $rendidos, $ingresos, $egresos, $integrantes, $aniosCarrera);
+        $alumno->editarAlumno($id, $facultad, $apellidos, $nombres, $dni, $email, $telefono, $carrera, $ingresos, $egresos, $integrantes, $aniosCarrera, $materias);
 
         $_SESSION['alumno'] = null;
         header("Location: ../index.php");
@@ -322,24 +319,25 @@
                         };
                     echo '</select>
                     </p>
-                    <p>Año de ingreso a la facultad: <br>
-                        <input type="number" name="ingreso" value="' .$alumnoDecoded['AnioIngreso'] .'">
-                    </p>
-                    <p>Promedio (Separar decimales con punto. <b>Ejemplo: 8.265</b>): <br>
-                        <input type="number" step="0.001" name="promedio" value="' .$alumnoDecoded['Promedio'] .'">
-                    </p>
-                    <p>Cantidad de materias aprobadas en el último ciclo lectivo <br><b>(Del 01/04/2018 al 31/03/2019)</b>: <br>
-                        <input type="number" name="aprobadas" value="' .$alumnoDecoded['MateriasAprobadas'] .'">
-                    </p>
-                    <p>Cantidad de materias de la carrera: <br>
-                        <input type="number" name="totales" value="' .$alumnoDecoded['CantidadMaterias'] .'">
-                    </p>
-                    <p>Cantidad de examenes rendidos en total: <br>
-                        <input type="number" name="rendidos" value="' .$alumnoDecoded['ExamenesRendidos'] .'">
-                    </p>
                     <p>Duración de la carrera en años: <br>
                         <input type="number" name="aniosCarrera" value="' .$alumnoDecoded['AniosCarrera'] .'">
                     </p>
+                    <p style="font-weight: bold;">
+                        Materias que cursa actualmente:
+                    </p>';
+                    $materias = explode(", ", $alumnoDecoded['Materias']);
+                    foreach($materias as &$materia) {
+                        echo '<p>Materia ' .(array_search($materia, $materias) + 1) .': <br>
+                        <input name="materias[]" value="' .$materia .'">
+                    </p>';
+                    }
+                    for ($i = count($materias) + 1; $i <= 6; $i++) {
+                        echo '<p>Materia ' .$i .': <br>
+                          <input name="materias[]">
+                        </p>';
+                    };
+                    
+                echo '
                     <div class="registro__button" style="padding-bottom: 20px;">
                         <input type="submit" value="Siguiente" class="button">
                         <a class="button registrarse" style="margin-left:10px;" onclick="location=`../index.php`">Cancelar</a>
@@ -347,9 +345,11 @@
                 </div>
                 </form>';
             }
-        } else if (isset($_POST['carrera']) && isset($_POST['ingreso']) && isset($_POST['promedio']) && isset($_POST['aprobadas']) && isset($_POST['totales']) && isset($_POST['rendidos'])){
-            if ($_POST['carrera'] !== '' && $_POST['ingreso'] !== 0 && $_POST['promedio'] !== 0 && $_POST['aprobadas'] !== '' && $_POST['totales'] !== 0 && $_POST['rendidos'] !== ''){
-                if ($_POST['promedio'] > 10 || $_POST['aprobadas'] > $_POST['rendidos'] || $_POST['aprobadas'] > $_POST['totales'] || $_POST['rendidos'] > $_POST['totales'] || $_POST['ingreso'] > 2019) {
+        } else if ((isset($_POST['carrera']) && isset($_POST['materias']) && isset($_POST['aniosCarrera']))) {
+            $materiasUppercase=array_map(function($word) { return ucwords(strtolower($word)); }, $_POST['materias']);
+            $materias = implode(", ",array_unique(array_filter($materiasUppercase)));
+            if ($_POST['carrera'] !== ''){
+                if ($_POST['aniosCarrera'] === '' && $_POST['aniosCarrera'] === 0 && $materias === ''){
                     echo '
                     <div class="incorrecto" style="margin-left: 50px; padding-top: 90px;">
                         <form action="" method="POST">
@@ -370,11 +370,6 @@
                     $telefono = $_POST['telefono'];
 
                     $carrera = $_POST['carrera'];
-                    $ingreso = $_POST['ingreso'];
-                    $promedio = $_POST['promedio'];
-                    $aprobadas = $_POST['aprobadas'];
-                    $totales = $_POST['totales'];
-                    $rendidos = $_POST['rendidos'];
                     $aniosCarrera = $_POST['aniosCarrera'];
 
                     echo '
@@ -437,6 +432,11 @@
     
                         <select name="totales" style="display:none;">';
                         echo '<option value="' .$totales .'">' .$totales .'</option>';
+                        echo
+                        '</select>
+
+                        <select name="materias" style="display:none;">';
+                        echo '<option value="' .$materias .'">' .$materias .'</option>';
                         echo
                         '</select>
     
