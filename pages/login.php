@@ -15,7 +15,7 @@
         <div class="top-bar__unt">
           <img src="assets/untletras.png" alt="" style="padding:10px;">          
         </div>
-        <a onclick="location='index.php'" class="titulo">Becas Juan B Terán</a>
+        <a onclick="location='index.php'" class="titulo">Becas UNT</a>
         <div class="top-bar__organismos">
           <span>Secretaría de Asuntos Estudiantiles</span>
           <span>Dirección General de Becas</span>

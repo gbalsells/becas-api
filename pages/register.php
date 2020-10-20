@@ -14,16 +14,6 @@
   Mensaje para desactivar registro:
   <h2 style="margin-left: 20px;">Página no encontrada</h2>
 -->
-  <nav class="top-bar">
-    <div class="top-bar__unt">
-      <img src="../assets/untletras.png" alt="" style="padding:10px;">          
-    </div>
-    <a onclick="location='../index.php'" class="titulo">Becas Juan B Terán</a>
-    <div class="top-bar__organismos">
-      <span>Secretaría de Asuntos Estudiantiles</span>
-      <span>Dirección General de Becas</span>
-    </div>
-  </nav>
   <?php
     include_once '../models/user.php';
     include_once '../models/user_session.php';
@@ -39,6 +29,16 @@
         $beca = 'Conectar';
       }
       echo '
+        <nav class="top-bar">
+          <div class="top-bar__unt">
+            <img src="../assets/untletras.png" alt="" style="padding:10px;">          
+          </div>
+          <a onclick="location=`../index.php`" class="titulo">Becas ' .$beca .'</a>
+          <div class="top-bar__organismos">
+            <span>Secretaría de Asuntos Estudiantiles</span>
+            <span>Dirección General de Becas</span>
+          </div>
+        </nav>
         <form action="" method="POST" class="registro">
         <select name="becaConectar" style="display:none;">';
         echo '<option value="' .$becaConectar .'">' .$becaConectar .'</option>';
@@ -83,6 +83,16 @@
       ';
     } else {
       echo '
+      <nav class="top-bar">
+        <div class="top-bar__unt">
+          <img src="../assets/untletras.png" alt="" style="padding:10px;">          
+        </div>
+        <a onclick="location=`../index.php`" class="titulo">Becas UNT</a>
+        <div class="top-bar__organismos">
+          <span>Secretaría de Asuntos Estudiantiles</span>
+          <span>Dirección General de Becas</span>
+        </div>
+      </nav>
       <form action="" method="POST" class="tipoBeca">
         <div class="tipoBeca__card">
           <h2>Bienvenido/a</h2>
@@ -119,7 +129,8 @@
       $md5pass = md5($pass);
       $nuevoUsuario = $newUser->createUser($apellidos, $nombres, $email, $dni, $md5pass, $user, $telefono, $becaConectar);
       if ($nuevoUsuario === NULL) {
-        header("Location: ../components/registroCompleto.php");
+        $location = 'Location: ../components/registroCompleto.php?beca=' .$becaConectar;
+        header($location);
       } else {
         echo '<span class="incorrecto" style="margin-left: 50px;">' .$nuevoUsuario.'</span>';
       }

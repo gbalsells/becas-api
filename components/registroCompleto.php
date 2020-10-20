@@ -11,22 +11,32 @@
 
 </head>
 <body>
-    <nav class="top-bar">
-        <div class="top-bar__unt">
-          <img src="../assets/untletras.png" alt="" style="padding:10px;">          
-        </div>
-        <a onclick="location='../index.php'" class="titulo">Becas Juan B Terán</a>
-        <div class="top-bar__organismos">
-          <span>Secretaría de Asuntos Estudiantiles</span>
-          <span>Dirección General de Becas</span>
-        </div>
-    </nav>
-    <div class="solicitud__background">
-        <div class="solicitud__text">
-            <h2>¡Se ha registrado exitosamente!</h2>
-            <p>Para solicitar la Beca Juan B. Terán, deberá ingresar al sistema y completar el formulario de solicitud. </p>
-            <p>Para iniciar sesión y comenzar a completarlo, haga click <a class="link" onclick="location='../index.php'">aquí</a></p>
-        </div>
-    </div>
+    <?php
+        if ($_REQUEST['beca'] === '0') {
+        $beca = 'Juan B. Terán';
+        } else {
+        $beca = 'Conectar';
+        }
+        echo '
+        <nav class="top-bar">
+              <div class="top-bar__unt">
+                <img src="../assets/untletras.png" alt="" style="padding:10px;">          
+              </div>
+              <a onclick="location=`../index.php`" class="titulo">Becas ' .$beca .'</a>
+              <div class="top-bar__organismos">
+                <span>Secretaría de Asuntos Estudiantiles</span>
+                <span>Dirección General de Becas</span>
+              </div>
+          </nav>
+          <div class="solicitud__background">
+              <div class="solicitud__text">
+                  <h2>¡Se ha registrado exitosamente!</h2>
+                  <p>Para solicitar la Beca ' .$beca .', deberá ingresar al sistema y completar el formulario de solicitud. </p>
+                  <p>Para iniciar sesión y comenzar a completarlo, haga click <a class="link" onclick="location=`../index.php`">aquí</a></p>
+              </div>
+          </div>
+        ';
+        
+    ?>
 </body>
 </html>
