@@ -68,6 +68,9 @@
           <p>DNI: <br>
             <input type="number" name="dni">
           </p>
+          <p>Domicilio (Lugar donde reside en época de aislamiento/distanciamiento social preventivo obligatorio): <br>
+            <input type="text" name="domicilio">
+          </p>
           <p>Email: <br>
             <input type="email" name="email">
           </p>
@@ -114,8 +117,8 @@
       </form>
       ';
     }
-  if (isset($_POST['usuario']) && isset($_POST['password']) && isset($_POST['nombres']) && isset($_POST['apellidos']) && isset($_POST['dni']) && isset($_POST['email'])){
-    if ($_POST['usuario'] === '' || $_POST['password'] === '' || $_POST['nombres'] === '' || $_POST['apellidos'] === '' || $_POST['dni'] === '' || $_POST['dni'] < 10000000 || $_POST['email'] === ''){
+  if (isset($_POST['usuario']) && isset($_POST['password']) && isset($_POST['nombres']) && isset($_POST['apellidos']) && isset($_POST['dni']) && isset($_POST['email']) && isset($_POST['domicilio'])){
+    if ($_POST['usuario'] === '' || $_POST['password'] === '' || $_POST['nombres'] === '' || $_POST['apellidos'] === '' || $_POST['dni'] === '' || $_POST['dni'] < 10000000 || $_POST['email'] === '' || $_POST['domicilio'] === ''){
       echo '<span class="incorrecto" style="margin-left: 50px; margin-top: 0px;"><span class="incorrecto" style="margin-left: 50px; margin-top: 0px;">Debe ingresar todos los datos</span></span>';
     } elseif ($_POST['password'] === $_POST['password2']){
       $apellidos = $_POST['apellidos'];
@@ -125,9 +128,10 @@
       $user = $_POST['usuario'];
       $pass = $_POST['password'];
       $telefono = $_POST['telefono'];
+      $domicilio = $_POST['domicilio'];
       $becaConectar = $_POST['becaConectar'];
       $md5pass = md5($pass);
-      $nuevoUsuario = $newUser->createUser($apellidos, $nombres, $email, $dni, $md5pass, $user, $telefono, $becaConectar);
+      $nuevoUsuario = $newUser->createUser($apellidos, $nombres, $email, $dni, $md5pass, $user, $telefono, $becaConectar, $domicilio);
       if ($nuevoUsuario === NULL) {
         $location = 'Location: ../components/registroCompleto.php?beca=' .$becaConectar;
         header($location);
