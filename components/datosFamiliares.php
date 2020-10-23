@@ -26,10 +26,13 @@ if($esBecaConectar) {
         if ($_POST['vulnerabilidad'] === 'Si' && $_POST['descripcionVulnerabilidad'] === '') {
           $mensajeVulnerabilidad = 'Debe describir su condición de vulnerabilidad';
         }
-        if (isset($mensajeHijos) || isset($mensajeVulnerabilidad)) {
+        if ($_POST['integrantes'] === '0' || $_POST['integrantes'] === '') {
+          $mensajeIntegrantes = 'Debe indicar los integrantes de su familia';
+        }
+        if (isset($mensajeHijos) || isset($mensajeVulnerabilidad) || isset($mensajeIntegrantes)) {
           echo '
           <form action="" method="POST" class="registro">
-            <h2>Datos familiares y tecnológicos arada</h2>
+            <h2>Datos familiares y tecnológicos</h2>
             <div class="registro__form familiares">
             <div class="incorrecto" style="padding-left: 0px;">';
             if(isset($mensajeHijos)) {
@@ -39,6 +42,11 @@ if($esBecaConectar) {
             <div class="incorrecto" style="padding-left: 0px;">';
             if(isset($mensajeVulnerabilidad)) {
               echo $mensajeVulnerabilidad;
+            }
+            echo '</div>
+            <div class="incorrecto" style="padding-left: 0px;">';
+            if(isset($mensajeIntegrantes)) {
+              echo $mensajeIntegrantes;
             }
             echo '</div>
             <p>Cantidad de integrantes de su grupo familiar (Contándose a usted mismo): <br>
@@ -151,6 +159,8 @@ if($esBecaConectar) {
           $vulnerabilidad = 'No';
           if($_POST['vulnerabilidad'] === 'Si' ) {
             $vulnerabilidad = $_POST['descripcionVulnerabilidad'];
+          } else if ($_POST['vulnerabilidad'] === 'Si' ) {
+            $vulnerabilidad = 'No deseo contestar';
           }
           echo $ingresos, $telefono4G, $telefonoLiberado, $compania, $mejorCompania, $integrantes, $hijos, $vulnerabilidad;
           $alumno->datosFamiliaresConectar($id, $integrantes, $hijos, $ingresos, $telefono4G, $telefonoLiberado, $compania, $mejorCompania, $vulnerabilidad);
@@ -159,7 +169,7 @@ if($esBecaConectar) {
       } else {
         echo '
         <form action="" method="POST" class="registro">
-          <h2>Datos familiares y tecnológicos arada</h2>
+          <h2>Datos familiares y tecnológicos</h2>
           <div class="registro__form familiares">
           <div class="incorrecto" style="padding-left: 0px;">Debe ingresar todos los datos</div>
             <p>Cantidad de integrantes de su grupo familiar (Contándose a usted mismo): <br>
@@ -262,7 +272,7 @@ if($esBecaConectar) {
   } else {
     echo '
     <form action="" method="POST" class="registro">
-    <h2>Datos familiares y tecnológicos asada</h2>
+    <h2>Datos familiares y tecnológicos</h2>
       <div class="registro__form familiares">
         <p>Cantidad de integrantes de su grupo familiar (Contándose a usted mismo): <br>
           <input type="number" name="integrantes">
