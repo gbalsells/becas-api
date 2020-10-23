@@ -119,7 +119,11 @@
     }
   if (isset($_POST['usuario']) && isset($_POST['password']) && isset($_POST['nombres']) && isset($_POST['apellidos']) && isset($_POST['dni']) && isset($_POST['email']) && isset($_POST['domicilio'])){
     if ($_POST['usuario'] === '' || $_POST['password'] === '' || $_POST['nombres'] === '' || $_POST['apellidos'] === '' || $_POST['dni'] === '' || $_POST['dni'] < 10000000 || $_POST['email'] === '' || $_POST['domicilio'] === ''){
-      echo '<span class="incorrecto" style="margin-left: 50px; margin-top: 0px;"><span class="incorrecto" style="margin-left: 50px; margin-top: 0px;">Debe ingresar todos los datos</span></span>';
+      if ($_POST['dni'] < 10000000) {
+        echo '<span class="incorrecto" style="margin-left: 30px; margin-top: 0px;">DNI inválido</span>';
+      } else {
+        echo '<span class="incorrecto" style="margin-left: 30px; margin-top: 0px;">Debe ingresar todos los datos</span>';
+      }
     } elseif ($_POST['password'] === $_POST['password2']){
       $apellidos = $_POST['apellidos'];
       $nombres = $_POST['nombres'];

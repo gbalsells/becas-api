@@ -15,7 +15,12 @@
     include_once 'models/alumno.php';
     $alumno = new Alumno();
     $id = $user->getIdUsuario();
-    $hayAlumno = $user->hayAlumno();
+    $esBecaConectar = $user->getBeca();
+    if($esBecaConectar) {
+      $hayAlumno = $user->hayAlumnoConectar();
+    } else {
+      $hayAlumno = $user->hayAlumno();
+    }
 
     if($hayAlumno === 0){
       include_once 'components/CaratulaAlumno.php';
@@ -50,7 +55,7 @@
                 <input type="number" name="aniosCarrera">
               </p>
               <p style="font-weight: bold;">
-                  Materias que cursa actualmente:
+                  Materias que cursa actualmente en modalidad virtual:
               </p>';
               for ($i = 1; $i <= 6; $i++) {
                 echo '<p>Materia ' .$i .': <br>
@@ -70,7 +75,11 @@
           $carrera = $_POST['carrera'];
           $aniosCarrera = $_POST['aniosCarrera'];
           $facultadAlumno = $_POST['facultad'];
-          $alumno->datosAcademicos($id, $facultadAlumno, $carrera, $aniosCarrera, $materias);
+          if ($esBecaConectar) {
+            $alumno->datosAcademicosConectar($id, $facultadAlumno, $carrera, $aniosCarrera, $materias);
+          } else {
+            $alumno->datosAcademicos($id, $facultadAlumno, $carrera, $aniosCarrera, $materias);
+          }
           include_once 'components/datosFamiliares.php';
         } else {
           $facultad = $_POST['facultad'];

@@ -132,6 +132,11 @@ class Alumno extends User{
         return $this->Materias;
     }
 
+    public function datosAcademicosConectar($id, $facultad, $carrera, $aniosCarrera, $materias){
+        $query = $this->connect()->prepare('INSERT INTO alumnoconectar VALUES(:id, :facultad, :carrera, :aniosCarrera, :materias, now(), null, null, null, null, null, null, null, null, null, null)');
+        $query->execute(['id'=> $id, 'facultad' => $facultad, 'carrera' => $carrera, 'materias' => $materias, 'aniosCarrera' => $aniosCarrera]);
+    }
+
     public function datosAcademicos($id, $facultad, $carrera, $aniosCarrera, $materias){
         $query = $this->connect()->prepare('INSERT INTO alumno VALUES(:id, :facultad, :carrera, :aniosCarrera, :materias, now(), null, null, null, null, null)');
         $query->execute(['id'=> $id, 'facultad' => $facultad, 'carrera' => $carrera, 'materias' => $materias, 'aniosCarrera' => $aniosCarrera]);
@@ -141,6 +146,11 @@ class Alumno extends User{
     //     $query = $this->connect()->prepare('INSERT INTO alumno VALUES(:id, :facultad, :carrera, null, :ingreso, :totales, :promedio, :rendidos, :aprobadas, null, null, null, null, now(), null, :aniosCarrera, null, null, null, null)');
     //     $query->execute(['id'=> $id, 'facultad' => $facultad, 'carrera' => $carrera, 'ingreso' => $ingreso, 'promedio' => $promedio, 'aprobadas' => $aprobadas, 'totales' => $totales, 'rendidos' => $rendidos, 'aniosCarrera' => $aniosCarrera]);
     // }
+
+    public function datosFamiliaresConectar($id, $integrantes, $hijos, $ingresos, $telefono4g, $telefonoLiberado, $compania, $mejorCompania, $vulnerabilidad){
+        $query = $this->connect()->prepare('UPDATE alumnoconectar SET IntegrantesFamilia = :integrantes, Ingresos = :ingresos, CantidadHijos = :hijos, Telefono4G = :telefono4g, TelefonoLiberado = :telefonoLiberado, Compania = :compania, MejorCompania = :mejorCompania, Vulnerabilidad = :vulnerabilidad, FechaCreacion = now() WHERE idUsuario = :id');
+        $query->execute(['id'=> $id, 'integrantes' => $integrantes, 'ingresos' => $ingresos, 'hijos' => $hijos, 'telefono4g' => $telefono4g, 'telefonoLiberado' => $telefonoLiberado, 'compania' => $compania, 'mejorCompania' => $mejorCompania, 'vulnerabilidad' => $vulnerabilidad]);
+    }
 
     public function datosFamiliares($id, $ingresos, $egresos, $integrantes){
         $query = $this->connect()->prepare('UPDATE alumno SET IntegrantesFamilia = :integrantes, Ingresos = :ingresos, Egresos = :egresos, FechaCreacion = now() WHERE idUsuario = :id');

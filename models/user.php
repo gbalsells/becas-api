@@ -79,6 +79,20 @@ class User extends DB{
         }
     }
 
+    public function hayAlumnoConectar(){
+        $query = $this->connect()->prepare('SELECT * FROM alumnoconectar WHERE idUsuario = :user');
+        $query->execute(['user' => $this->id]);
+        foreach ($query as $alumno) {
+            if ($alumno['Ingresos'] && $alumno['Carrera']) {
+                return 0; // Devuelve 0 cuando ya tiene todos los datos cargados
+            } else if ($alumno['Carrera']){
+                return 1; // Devuelve 1 cuando solo tiene datos academicos cargados
+            } else {
+                return 2; // Devuelve 2 cuando no tiene ningun dato cargado
+            }
+        }
+    }
+
     public function getUsuario(){
         return $this->usuario;
     }
