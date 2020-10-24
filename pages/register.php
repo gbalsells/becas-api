@@ -102,11 +102,11 @@
           <h3>¿Para qué beca desea postularse?</h3>
           <div class="tipoBeca__options">
             <div class="tipoBeca__radio">
-              <input type="radio" id="male" name="becaConectar" value="0">
+              <input type="radio" name="becaConectar" value="0" disabled>
               <label for="0">Becas J.B.Teran</label><br>
             </div>
             <div class="tipoBeca__radio">
-              <input type="radio" id="male" name="becaConectar" value="1">
+              <input type="radio" name="becaConectar" value="1">
               <label for="1">Becas Conectar</label><br>
             </div>
           </div>

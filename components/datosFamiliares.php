@@ -55,11 +55,11 @@ if($esBecaConectar) {
               <p>¿Tiene hijos?
                 <div class="registro__form hijos">
                   <div>
-                    <input type="radio" id="male" name="tieneHijos" value="1">
+                    <input type="radio" name="tieneHijos" value="1">
                     <label for="1">Si</label><br>
                   </div>
                   <div>
-                    <input type="radio" id="male" name="tieneHijos" value="0">
+                    <input type="radio" name="tieneHijos" value="0">
                     <label for="0">No</label><br>
                   </div>
                 </div>
@@ -81,11 +81,11 @@ if($esBecaConectar) {
               <p>¿Tiene teléfono 4G?
                 <div class="registro__form hijos">
                   <div>
-                    <input type="radio" id="male" name="telefono4G" value="Si">
+                    <input type="radio" name="telefono4G" value="Si">
                     <label for="Si">Si</label><br>
                   </div>
                   <div>
-                    <input type="radio" id="male" name="telefono4G" value="No">
+                    <input type="radio" name="telefono4G" value="No">
                     <label for="No">No</label><br>
                   </div>
                 </div>
@@ -93,11 +93,11 @@ if($esBecaConectar) {
               <p>¿Su teléfono celular es liberado?
                 <div class="registro__form hijos">
                   <div>
-                    <input type="radio" id="male" name="telefonoLiberado" value="Si">
+                    <input type="radio" name="telefonoLiberado" value="Si">
                     <label for="Si">Si</label><br>
                   </div>
                   <div>
-                    <input type="radio" id="male" name="telefonoLiberado" value="No">
+                    <input type="radio" name="telefonoLiberado" value="No">
                     <label for="No">No</label><br>
                   </div>
                 </div>
@@ -121,15 +121,15 @@ if($esBecaConectar) {
               <p>¿Presentas indicadores de vulnerabilidad?
                 <div class="registro__form vulnerabilidad">
                   <div>
-                    <input type="radio" id="male" name="vulnerabilidad" value="Si">
+                    <input type="radio" name="vulnerabilidad" value="Si">
                     <label for="Si">Si</label><br>
                   </div>
                   <div>
-                    <input type="radio" id="male" name="vulnerabilidad" value="No">
+                    <input type="radio" name="vulnerabilidad" value="No">
                     <label for="No">No</label><br>
                   </div>
                   <div>
-                    <input type="radio" id="male" name="vulnerabilidad" value="NC">
+                    <input type="radio" name="vulnerabilidad" value="NC">
                     <label for="NC">No deseo contestar</label><br>
                   </div>
                 </div>
@@ -178,11 +178,11 @@ if($esBecaConectar) {
             <p>¿Tiene hijos?
               <div class="registro__form hijos">
                 <div>
-                  <input type="radio" id="male" name="tieneHijos" value="1">
+                  <input type="radio" name="tieneHijos" value="1">
                   <label for="1">Si</label><br>
                 </div>
                 <div>
-                  <input type="radio" id="male" name="tieneHijos" value="0">
+                  <input type="radio" name="tieneHijos" value="0">
                   <label for="0">No</label><br>
                 </div>
               </div>
@@ -204,11 +204,11 @@ if($esBecaConectar) {
             <p>¿Tiene teléfono 4G?
               <div class="registro__form hijos">
                 <div>
-                  <input type="radio" id="male" name="telefono4G" value="Si">
+                  <input type="radio" name="telefono4G" value="Si">
                   <label for="Si">Si</label><br>
                 </div>
                 <div>
-                  <input type="radio" id="male" name="telefono4G" value="No">
+                  <input type="radio" name="telefono4G" value="No">
                   <label for="No">No</label><br>
                 </div>
               </div>
@@ -216,11 +216,11 @@ if($esBecaConectar) {
             <p>¿Su teléfono celular es liberado?
               <div class="registro__form hijos">
                 <div>
-                  <input type="radio" id="male" name="telefonoLiberado" value="Si">
+                  <input type="radio" name="telefonoLiberado" value="Si">
                   <label for="Si">Si</label><br>
                 </div>
                 <div>
-                  <input type="radio" id="male" name="telefonoLiberado" value="No">
+                  <input type="radio" name="telefonoLiberado" value="No">
                   <label for="No">No</label><br>
                 </div>
               </div>
@@ -244,15 +244,15 @@ if($esBecaConectar) {
             <p>¿Presentas indicadores de vulnerabilidad?
               <div class="registro__form vulnerabilidad">
                 <div>
-                  <input type="radio" id="male" name="vulnerabilidad" value="Si">
+                  <input type="radio" name="vulnerabilidad" value="Si">
                   <label for="Si">Si</label><br>
                 </div>
                 <div>
-                  <input type="radio" id="male" name="vulnerabilidad" value="No">
+                  <input type="radio" name="vulnerabilidad" value="No">
                   <label for="No">No</label><br>
                 </div>
                 <div>
-                  <input type="radio" id="male" name="vulnerabilidad" value="NC">
+                  <input type="radio" name="vulnerabilidad" value="NC">
                   <label for="NC">No deseo contestar</label><br>
                 </div>
               </div>
@@ -280,11 +280,11 @@ if($esBecaConectar) {
         <p>¿Tiene hijos?
           <div class="registro__form hijos">
             <div>
-              <input type="radio" id="male" name="tieneHijos" value="1">
+              <input type="radio" name="tieneHijos" value="1">
               <label for="1">Si</label><br>
             </div>
             <div>
-              <input type="radio" id="male" name="tieneHijos" value="0">
+              <input type="radio" name="tieneHijos" value="0">
               <label for="0">No</label><br>
             </div>
           </div>
@@ -306,11 +306,11 @@ if($esBecaConectar) {
         <p>¿Tiene teléfono 4G?
           <div class="registro__form hijos">
             <div>
-              <input type="radio" id="male" name="telefono4G" value="Si">
+              <input type="radio" name="telefono4G" value="Si">
               <label for="Si">Si</label><br>
             </div>
             <div>
-              <input type="radio" id="male" name="telefono4G" value="No">
+              <input type="radio" name="telefono4G" value="No">
               <label for="No">No</label><br>
             </div>
           </div>
@@ -318,11 +318,11 @@ if($esBecaConectar) {
         <p>¿Su teléfono celular es liberado?
           <div class="registro__form hijos">
             <div>
-              <input type="radio" id="male" name="telefonoLiberado" value="Si">
+              <input type="radio" name="telefonoLiberado" value="Si">
               <label for="Si">Si</label><br>
             </div>
             <div>
-              <input type="radio" id="male" name="telefonoLiberado" value="No">
+              <input type="radio" name="telefonoLiberado" value="No">
               <label for="No">No</label><br>
             </div>
           </div>
@@ -346,15 +346,15 @@ if($esBecaConectar) {
         <p>¿Presentas indicadores de vulnerabilidad?
           <div class="registro__form vulnerabilidad">
             <div>
-              <input type="radio" id="male" name="vulnerabilidad" value="Si">
+              <input type="radio" name="vulnerabilidad" value="Si">
               <label for="Si">Si</label><br>
             </div>
             <div>
-              <input type="radio" id="male" name="vulnerabilidad" value="No">
+              <input type="radio" name="vulnerabilidad" value="No">
               <label for="No">No</label><br>
             </div>
             <div>
-              <input type="radio" id="male" name="vulnerabilidad" value="NC">
+              <input type="radio" name="vulnerabilidad" value="NC">
               <label for="NC">No deseo contestar</label><br>
             </div>
           </div>
