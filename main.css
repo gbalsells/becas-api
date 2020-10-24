@@ -185,7 +185,7 @@ input{
 }
 
 .registro{
-  padding-top: 50px;
+  padding-top: 80px;
   padding-left: 50px;
 }
 
@@ -409,6 +409,7 @@ input:focus{
 
 .caratula__container{
   display: flex;
+  justify-content: space-between;
 }
 
 .caratula__datos{
@@ -593,7 +594,7 @@ iframe{
   /* REGISTRO */
 
   .registro{
-    padding-top: 50px;
+    padding-top: 80px;
   }
   .registro h2{
     font-size: 20px;

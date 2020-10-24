@@ -32,8 +32,13 @@
         $logout = "models/logout.php";
     }
     $alumno = new Alumno();
+    $esBecaConectar = $user->getBeca();
 
-    $alumno->setAlumnoByUser($id);
+    if ($esBecaConectar) {
+        $alumno->setAlumnoByUserConectar($id);
+    } else {
+        $alumno->setAlumnoByUserTeran($id);
+    }
     $alumnoJson = json_encode($alumno);
     ?>
     <nav class="top-bar">
@@ -68,22 +73,22 @@
                 </h1>
                 <h1 class="resultado__texto">
                 <?php 
-                if ($alumno->getResultado() === 'FUERA DE CONCURSO: MENOS DE 2 MATERIAS APROBADAS EN 2018') {
-                    echo 'FUERA DE CONCURSO: MENOS DE 2 MATERIAS APROBADAS EN 2018 SEGÚN UNIDAD ACADÉMICA';
-                } else if ($alumno->getResultado() === 'FUERA DE CONCURSO.PROMEDIO INFERIOR A 5' || $alumno->getResultado() === 'FUERA DE CONCURSO: PROMEDIO INFERIOR A 5') {
-                    echo 'FUERA DE CONCURSO: PROMEDIO INFERIOR A 5 SEGÚN UNIDAD ACADÉMICA';
-                } else if ($alumno->getResultado() === 'BECA APROBADA. A LA BREVEDAD LE COMUNICAREMOS LUGAR Y FECHA DE COBRO.') {
-                    echo 'BECA APROBADA';
-                } else {
-                    echo $alumno->getResultado();
-                }
+                // if ($alumno->getResultado() === 'FUERA DE CONCURSO: MENOS DE 2 MATERIAS APROBADAS EN 2018') {
+                //     echo 'FUERA DE CONCURSO: MENOS DE 2 MATERIAS APROBADAS EN 2018 SEGÚN UNIDAD ACADÉMICA';
+                // } else if ($alumno->getResultado() === 'FUERA DE CONCURSO.PROMEDIO INFERIOR A 5' || $alumno->getResultado() === 'FUERA DE CONCURSO: PROMEDIO INFERIOR A 5') {
+                //     echo 'FUERA DE CONCURSO: PROMEDIO INFERIOR A 5 SEGÚN UNIDAD ACADÉMICA';
+                // } else if ($alumno->getResultado() === 'BECA APROBADA. A LA BREVEDAD LE COMUNICAREMOS LUGAR Y FECHA DE COBRO.') {
+                //     echo 'BECA APROBADA';
+                // } else {
+                //     echo $alumno->getResultado();
+                // }
                 
                 ?></h1>
                 <h1 style="text-align: center;">
                 <?php
-                    if ($alumno->getResultado() === 'BECA APROBADA. A LA BREVEDAD LE COMUNICAREMOS LUGAR Y FECHA DE COBRO.') {
-                        echo 'El pago se efectuará en la tesorería de su facultad. Consulte allí mismo la fecha de pago. ';
-                    }
+                    // if ($alumno->getResultado() === 'BECA APROBADA. A LA BREVEDAD LE COMUNICAREMOS LUGAR Y FECHA DE COBRO.') {
+                    //     echo 'El pago se efectuará en la tesorería de su facultad. Consulte allí mismo la fecha de pago. ';
+                    // }
                 ?>
                 </h1>
             </div>
@@ -113,13 +118,30 @@
                         </li>
                     </ul>
                     <h3>Datos familiares</h3>
-                    <ul class="caratula__datos__info">
-                        <li><b>Ingresos: </b>$<?php echo $alumno->getIngresos();?></li>
-                        <li><b>Egresos: </b>$<?php echo $alumno->getEgresos();?></li>
-                        <li><b>Integrantes del grupo familiar: </b><?php echo $alumno->getIntegrantesFamilia();?></li>
+                        <ul class="caratula__datos__info">
+                    <?php
+                        if ($esBecaConectar) {
+                            echo '
+                            <li><b>Integrantes del grupo familiar: </b> ' .$alumno->getIntegrantesFamilia() .'</li>
+                            <li><b>Fuente de Ingresos: </b>' .$alumno->getIngresos() .'</li>
+                            <li><b>Hijos: </b>' .$alumno->getCantidadHijos() .'</li>
+                            <li><b>Tiene teléfono 4G: </b>' .$alumno->getTelefono4G() .'</li>
+                            <li><b>Tiene teléfono 4G: </b>' .$alumno->getTelefonoLiberado() .'</li>
+                            <li><b>Compañía que posee: </b>' .$alumno->getCompania() .'</li>
+                            <li><b>Compañía con mejor cobertura en su zona: </b>' .$alumno->getMejorCompania() .'</li>
+                            <li><b>Vunerabilidad: </b>' .$alumno->getVulnerabilidad() .'</li>
+                            ';
+                        } else {
+                            echo '
+                            <li><b>Ingresos: </b>' .$alumno->getIngresos() .'</li>
+                            <li><b>Egresos: </b>' .$alumno->getEgresos() .'</li>
+                            <li><b>Integrantes del grupo familiar: </b> ' .$alumno->getIntegrantesFamilia() .'</li>
+                            ';
+                        }
+                    ?>
                     </ul>
                     <?php
-                        if($user->getTipoUsuario() === 0){
+                        if($user->getTipoUsuario() === 0 && !$esBecaConectar){
                             echo '
                             <h3>Otros datos</h3>
                             <ul class="caratula__datos__info">

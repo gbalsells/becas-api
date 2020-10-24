@@ -159,7 +159,7 @@ if($esBecaConectar) {
           $vulnerabilidad = 'No';
           if($_POST['vulnerabilidad'] === 'Si' ) {
             $vulnerabilidad = $_POST['descripcionVulnerabilidad'];
-          } else if ($_POST['vulnerabilidad'] === 'Si' ) {
+          } else if ($_POST['vulnerabilidad'] === 'NC' ) {
             $vulnerabilidad = 'No deseo contestar';
           }
           echo $ingresos, $telefono4G, $telefonoLiberado, $compania, $mejorCompania, $integrantes, $hijos, $vulnerabilidad;

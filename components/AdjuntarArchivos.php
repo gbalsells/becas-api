@@ -39,7 +39,7 @@
     $alumno = new Alumno();
 
 
-    $alumno->setAlumnoByUser($alumnoSession);
+    $alumno->setAlumnoByUserTeran($alumnoSession);
 ?>
 <nav class="top-bar">
     Bienvenido/a, <?php echo $user->getNombre(); ?>

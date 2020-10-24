@@ -2,7 +2,7 @@
 
 class Alumno extends User{
 
-    public function setAlumnoByUser($id){
+    public function setAlumnoByUserTeran($id){
         $query = $this->connect()->prepare('SELECT * FROM alumno JOIN usuario ON alumno.idUsuario = usuario.idUsuario WHERE alumno.idUsuario = :id');
         $query->execute(['id' => $id]);
 
@@ -24,6 +24,45 @@ class Alumno extends User{
             $this->IntegrantesFamilia = $currentAlumno['IntegrantesFamilia'];
             $this->Ingresos = $currentAlumno['Ingresos'];
             $this->Egresos = $currentAlumno['Egresos'];
+            $this->Estado = $currentAlumno['Estado'];
+            $this->FechaCreacion = $currentAlumno['FechaCreacion'];
+            $this->FechaEdicion = $currentAlumno['FechaEdicion'];
+            $this->AniosCarrera = $currentAlumno['AniosCarrera'];
+            // $this->Distancia = $currentAlumno['Distancia'];
+            // $this->Vulnerabilidad = $currentAlumno['Vulnerabilidad'];
+            // $this->Puntaje = $currentAlumno['Puntaje'];
+            // $this->Resultado = $currentAlumno['Resultado'];
+            $this->idAlumno = $id;
+        }
+    }
+
+    public function setAlumnoByUserConectar($id){
+        $query = $this->connect()->prepare('SELECT * FROM alumnoconectar JOIN usuario ON alumnoconectar.idUsuario = usuario.idUsuario WHERE alumnoconectar.idUsuario = :id');
+        $query->execute(['id' => $id]);
+
+        foreach ($query as $currentAlumno) {
+            $this->nombre = $currentAlumno['Nombres'];
+            $this->usuario = $currentAlumno['Usuario'];
+            $this->apellido = $currentAlumno['Apellidos'];
+            $this->email = $currentAlumno['Email'];
+            $this->dni = $currentAlumno['DNI'];
+            $this->telefono = $currentAlumno['Telefono'];
+            $this->Facultad = $currentAlumno['Facultad'];
+            $this->Carrera = $currentAlumno['Carrera'];
+            $this->Materias = $currentAlumno['MateriasCursando'];
+            // $this->AnioIngreso = $currentAlumno['AnioIngreso'];
+            // $this->CantidadMaterias = $currentAlumno['CantidadMaterias'];
+            // $this->Promedio = $currentAlumno['Promedio'];
+            // $this->ExamenesRendidos = $currentAlumno['ExamenesRendidos'];
+            // $this->MateriasAprobadas = $currentAlumno['MateriasAprobadas'];
+            $this->IntegrantesFamilia = $currentAlumno['IntegrantesFamilia'];
+            $this->Ingresos = $currentAlumno['Ingresos'];
+            $this->CantidadHijos = $currentAlumno['CantidadHijos'];
+            $this->Telefono4G = $currentAlumno['Telefono4G'];
+            $this->TelefonoLiberado = $currentAlumno['TelefonoLiberado'];
+            $this->Compania = $currentAlumno['Compania'];
+            $this->MejorCompania = $currentAlumno['MejorCompania'];
+            $this->Vulnerabilidad = $currentAlumno['Vulnerabilidad'];
             $this->Estado = $currentAlumno['Estado'];
             $this->FechaCreacion = $currentAlumno['FechaCreacion'];
             $this->FechaEdicion = $currentAlumno['FechaEdicion'];
@@ -130,6 +169,26 @@ class Alumno extends User{
 
     public function getMaterias(){
         return $this->Materias;
+    }
+
+    public function getCantidadHijos(){
+        return $this->CantidadHijos;
+    }
+
+    public function getTelefono4G(){
+        return $this->Telefono4G;
+    }
+
+    public function getTelefonoLiberado(){
+        return $this->TelefonoLiberado;
+    }
+
+    public function getCompania(){
+        return $this->Compania;
+    }
+
+    public function getMejorCompania(){
+        return $this->MejorCompania;
     }
 
     public function datosAcademicosConectar($id, $facultad, $carrera, $aniosCarrera, $materias){
