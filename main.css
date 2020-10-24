@@ -229,8 +229,24 @@ input{
   width: 100%;
 }
 
+.registro input[type="radio"]{
+  width: auto;
+}
+
 .registro .button{
   width: 200px;
+}
+
+.registro__form .hijos {
+  display: flex;
+  justify-content: space-between;
+  max-width: 120px;
+}
+
+.registro__form .vulnerabilidad {
+  display: flex;
+  justify-content: space-between;
+  max-width: 360px;
 }
 
 input:focus{
