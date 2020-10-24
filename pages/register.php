@@ -106,7 +106,7 @@
               <label for="0">Becas J.B.Teran</label><br>
             </div>
             <div class="tipoBeca__radio">
-              <input type="radio" name="becaConectar" value="1">
+              <input type="radio" name="becaConectar" value="1" checked>
               <label for="1">Becas Conectar</label><br>
             </div>
           </div>
