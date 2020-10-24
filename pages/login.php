@@ -17,8 +17,7 @@
         </div>
         <a onclick="location='index.php'" class="titulo">Becas UNT</a>
         <div class="top-bar__organismos">
-          <span>Secretaría de Asuntos Estudiantiles</span>
-          <span>Dirección General de Becas</span>
+          <img src="assets/sae3.png" alt="" style="padding:10px;">          
         </div>
     </nav>
     <div class="login-div">

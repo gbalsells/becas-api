@@ -35,8 +35,7 @@
           </div>
           <a onclick="location=`../index.php`" class="titulo">Becas ' .$beca .'</a>
           <div class="top-bar__organismos">
-            <span>Secretaría de Asuntos Estudiantiles</span>
-            <span>Dirección General de Becas</span>
+            <img src="../assets/sae2.png" alt="" style="padding:10px;">          
           </div>
         </nav>
         <form action="" method="POST" class="registro">
@@ -92,8 +91,7 @@
         </div>
         <a onclick="location=`../index.php`" class="titulo">Becas UNT</a>
         <div class="top-bar__organismos">
-          <span>Secretaría de Asuntos Estudiantiles</span>
-          <span>Dirección General de Becas</span>
+          <img src="../assets/sae2.png" alt="" style="padding:10px;">          
         </div>
       </nav>
       <form action="" method="POST" class="tipoBeca">

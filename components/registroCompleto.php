@@ -24,8 +24,7 @@
               </div>
               <a onclick="location=`../index.php`" class="titulo">Becas ' .$beca .'</a>
               <div class="top-bar__organismos">
-                <span>Secretaría de Asuntos Estudiantiles</span>
-                <span>Dirección General de Becas</span>
+                <img src="../assets/sae2.png" alt="" style="padding:10px;">          
               </div>
           </nav>
           <div class="solicitud__background">

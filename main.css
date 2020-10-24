@@ -89,7 +89,7 @@ input{
 .top-bar{
   position: fixed;
   width: 100%;
-  height: 50px;
+  height: 80px;
   display: flex;
   justify-content: space-between;
   background-color: #0277bd;
@@ -112,7 +112,7 @@ input{
   color: white;
   padding: 14px 16px;
   text-decoration: none;
-  height: 40px;
+  height: 60px;
   width: auto;
 }
 
