@@ -619,7 +619,7 @@
                             <p>Cantidad de integrantes de su grupo familiar (Contándose a usted mismo): <br>
                                 <input type="number" name="integrantes" value="' .$alumnoDecoded['IntegrantesFamilia'] .'">
                             </p>
-                            <p>¿Tiene hijos?
+                            <p class="radiop">¿Tiene hijos?
                                 <div class="registro__form hijos">
                                     <div>
                                         <input type="radio" name="tieneHijos" value="1"';
@@ -710,7 +710,7 @@
                                 echo '
                                 </select>
                                 </p>
-                                <p>¿Tiene teléfono 4G?
+                                <p class="radiop">¿Tiene teléfono 4G?
                                 <div class="registro__form hijos">
                                     <div>
                                         <input type="radio" name="telefono4G" value="Si"';
@@ -730,7 +730,7 @@
                                     </div>
                                 </div>
                                 </p>
-                                <p>¿Su teléfono celular es liberado?
+                                <p class="radiop">¿Su teléfono celular es liberado?
                                     <div class="registro__form hijos">
                                     <div>
                                         <input type="radio" name="telefonoLiberado" value="Si"';
@@ -832,7 +832,7 @@
                                     echo '
                                     </select>
                                 </p>
-                                <p>¿Presentas indicadores de vulnerabilidad?
+                                <p class="radiop">¿Presentas indicadores de vulnerabilidad?
                                 <div class="registro__form vulnerabilidad">
                                     <div>
                                         <input type="radio" name="vulnerabilidad" value="Si"';

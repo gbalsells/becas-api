@@ -11,7 +11,7 @@
 
 </head>
 <body>
-    <nav class="top-bar">
+    <nav class="top-bar logos">
         <div class="top-bar__unt">
           <img src="assets/untletras.png" alt="" style="padding:10px;">          
         </div>

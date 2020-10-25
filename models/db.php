@@ -39,6 +39,12 @@ class DB{
         return $query;
     }
 
+    public function getAlumnosConectar(){
+        $query = $this->connect()->prepare('SELECT * FROM usuario JOIN alumnoconectar ON alumnoconectar.idUsuario = usuario.IdUsuario');
+        $query->execute();
+        return $query;
+    }
+
     public function getAlumnosModificados(){
         $query = $this->connect()->prepare('SELECT * FROM importacion');
         $query->execute();
@@ -63,6 +69,12 @@ class DB{
 
     public function buscarAlumno($param_busqueda){
         $query = $this->connect()->prepare('SELECT * FROM `usuario` JOIN `alumno` ON alumno.idUsuario = usuario.IdUsuario WHERE (Apellidos = :param_busqueda1) OR (Nombres = :param_busqueda2) OR (DNI = :param_busqueda3)');
+        $query->execute(['param_busqueda1'=> $param_busqueda, 'param_busqueda2'=> $param_busqueda, 'param_busqueda3'=> $param_busqueda]);
+        return $query;
+    }
+
+    public function buscarAlumnoConectar($param_busqueda){
+        $query = $this->connect()->prepare('SELECT * FROM `usuario` JOIN `alumnoconectar` ON alumnoconectar.idUsuario = usuario.IdUsuario WHERE (Apellidos = :param_busqueda1) OR (Nombres = :param_busqueda2) OR (DNI = :param_busqueda3)');
         $query->execute(['param_busqueda1'=> $param_busqueda, 'param_busqueda2'=> $param_busqueda, 'param_busqueda3'=> $param_busqueda]);
         return $query;
     }

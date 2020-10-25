@@ -29,13 +29,13 @@
         $beca = 'Conectar';
       }
       echo '
-        <nav class="top-bar">
+        <nav class="top-bar logos">
           <div class="top-bar__unt">
             <img src="../assets/untletras.png" alt="" style="padding:10px;">          
           </div>
           <a onclick="location=`../index.php`" class="titulo">Becas ' .$beca .'</a>
           <div class="top-bar__organismos">
-            <img src="../assets/sae2.png" alt="" style="padding:10px;">          
+            <img src="../assets/sae3.png" alt="" style="padding:10px;">          
           </div>
         </nav>
         <form action="" method="POST" class="registro">
@@ -79,20 +79,20 @@
           <div class="registro__button" style="padding-bottom: 20px;">
             <input type="submit" value="Registrarse" class="button">
             <a class="button registrarse" style="margin-top: 20px" href="javascript:history.go(-1);">Atras</a>
-            <a class="button registrarse" onclick="location=`../index.php`">Cancelar</a>
+            <a class="button registrarse" style="margin-top: 20px"  onclick="location=`../index.php`">Cancelar</a>
             </div>
         </div>
       </form>
       ';
     } else {
       echo '
-      <nav class="top-bar">
+      <nav class="top-bar logos">
         <div class="top-bar__unt">
           <img src="../assets/untletras.png" alt="" style="padding:10px;">          
         </div>
         <a onclick="location=`../index.php`" class="titulo">Becas UNT</a>
         <div class="top-bar__organismos">
-          <img src="../assets/sae2.png" alt="" style="padding:10px;">          
+          <img src="../assets/sae3.png" alt="" style="padding:10px;">          
         </div>
       </nav>
       <form action="" method="POST" class="tipoBeca">

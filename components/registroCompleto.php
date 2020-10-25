@@ -18,13 +18,13 @@
         $beca = 'Conectar';
         }
         echo '
-        <nav class="top-bar">
+        <nav class="top-bar logos">
               <div class="top-bar__unt">
                 <img src="../assets/untletras.png" alt="" style="padding:10px;">          
               </div>
               <a onclick="location=`../index.php`" class="titulo">Becas ' .$beca .'</a>
               <div class="top-bar__organismos">
-                <img src="../assets/sae2.png" alt="" style="padding:10px;">          
+                <img src="../assets/sae3.png" alt="" style="padding:10px;">          
               </div>
           </nav>
           <div class="solicitud__background">

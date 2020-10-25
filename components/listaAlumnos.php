@@ -14,7 +14,7 @@
       <h2>Alumnos registrados:</h2>
       <div id="btn-excel">
       <button class="button registrarse" style="margin-top:30px; margin-bottom: 20px;margin-left: auto; margin-right: auto;" onclick="location=`components/Calculo.php`">Fin de Excel</button>
-        <button class="button registrarse" style="margin-top:30px; margin-bottom: 20px;margin-left: auto; margin-right: auto;" onclick="location=`components/excel.php`">Descargar Excel</button>
+      <button class="button registrarse" style="margin-top:30px; margin-bottom: 20px;margin-left: auto; margin-right: auto;" onclick="location=`components/excel.php`">Descargar Excel</button>
       </div>
       <div id="form-busqueda">
         <form action="" method="POST">
@@ -30,7 +30,7 @@
       if(isset($_POST['busqueda'])){
         $busqueda = strtolower($_POST['busqueda']);
         if($busqueda == ''){
-          $alumnos = $db->getAlumnos();
+          $alumnos = $db->getAlumnosConectar();
           foreach($alumnos as $alumno){
             $id = $alumno['idUsuario'];
             echo '
@@ -45,7 +45,7 @@
 
         }
         else {
-          $alumnos_buscados = $db->buscarAlumno($busqueda);
+          $alumnos_buscados = $db->buscarAlumnoConectar($busqueda);
           if($alumnos_buscados->rowCount()){
             foreach($alumnos_buscados as $alumno){
               $id = $alumno['idUsuario'];

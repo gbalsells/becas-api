@@ -73,6 +73,8 @@ input{
   box-sizing: border-box;
   font-size: 14px;
   width: 200px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .button__flex {
@@ -89,7 +91,7 @@ input{
 .top-bar{
   position: fixed;
   width: 100%;
-  height: 80px;
+  height: 50px;
   display: flex;
   justify-content: space-between;
   background-color: #0277bd;
@@ -100,6 +102,10 @@ input{
   align-items: center;
   text-align: center;
   flex-basis: 30%;
+}
+
+.logos{
+  height: 80px;
 }
 
 .top-bar__unt {
@@ -198,8 +204,13 @@ input{
 .registro p{
   font-size: 14px;
   width: 40%;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 40px;
+  font-weight: bold;
+  /* margin-bottom: 30px; */
+}
+
+.registro p .radiop{
+  margin-bottom: 10px;
 }
 
 .registro p input{
@@ -389,7 +400,7 @@ input:focus{
 }
 
 .caratula__contenido{
-  margin-top: 20px;
+  margin-top: 50px;
   margin-bottom: 20px;
   background-color: white;
   min-width: 70%;
@@ -537,7 +548,7 @@ h2.warning{
 }
 
 .adjuntar{
-  padding-top: 80px;
+  padding-top: 50px;
   padding-left: 50px;
   padding-right: 50px;
 }
@@ -551,7 +562,7 @@ iframe{
 
 @media (max-width: 1370px) {
   .caratula{
-    height: 100%;
+    height: auto;
   }
 }
 
@@ -577,6 +588,14 @@ iframe{
     background-size: contain;
   }
 
+  .button_flex{
+    align-items: flex-start;
+  }
+
+  .tipoBeca__card{
+    max-width: 100%;
+    min-width: 0;
+  }
 
   .registrarse{
     margin-left: 0;
@@ -611,20 +630,27 @@ iframe{
   }
 
   .registro__button{
+    padding-top: 20px;
     margin-bottom: 20px;
     padding-bottom: 20px;
   }
 
+
   /* CARATULA */
 
   .caratula{
-    padding-top: 85px;
     background-color: #e0f2f1;
   }
   
+  .caratula__container{
+    flex-direction: column;
+  }
+
   .caratula__contenido{
     background-color: white;
     min-width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
     -webkit-box-shadow: 0px 0px 35px -9px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 35px -9px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 35px -9px rgba(0,0,0,0.75);
@@ -637,9 +663,14 @@ iframe{
     display: flex;
     justify-content: space-between;
   }
+
+  .caratula__header__estado{
+    text-align: end;
+  }
   
   .caratula__datos{
     padding-left: 20px;
+    max-width: 100%;
   }
   
   .caratula__datos__info{
