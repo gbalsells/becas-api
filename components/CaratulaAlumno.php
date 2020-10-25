@@ -36,8 +36,10 @@
 
     if ($esBecaConectar) {
         $alumno->setAlumnoByUserConectar($id);
+        $beca = 'Conectar';
     } else {
         $alumno->setAlumnoByUserTeran($id);
+        $beca = 'Juan B. Teran';
     }
     $alumnoJson = json_encode($alumno);
     ?>
@@ -48,7 +50,7 @@
     <div class="caratula">
         <div class="caratula__contenido">
             <div class="caratula__header">
-                <span class="caratula__header__nombre"><?php echo $alumno->getApellido() .', ' .$alumno->getNombre(); ?></span>
+                <span class="caratula__header__nombre"><?php echo $alumno->getApellido() .', ' .$alumno->getNombre() .' - Beca ' .$beca; ?></span>
                 <span class="caratula__header__estado">
                     <?php
                         $estado = $alumno->getEstado();

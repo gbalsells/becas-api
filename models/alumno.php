@@ -216,10 +216,19 @@ class Alumno extends User{
         $query->execute(['id'=> $id, 'integrantes' => $integrantes, 'ingresos' => $ingresos, 'egresos' => $egresos]);
     }
 
-    public function editarAlumno($id, $facultad, $apellidos, $nombres, $dni, $email, $telefono, $carrera, $ingresos, $egresos, $integrantes, $aniosCarrera, $materias){
+    public function editarAlumnoTeran($id, $facultad, $apellidos, $nombres, $dni, $email, $telefono, $carrera, $ingresos, $egresos, $integrantes, $aniosCarrera, $materias){
         
         $query = $this->connect()->prepare('UPDATE alumno SET Facultad = :facultad, Carrera = :carrera, IntegrantesFamilia = :integrantes, Ingresos = :ingresos, Egresos = :egresos, AniosCarrera = :aniosCarrera, FechaEdicion = now(), MateriasCursando = :materias WHERE idUsuario = :id');
         $query->execute(['id'=> $id, 'facultad' => $facultad, 'carrera' => $carrera, 'integrantes' => $integrantes, 'ingresos' => $ingresos, 'egresos' => $egresos, 'aniosCarrera' => $aniosCarrera, 'materias' => $materias]);
+        
+        $query = $this->connect()->prepare('UPDATE usuario SET Apellidos = :apellidos, Nombres = :nombres, DNI = :dni, Email = :email, Telefono = :telefono WHERE idUsuario = :id');
+        $query->execute(['id'=> $id, 'apellidos' => $apellidos, 'nombres' => $nombres, 'dni' => $dni, 'email' => $email, 'telefono' => $telefono]);
+    }
+
+    public function editarAlumnoConectar($id, $facultad, $apellidos, $nombres, $dni, $email, $telefono, $carrera, $ingresos, $integrantes, $aniosCarrera, $materias, $telefono4G, $telefonoLiberado, $compania, $mejorCompania, $hijos, $vulnerabilidad){
+        
+        $query = $this->connect()->prepare('UPDATE alumnoconectar SET Facultad = :facultad, Carrera = :carrera, IntegrantesFamilia = :integrantes, Ingresos = :ingresos, Telefono4G = :telefono4G, TelefonoLiberado = :telefonoLiberado, Compania = :compania, MejorCompania = :mejorCompania, CantidadHijos = :hijos, Vulnerabilidad = :vulnerabilidad, AniosCarrera = :aniosCarrera, FechaEdicion = now(), MateriasCursando = :materias WHERE idUsuario = :id');
+        $query->execute(['id'=> $id, 'facultad' => $facultad, 'carrera' => $carrera, 'integrantes' => $integrantes, 'ingresos' => $ingresos, 'telefono4G' => $telefono4G, 'telefonoLiberado' => $telefonoLiberado, 'compania' => $compania, 'mejorCompania' => $mejorCompania, 'hijos' => $hijos, 'vulnerabilidad' => $vulnerabilidad, 'aniosCarrera' => $aniosCarrera, 'materias' => $materias]);
         
         $query = $this->connect()->prepare('UPDATE usuario SET Apellidos = :apellidos, Nombres = :nombres, DNI = :dni, Email = :email, Telefono = :telefono WHERE idUsuario = :id');
         $query->execute(['id'=> $id, 'apellidos' => $apellidos, 'nombres' => $nombres, 'dni' => $dni, 'email' => $email, 'telefono' => $telefono]);
