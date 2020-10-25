@@ -126,7 +126,7 @@
                             <li><b>Fuente de Ingresos: </b>' .$alumno->getIngresos() .'</li>
                             <li><b>Hijos: </b>' .$alumno->getCantidadHijos() .'</li>
                             <li><b>Tiene teléfono 4G: </b>' .$alumno->getTelefono4G() .'</li>
-                            <li><b>Tiene teléfono 4G: </b>' .$alumno->getTelefonoLiberado() .'</li>
+                            <li><b>Tiene teléfono Liberado: </b>' .$alumno->getTelefonoLiberado() .'</li>
                             <li><b>Compañía que posee: </b>' .$alumno->getCompania() .'</li>
                             <li><b>Compañía con mejor cobertura en su zona: </b>' .$alumno->getMejorCompania() .'</li>
                             <li><b>Vunerabilidad: </b>' .$alumno->getVulnerabilidad() .'</li>
