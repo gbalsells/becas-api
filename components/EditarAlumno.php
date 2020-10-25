@@ -28,7 +28,7 @@
         $user->setUser($userSession->getCurrentUser($user));
         $esBecaConectar = $user->getBeca();
     }
-
+    
     if (isset($_SESSION['alumno'])){
         $alumnoSession = $_SESSION['alumno'];
         $alumnoDecoded = json_decode($alumnoSession, true);

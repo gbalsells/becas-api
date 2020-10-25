@@ -26,6 +26,7 @@
 
     if (isset($_SESSION['user'])){
         $user->setUser($userSession->getCurrentUser($user));
+        $esBecaConectar = $user->getBeca();
     }
 
     if (isset($_SESSION['alumno'])){
@@ -39,8 +40,11 @@
     $alumno = new Alumno();
 
 
-    $alumno->setAlumnoByUserTeran($alumnoSession);
-?>
+    if($esBecaConectar) {
+        $alumno->setAlumnoByUserConectar($alumnoSession);
+    } else {
+        $alumno->setAlumnoByUserTeran($alumnoSession);
+    }?>
 <nav class="top-bar">
     Bienvenido/a, <?php echo $user->getNombre(); ?>
     <a class="cerrar-sesion" href=<?php echo $logout; ?>>Cerrar sesión</a>
@@ -72,9 +76,9 @@
             <input type="submit" value="Subir" name="subir" class="button">
             <?php
                 if ($user->getTipoUsuario() === 0) {
-                    echo '<a class="button registrarse" style="margin-top: 20px" onclick="location=`CaratulaAlumno.php?id=' .$id .'`">Cancelar</a>';
+                    echo '<a class="button registrarse" style="margin-top: 20px" onclick="location=`CaratulaAlumno.php?id=' .$id .'`">Volver</a>';
                 } else {
-                    echo '<a class="button registrarse" onclick="location=`../index.php`">Cancelar</a>';
+                    echo '<a class="button registrarse" onclick="location=`../index.php`">Volver</a>';
                 }
             ?>
         </div>

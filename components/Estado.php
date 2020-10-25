@@ -24,6 +24,7 @@
 
     if (isset($_SESSION['user'])){
         $user->setUser($userSession->getCurrentUser($user));
+        $esBecaConectar = $user->getBeca();
     }
 
     if (isset($_SESSION['alumno'])){
@@ -37,7 +38,11 @@
     $alumno = new Alumno();
 
 
-    $alumno->setAlumnoByUserTeran($alumnoSession);
+    if($esBecaConectar) {
+        $alumno->setAlumnoByUserConectar($alumnoSession);
+    } else {
+        $alumno->setAlumnoByUserTeran($alumnoSession);
+    }
 ?>
 <nav class="top-bar">
     Bienvenido/a, <?php echo $user->getNombre(); ?>

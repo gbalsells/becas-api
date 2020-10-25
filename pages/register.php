@@ -79,7 +79,8 @@
           <div class="registro__button" style="padding-bottom: 20px;">
             <input type="submit" value="Registrarse" class="button">
             <a class="button registrarse" style="margin-top: 20px" href="javascript:history.go(-1);">Atras</a>
-          </div>
+            <a class="button registrarse" onclick="location=`../index.php`">Cancelar</a>
+            </div>
         </div>
       </form>
       ';
