@@ -162,7 +162,6 @@ if($esBecaConectar) {
           } else if ($_POST['vulnerabilidad'] === 'NC' ) {
             $vulnerabilidad = 'No deseo contestar';
           }
-          echo $ingresos, $telefono4G, $telefonoLiberado, $compania, $mejorCompania, $integrantes, $hijos, $vulnerabilidad;
           $alumno->datosFamiliaresConectar($id, $integrantes, $hijos, $ingresos, $telefono4G, $telefonoLiberado, $compania, $mejorCompania, $vulnerabilidad);
           header("Location: components/solicitudEnviada.php");
         }
