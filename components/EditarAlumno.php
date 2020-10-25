@@ -23,6 +23,7 @@
 
     $userSession = new UserSession();
     $user = new User();
+    $alumno = new Alumno();
 
     if (isset($_SESSION['user'])){
         $user->setUser($userSession->getCurrentUser($user));
@@ -33,11 +34,11 @@
         $alumnoSession = $_SESSION['alumno'];
         $alumnoDecoded = json_decode($alumnoSession, true);
         $id = $alumnoDecoded['idAlumno'];
+        $hayBeca = $alumno->esBecaConectar($id);
+        $esBecaConectar = $hayBeca["esBecaConectar"];
     } else {
         header("Location: ../index.php");
     }
-    
-    $alumno = new Alumno();
     
     if($esBecaConectar) {
         $alumno->setAlumnoByUserConectar($alumnoSession);
@@ -141,7 +142,7 @@
                   $vulnerabilidad = 'No deseo contestar';
                 }
                 echo '
-                    <form action="" method="POST" class="registro">
+                    <form action="" method="POST" class="resumen">
                         <h2>Datos Ingresados</h2>
                         ';
                         if ($user->getTipoUsuario() === 1) {

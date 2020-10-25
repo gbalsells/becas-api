@@ -21,6 +21,7 @@
 
     $userSession = new UserSession();
     $user = new User();
+    $alumno = new Alumno();
 
     if (isset($_SESSION['user'])){
         $user->setUser($userSession->getCurrentUser($user));
@@ -31,12 +32,11 @@
         $alumnoSession = $_SESSION['alumno'];
         $alumnoDecoded = json_decode($alumnoSession, true);
         $id = $alumnoDecoded['idAlumno'];
+        $hayBeca = $alumno->esBecaConectar($id);
+        $esBecaConectar = $hayBeca["esBecaConectar"];
     } else {
         header("Location: ../index.php");
     }
-
-    $alumno = new Alumno();
-
 
     if($esBecaConectar) {
         $alumno->setAlumnoByUserConectar($alumnoSession);
@@ -51,7 +51,11 @@
 <?php
 if (isset($_POST['estado'])){
     $estado = $_POST['estado'];
-    $alumno->editarEstado($id, $estado);
+    if($esBecaConectar) {
+        $alumno->editarEstadoConectar($id, $estado);
+    } else {
+        $alumno->editarEstado($id, $estado);
+    }
     $_SESSION['alumno'] = null;
     header("Location: ../index.php");
 } else {

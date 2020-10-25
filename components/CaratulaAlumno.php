@@ -17,22 +17,26 @@
         include_once '../constants/salarioMinimo.php';
         require_once '../models/user.php';
         require_once '../models/alumno.php';
-
+        
+        $alumno = new Alumno();
         $id = $_REQUEST['id'];
         $logout = "../models/logout.php";
-
+        
         $userSession = new UserSession();
         $user = new User();
+
+        $hayBeca = $alumno->esBecaConectar($id);
+        $esBecaConectar = $hayBeca["esBecaConectar"];
 
         if (isset($_SESSION['user'])){
             $user->setUser($userSession->getCurrentUser($user));
         }
     } else {
+        $alumno = new Alumno();
         $id = $user->getIdUsuario();
         $logout = "models/logout.php";
+        $esBecaConectar = $user->getBeca();
     }
-    $alumno = new Alumno();
-    $esBecaConectar = $user->getBeca();
 
     if ($esBecaConectar) {
         $alumno->setAlumnoByUserConectar($id);
@@ -143,27 +147,27 @@
                     ?>
                     </ul>
                     <?php
-                        if($user->getTipoUsuario() === 0 && !$esBecaConectar){
-                            echo '
-                            <h3>Otros datos</h3>
-                            <ul class="caratula__datos__info">
-                                <li><b>Vulnerabilidad: </b>';
-                                if ($alumno->getVulnerabilidad()){
-                                    echo $alumno->getVulnerabilidad();
-                                } else {
-                                    echo '<span style="color: red; font-weight: 700;">Vunerabilidad no cargada</span>';
-                                }
-                                echo '</li>
-                                <li><b>Distancia: </b>';
-                                if ($alumno->getDistancia()){
-                                    echo $alumno->getDistancia();
-                                } else {
-                                    echo '<span style="color: red; font-weight: 700;">Distancia no cargada</span>';
-                                }
-                                echo '</li>
-                            </ul>
-                            ';
-                        }
+                        // if($user->getTipoUsuario() === 0 && !$esBecaConectar){
+                        //     echo '
+                        //     <h3>Otros datos</h3>
+                        //     <ul class="caratula__datos__info">
+                        //         <li><b>Vulnerabilidad: </b>';
+                        //         if ($alumno->getVulnerabilidad()){
+                        //             echo $alumno->getVulnerabilidad();
+                        //         } else {
+                        //             echo '<span style="color: red; font-weight: 700;">Vunerabilidad no cargada</span>';
+                        //         }
+                        //         echo '</li>
+                        //         <li><b>Distancia: </b>';
+                        //         if ($alumno->getDistancia()){
+                        //             echo $alumno->getDistancia();
+                        //         } else {
+                        //             echo '<span style="color: red; font-weight: 700;">Distancia no cargada</span>';
+                        //         }
+                        //         echo '</li>
+                        //     </ul>
+                        //     ';
+                        // }
                     ?>
                     <div>
                         <h4>Creado el <?php echo $alumno->getFechaCreacion() ?> </h4>
@@ -176,46 +180,46 @@
                                 // ALGORITMO DE CALCULO DE MERITOS
                                 
                                 //MERITO FAMILIAR
-                                $factorCorreccion = ($alumno->getIntegrantesFamilia() - 4) * $salarioMinimo /5;
-                                if ($factorCorreccion < 0) {
-                                    $factorCorreccion = 0;
-                                }
+                                // $factorCorreccion = ($alumno->getIntegrantesFamilia() - 4) * $salarioMinimo /5;
+                                // if ($factorCorreccion < 0) {
+                                //     $factorCorreccion = 0;
+                                // }
                                 
-                                if (($alumno->getIngresos() - $factorCorreccion) <= $salarioMinimo ) {
-                                    $meritoFamiliar = 40;
-                                } else if (($alumno->getIngresos() - $factorCorreccion) < 3 * $salarioMinimo){
-                                    $meritoFamiliar = -20 * ($alumno->getIngresos() - $factorCorreccion) / $salarioMinimo + 60;
-                                } else {
-                                    $meritoFamiliar = 0;
-                                }
+                                // if (($alumno->getIngresos() - $factorCorreccion) <= $salarioMinimo ) {
+                                //     $meritoFamiliar = 40;
+                                // } else if (($alumno->getIngresos() - $factorCorreccion) < 3 * $salarioMinimo){
+                                //     $meritoFamiliar = -20 * ($alumno->getIngresos() - $factorCorreccion) / $salarioMinimo + 60;
+                                // } else {
+                                //     $meritoFamiliar = 0;
+                                // }
                                 
-                                // MERITO POR PROMEDIO  
+                                // // MERITO POR PROMEDIO  
                                 
-                                if ($alumno->getPromedio() > 5){
-                                    $meritoPromedio = 4 * $alumno->getPromedio() - 20;                         
-                                } else {
-                                    $meritoPromedio = 0;                        
-                                }
+                                // if ($alumno->getPromedio() > 5){
+                                //     $meritoPromedio = 4 * $alumno->getPromedio() - 20;                         
+                                // } else {
+                                //     $meritoPromedio = 0;                        
+                                // }
                                 
                                 // MERITO POR REGULARIDAD
                                 
-                                $materiasPorAnio = $alumno->getCantidadMaterias()/$alumno->getAniosCarrera();
-                                if ($alumno->getMateriasAprobadas() <= 2) {
-                                    $condicionMaterias = 0;
-                                } else {
-                                    $condicionMaterias = ($alumno->getMateriasAprobadas() - 2)/$materiasPorAnio;
-                                }
+                                // $materiasPorAnio = $alumno->getCantidadMaterias()/$alumno->getAniosCarrera();
+                                // if ($alumno->getMateriasAprobadas() <= 2) {
+                                //     $condicionMaterias = 0;
+                                // } else {
+                                //     $condicionMaterias = ($alumno->getMateriasAprobadas() - 2)/$materiasPorAnio;
+                                // }
                                 
-                                if ($condicionMaterias > 1) {
-                                    $meritoRegularidad = 10;
-                                } else {
-                                    $meritoRegularidad = round(10 * $condicionMaterias, 4);
-                                }
+                                // if ($condicionMaterias > 1) {
+                                //     $meritoRegularidad = 10;
+                                // } else {
+                                //     $meritoRegularidad = round(10 * $condicionMaterias, 4);
+                                // }
                                 
                                 // SUMA DE MERITOS
                                 
-                                $merito = $meritoPromedio + $meritoFamiliar + $meritoRegularidad + $alumno->getVulnerabilidad() + $alumno->getDistancia();
-                                echo '<h3 class="puntuacion">Puntuacion: ' .$merito .'</h3>';
+                                // $merito = $meritoPromedio + $meritoFamiliar + $meritoRegularidad + $alumno->getVulnerabilidad() + $alumno->getDistancia();
+                                // echo '<h3 class="puntuacion">Puntuacion: ' .$merito .'</h3>';
                             }
                         ?>
                     </div>
@@ -223,11 +227,10 @@
             <?php
                 if ($user->getTipoUsuario() === 0) {
                     $userSession->setAlumno($alumnoJson);
-                    $userSession->setMerito($merito);
+                    // $userSession->setMerito($merito);
                     echo '
                     <div class="button_flex">
                         <button class="button atras" onclick="location=`EditarAlumno.php`">Editar</button>
-                        <button class="button atras" onclick="location=`AgregarDatos.php`">Agregar datos</button>
                         <button class="button atras" onclick="location=`Estado.php`">Estado</button>';
                     $id = $alumno->getId();
                     $tieneDoc = $alumno->tieneDocumentacion($id);

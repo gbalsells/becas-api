@@ -195,6 +195,7 @@ input{
   padding-left: 50px;
 }
 
+
 .registro h2{
   text-transform: uppercase;
   font-size: 22px;
@@ -206,6 +207,24 @@ input{
   width: 40%;
   margin-top: 40px;
   font-weight: bold;
+  /* margin-bottom: 30px; */
+}
+
+.resumen {
+  padding-top: 80px;
+  padding-left: 50px;
+}
+
+.resumen h2{
+  text-transform: uppercase;
+  font-size: 22px;
+  margin-bottom: 1em;
+}
+
+.resumen p{
+  font-size: 14px;
+  width: 40%;
+  margin-top: 40px;
   /* margin-bottom: 30px; */
 }
 

@@ -68,7 +68,6 @@ class Alumno extends User{
             $this->FechaEdicion = $currentAlumno['FechaEdicion'];
             $this->AniosCarrera = $currentAlumno['AniosCarrera'];
             // $this->Distancia = $currentAlumno['Distancia'];
-            // $this->Vulnerabilidad = $currentAlumno['Vulnerabilidad'];
             // $this->Puntaje = $currentAlumno['Puntaje'];
             // $this->Resultado = $currentAlumno['Resultado'];
             $this->idAlumno = $id;
@@ -244,6 +243,11 @@ class Alumno extends User{
         $query->execute(['id'=> $id, 'estado' => $estado]);
     }
 
+    public function editarEstadoConectar($id, $estado){  
+        $query = $this->connect()->prepare('UPDATE alumnoconectar SET Estado = :estado WHERE idUsuario = :id');
+        $query->execute(['id'=> $id, 'estado' => $estado]);
+    }
+
     public function adjuntarPDF($id, $nombre, $tamanio){
         $query1 = $this->connect()->prepare('SELECT Nombre FROM documento WHERE (idAlumno = :id)');
         $query1->execute(['id'=>$id]);
@@ -290,6 +294,17 @@ class Alumno extends User{
             return true;
         }
         return false;
+    }
+
+    public function esBecaConectar($id) {
+        $query = $this->connect()->prepare('SELECT esBecaConectar FROM usuario JOIN alumnoconectar ON alumnoconectar.idUsuario = usuario.idUsuario WHERE alumnoconectar.idUsuario = :id');
+        $query->execute(['id' => $id]);
+
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            return $result;
+        }
     }
 }
 
