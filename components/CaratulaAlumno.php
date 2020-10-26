@@ -173,7 +173,7 @@
                         <h4>Creado el <?php echo $alumno->getFechaCreacion() ?> </h4>
                         <?php
                             if ($alumno->getFechaEdicion()) {
-                                echo '<h4>Editado el ' .$alumno->getFechaCreacion() .'</h4>';
+                                echo '<h4>Editado el ' .$alumno->getFechaEdicion() .'</h4>';
                             }
                             if ($user->getTipoUsuario() === 0){
                                 
