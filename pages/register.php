@@ -26,14 +26,14 @@
       if ($_POST['becaConectar'] === '0') {
         $beca = 'Juan B. Terán';
       } else {
-        $beca = 'Conectar';
+        $beca = 'Conectividad';
       }
       echo '
         <nav class="top-bar logos">
           <div class="top-bar__unt">
             <img src="../assets/untletras.png" alt="" style="padding:10px;">          
           </div>
-          <a onclick="location=`../index.php`" class="titulo">Becas ' .$beca .'</a>
+          <a onclick="location=`../index.php`" class="titulo">Becas ' .$beca .' - UNT</a>
           <div class="top-bar__organismos">
             <img src="../assets/sae3.png" alt="" style="padding:10px;">          
           </div>
@@ -106,7 +106,7 @@
             </div>
             <div class="tipoBeca__radio">
               <input type="radio" name="becaConectar" value="1" checked>
-              <label for="1">Becas Conectar</label><br>
+              <label for="1">Becas Conectividad</label><br>
             </div>
           </div>
           <div class="registro__button" style="padding-bottom: 20px;">

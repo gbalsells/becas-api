@@ -40,7 +40,7 @@
 
     if ($esBecaConectar) {
         $alumno->setAlumnoByUserConectar($id);
-        $beca = 'Conectar';
+        $beca = 'Conectividad';
     } else {
         $alumno->setAlumnoByUserTeran($id);
         $beca = 'Juan B. Teran';
