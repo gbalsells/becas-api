@@ -23,6 +23,7 @@
 
     $userSession = new UserSession();
     $user = new User();
+    $alumno = new Alumno();
 
     if (isset($_SESSION['user'])){
         $user->setUser($userSession->getCurrentUser($user));
@@ -33,12 +34,11 @@
         $alumnoSession = $_SESSION['alumno'];
         $alumnoDecoded = json_decode($alumnoSession, true);
         $id = $alumnoDecoded['idAlumno'];
+        $hayBeca = $alumno->esBecaConectar($id);
+        $esBecaConectar = $hayBeca["esBecaConectar"];
     } else {
         header("Location: ../index.php");
     }
-
-    $alumno = new Alumno();
-
 
     if($esBecaConectar) {
         $alumno->setAlumnoByUserConectar($alumnoSession);
