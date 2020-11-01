@@ -52,7 +52,10 @@
 <div class="adjuntar">
     <h2>Adjuntar PDF</h2>
     <h3>A continuación, puede adjuntar la documentación requerida. </h3>
-    <p style="font-size: 16px;">Se permite:
+    <p style="font-size: 16px;">
+        <span>
+            Se permite:
+        </span>
         <ul>
             <li>Sólo un archivo por alumno</li>
             <li>Archivos únicamente en formato PDF</li>
@@ -60,7 +63,10 @@
         </ul>    
     </p>
     <div style="font-style: italic;">
-        <p >Sugerencias: 
+        <p >
+            <span>
+                Sugerencias: 
+            </span>
             <ul>
                 <li>Puede utilizar apps para combinar todas sus imágenes en un único PDF </li>
                 <li>Verifique que todas las imágenes tengan la misma orientación</li>
@@ -68,19 +74,30 @@
             </ul>
         </p>
     </div>
+    <div class="documentacion">
+        <span>
+            Listado de documentación requerida:
+        </span>
+        <ol>
+            <li><span>Fotocopia del DNI</span>: 1º y 2º hoja del Alumno y del Grupo Familiar Conviviente (todos deberán tener el mismo domicilio)</li>
+            <li><span>Certificación Negativa del ANSES</span> del Alumno y de los mayores de 18 años del Grupo Familiar Conviviente. Se obtiene en https://www.anses.gob.ar/consulta/certificacion-negativa. En caso de que se encuentre “denegada” por tener ítems marcados y vigentes, realizar una captura de pantalla que registre la información que otorga el sistema y enviarla adjunta con el resto de la documentación.</li>
+            <li>En caso de pertenecer a grupo familiar cuyo ingreso predominante proviene de actividades laborales que no se están desarrollando o se encuentran menguadas en virtud de las medidas de prevención dispuestas por el gobierno nacional en razón de la pandemia, debe presentar <span>constancia de inscripción de la actividad</span>.</li>
+            <li><span>Constancia de ingresos del grupo familiar conviviente</span>:
+                <ul>
+                    <li>Recibo de sueldo del grupo familiar conviviente</li>
+                    <li>Inscripción en monotributo</li>
+                    <li>En caso de ser trabajadores informales deberá presentar constancia policial donde se declare tipo de actividad que desarrolla e ingresos mensuales promedio.</li>
+                    <li>Constancia de ANSES de percepción de Transferencia formal del Estado</li>
+                </ul
+            </li>
+        </ol>
+    </div>
     <form method="post" action="" enctype="multipart/form-data">
         <p class="document-form">Archivo: <br>
             <input type="file" name="archivo" class="document-input">
         </p>
-        <div class="editar__buttons">
+        <div class="pdf__buttons">
             <input type="submit" value="Subir" name="subir" class="button">
-            <?php
-                if ($user->getTipoUsuario() === 0) {
-                    echo '<a class="button registrarse" style="margin-top: 20px" onclick="location=`CaratulaAlumno.php?id=' .$id .'`">Volver</a>';
-                } else {
-                    echo '<a class="button registrarse" onclick="location=`../index.php`">Volver</a>';
-                }
-            ?>
         </div>
     </form>            
     <?php
@@ -105,7 +122,8 @@
                         if ($resultado) {
                             echo '<span class="incorrecto adjunto-incorrecto">Sólo se permite adjuntar un único archivo PDF.</span>';
                         } else {
-                            echo '<span class="correcto">Archivo subido con éxito</span>';
+                            echo '<a class="button registrarse" onclick="location=`../index.php`">Ver estado de solicitud</a>';
+                            echo '<br><span class="correcto" style="padding-bottom: 20px;">Archivo subido con éxito</span>';
                         }
                     } else {
                         echo '<span class="incorrecto adjunto-incorrecto">Error al adjuntar archivo.</span>';

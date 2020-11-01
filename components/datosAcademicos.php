@@ -51,11 +51,11 @@
                   };
               echo '</select>
               </p>
-              <p>Duración de la carrera en años: <br>
+              <p style="display: none;">Duración de la carrera en años: <br>
                 <input type="number" name="aniosCarrera">
               </p>
               <p style="font-weight: bold;">
-                  Materias que cursa actualmente en modalidad virtual:
+                  Nombre de las materias que cursa actualmente en modalidad virtual:
               </p>';
               for ($i = 1; $i <= 6; $i++) {
                 echo '<p>Materia ' .$i .': <br>
@@ -71,7 +71,7 @@
       } else if (isset($_POST['carrera']) && isset($_POST['materias']) && isset($_POST['aniosCarrera'])) {
         $materiasUppercase=array_map(function($word) { return ucwords(strtolower($word)); }, $_POST['materias']);
         $materias = implode(", ",array_unique(array_filter($materiasUppercase)));
-        if ($_POST['aniosCarrera'] !== '' && $_POST['aniosCarrera'] !== 0 && $materias !== ''){
+        if ($materias !== ''){
           $carrera = $_POST['carrera'];
           $aniosCarrera = $_POST['aniosCarrera'];
           $facultadAlumno = $_POST['facultad'];
@@ -103,11 +103,11 @@
                     };
                 echo '</select>
                 </p>
-                <p>Duración de la carrera en años: <br>
+                <p style="display: none;">Duración de la carrera en años: <br>
                   <input type="number" name="aniosCarrera">
                 </p>
                 <p style="font-weight: bold;">
-                    Materias que cursa actualmente:
+                    Nombre de las materias que cursa actualmente en modalidad virtual:
                 </p>';
                 for ($i = 1; $i <= 6; $i++) {
                   echo '<p>Materia ' .$i .': <br>
@@ -120,9 +120,6 @@
                 </div>
               </div>
             </form>';
-            if ($_POST['aniosCarrera'] === '' || $_POST['aniosCarrera'] === 0) {
-              echo '<div class="incorrecto" style="margin-left: 50px; padding-left: 0px;">Debe ingresar la duración en años de su carrera</div>';
-            }
             if ($materias === ''){
               echo '<div class="incorrecto" style="margin-left: 50px; padding-left: 0px;">Debe ingresar al menos una materia</div>';
             }

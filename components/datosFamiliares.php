@@ -19,9 +19,22 @@ if($esBecaConectar) {
   if(isset($_POST['primerPaso'])) {
     if (isset($_POST['ingresos']) && isset($_POST['tieneHijos']) && isset($_POST['telefono4G'])
       && isset($_POST['telefonoLiberado']) && isset($_POST['compania']) && isset($_POST['mejorCompania'])
-      && isset($_POST['vulnerabilidad']) && isset($_POST['integrantes'])){
-        if ($_POST['tieneHijos'] === '1' && ($_POST['cantidadHijos'] === '0' || $_POST['cantidadHijos'] === '')) {
-          $mensajeHijos = 'Debe indicar cuántos hijos tiene';
+      && isset($_POST['vulnerabilidad']) && isset($_POST['integrantes']) && isset($_POST['familiaresInternet'])){
+        if (isset($_POST['juramento1']) && isset($_POST['juramento2']) && isset($_POST['juramento3'])) {
+          $valido = true;
+        } else {
+          $valido = false;
+          $mensajeJuramento = 'Debe declarar bajo juramento cada uno de los ítems para poder continuar';
+        }
+        $ingresos = implode(", ",array_unique(array_filter($_POST['ingresos'])));
+        if ($ingresos === '' ) {
+          $mensajeIngresos = 'Debe indicar al menos una fuente de ingresos';
+        }
+        if ((int)$_POST['familiaresInternet'] > ((int)$_POST['integrantes'])) {
+          $mensajeFamiliares = 'La cantidad de integrantes que utilizan Internet debe ser menor o igual a la cantidad de integrantes de su grupo familiar';
+        }
+        if ($_POST['tieneHijos'] === '1' && ($_POST['cantidadHijos'] === '')) {
+          $mensajeHijos = 'Debe indicar a quién tiene a cargo';
         }
         if ($_POST['vulnerabilidad'] === 'Si' && $_POST['descripcionVulnerabilidad'] === '') {
           $mensajeVulnerabilidad = 'Debe describir su condición de vulnerabilidad';
@@ -29,30 +42,55 @@ if($esBecaConectar) {
         if ($_POST['integrantes'] === '0' || $_POST['integrantes'] === '') {
           $mensajeIntegrantes = 'Debe indicar los integrantes de su familia';
         }
-        if (isset($mensajeHijos) || isset($mensajeVulnerabilidad) || isset($mensajeIntegrantes)) {
+        if (isset($mensajeHijos) || isset($mensajeVulnerabilidad) || isset($mensajeIntegrantes) || isset($mensajeIngresos) || isset($mensajeFamiliares) || $valido === false) {
           echo '
           <form action="" method="POST" class="registro">
-            <h2>Datos familiares y tecnológicos</h2>
-            <div class="registro__form familiares">
-            <div class="incorrecto" style="padding-left: 0px;">';
+            <h2>Otros datos</h2>
+            <div class="registro__form familiares">';
+            if(isset($mensajeFamiliares)) {
+              echo'
+              <div class="incorrecto" style="padding-left: 0px;">'
+                .$mensajeFamiliares 
+              .'</div>';
+            }
+            if(isset($mensajeJuramento)) {
+              echo'
+              <div class="incorrecto" style="padding-left: 0px;">'
+                .$mensajeJuramento 
+              .'</div>';
+            }
+            if(isset($mensajeIngresos)) {
+              echo'
+              <div class="incorrecto" style="padding-left: 0px;">'
+                .$mensajeIngresos 
+              .'</div>';
+            }
             if(isset($mensajeHijos)) {
-              echo $mensajeHijos;
+              echo'
+              <div class="incorrecto" style="padding-left: 0px;">'
+                .$mensajeHijos 
+              .'</div>';
             }
-            echo '</div>
-            <div class="incorrecto" style="padding-left: 0px;">';
             if(isset($mensajeVulnerabilidad)) {
-              echo $mensajeVulnerabilidad;
+              echo'
+              <div class="incorrecto" style="padding-left: 0px;">'
+                .$mensajeVulnerabilidad 
+              .'</div>';
             }
-            echo '</div>
-            <div class="incorrecto" style="padding-left: 0px;">';
             if(isset($mensajeIntegrantes)) {
-              echo $mensajeIntegrantes;
-            }
-            echo '</div>
-            <p>Cantidad de integrantes de su grupo familiar (Contándose a usted mismo): <br>
+              echo '
+              <div class="incorrecto" style="padding-left: 0px;">'
+                .$mensajeIntegrantes
+                .'</div>';
+              }
+            echo '
+              <p>Cantidad de integrantes de su grupo familiar (Contándose a usted mismo): <br>
                 <input type="number" name="integrantes">
               </p>
-              <p>¿Tiene hijos?
+              <p>¿Cuántas personas del grupo familiar usan Internet por cuestiones académicas?: <br>
+                <input type="number" name="familiaresInternet">
+              </p>
+              <p>¿Tiene personas a su cargo?
                 <div class="registro__form hijos">
                   <div>
                     <input type="radio" name="tieneHijos" value="1">
@@ -64,20 +102,17 @@ if($esBecaConectar) {
                   </div>
                 </div>
               </p>
-              <p>En caso afirmativo, ¿Cuántos hijos tiene? <br>
-                <input type="number" name="cantidadHijos">
+              <p>En caso afirmativo, ¿A quién tiene a cargo?<br>
+                <input name="cantidadHijos">
               </p>
-              <p>Los ingresos de su grupo familiar provienen: <br>
-                <select name="ingresos">
-                  <option value="Mercado informal de trabajo">Del mercado informal de trabajo</option>
-                  <option value="Planes y Asignaciones Sociales">De transferencias formales del Estado (Planes y Asignaciones Sociales)</option>
-                  <option value="Categorías de Monotributo A y B">De las categorías de Monotributo A y B</option>
-                  <option value="Empleados estatales Nacionales">Empleados estatales Nacionales</option>
-                  <option value="Empleados estatales Provinciales">Empleados estatales Provinciales</option>
-                  <option value="Empleados estatales Municipales">Empleados estatales Municipales</option>
-                  <option value="Actividades frenadas por pandemia">De actividades laborales que no se están desarrollando en virtud de las medidas de prevención dispuestas por el gobierno nacional en razón de la pandemia</option>
-                </select>
-              </p>
+              <p>Los ingresos de su grupo familiar provienen:</p>
+              <div class="ingresos">
+                <input type="checkbox" name="ingresos[]" style="font-weight: lighter;" value="Mercado informal de trabajo">Del mercado informal de trabajo</input> <br>
+                <input type="checkbox" name="ingresos[]" style="font-weight: lighter;" value="Planes Sociales">De transferencias formales del Estado (Planes y Asignaciones Sociales)</input> <br>
+                <input type="checkbox" name="ingresos[]" style="font-weight: lighter;" value="Monotributo">De las categorías de Monotributo A y B</input> <br>
+                <input type="checkbox" name="ingresos[]" style="font-weight: lighter;" value="Actividades frenadas por pandemia">De actividades laborales que no se están desarrollando en virtud de las medidas de prevención dispuestas por el gobierno nacional en razón de la pandemia</input> <br>
+                <input type="checkbox" name="ingresos[]" style="font-weight: lighter;" value="Otros">Otros</input>
+              </div>
               <p>¿Tiene teléfono 4G?
                 <div class="registro__form hijos">
                   <div>
@@ -116,6 +151,7 @@ if($esBecaConectar) {
                   <option value="Movistar">Movistar</option>
                   <option value="Claro">Claro</option>
                   <option value="Tuenti">Tuenti</option>
+                  <option value="No se">No sé</option>
                 </select>
               </p>
               <p>¿Presentas indicadores de vulnerabilidad?
@@ -140,19 +176,25 @@ if($esBecaConectar) {
               <select name="primerPaso" style="display:none;">
                 <option value="1">PrimerPaso</option>
               </select>
+              <div class="ingresos" style="font-weight: bold;">
+                <p>DECLARO BAJO JURAMENTO:</p>
+                <input type="checkbox" name="juramento1" value="true">QUE LOS DATOS ARRIBA CONSIGNADOS SON FEHACIENTES</option> <br>
+                <input type="checkbox" name="juramento2" value="true">QUE LOS INGRESOS DE MI GRUPO FAMILIAR CONVIVIENTE ES MENOR O IGUAL A 3 SALARIOS MINIMO VITALY MOVIL. (S.M.V.M del mes de octubre 2020 $18.900)</option> <br>
+                <input type="checkbox" name="juramento3" value="true">NO CONTAR CON CONECTIVIDAD A INTERNET EN EL DOMICILIO DONDE ME ENCUENTRO CUMPLIMENTANDO LA MEDIDA DE AISLAMIENTO/DISTANCIAMIENTO SOCIAL, PREVENTIVO Y OBLIGATORIO DISPUESTA POR EL GOBIERNO NACIONAL.</option> <br>
+              </div>
               <div class="registro__button">
                 <input type="submit" value="Siguiente" class="button">
               </div>
             </div>
           </form>';
         } else {
-          $ingresos = $_POST['ingresos'];
           $telefono4G = $_POST['telefono4G'];
           $telefonoLiberado = $_POST['telefonoLiberado'];
           $compania = $_POST['compania'];
           $mejorCompania = $_POST['mejorCompania'];
           $integrantes = $_POST['integrantes'];
-          $hijos = 0;
+          $familiaresInternet = $_POST['familiaresInternet'];
+          $hijos = 'No';
           if($_POST['tieneHijos'] === '1' ) {
             $hijos = $_POST['cantidadHijos'];
           }
@@ -162,19 +204,22 @@ if($esBecaConectar) {
           } else if ($_POST['vulnerabilidad'] === 'NC' ) {
             $vulnerabilidad = 'No deseo contestar';
           }
-          $alumno->datosFamiliaresConectar($id, $integrantes, $hijos, $ingresos, $telefono4G, $telefonoLiberado, $compania, $mejorCompania, $vulnerabilidad);
+          $alumno->datosFamiliaresConectar($id, $integrantes, $hijos, $ingresos, $telefono4G, $telefonoLiberado, $compania, $mejorCompania, $vulnerabilidad, $familiaresInternet);
           header("Location: components/solicitudEnviada.php");
         }
       } else {
         echo '
         <form action="" method="POST" class="registro">
-          <h2>Datos familiares y tecnológicos</h2>
+          <h2>Otros datos</h2>
           <div class="registro__form familiares">
           <div class="incorrecto" style="padding-left: 0px;">Debe ingresar todos los datos</div>
             <p>Cantidad de integrantes de su grupo familiar (Contándose a usted mismo): <br>
               <input type="number" name="integrantes">
             </p>
-            <p>¿Tiene hijos?
+            <p>¿Cuántas personas del grupo familiar usan Internet por cuestiones académicas?: <br>
+              <input type="number" name="familiaresInternet">
+            </p>
+            <p>¿Tiene personas a su cargo? 
               <div class="registro__form hijos">
                 <div>
                   <input type="radio" name="tieneHijos" value="1">
@@ -186,20 +231,17 @@ if($esBecaConectar) {
                 </div>
               </div>
             </p>
-            <p>En caso afirmativo, ¿Cuántos hijos tiene? <br>
-              <input type="number" name="cantidadHijos">
+            <p>En caso afirmativo, ¿A quién tiene a cargo? <br>
+              <input name="cantidadHijos">
             </p>
-            <p>Los ingresos de su grupo familiar provienen: <br>
-              <select name="ingresos">
-                <option value="Mercado informal de trabajo">Del mercado informal de trabajo</option>
-                <option value="Planes y Asignaciones Sociales">De transferencias formales del Estado (Planes y Asignaciones Sociales)</option>
-                <option value="Categorías de Monotributo A y B">De las categorías de Monotributo A y B</option>
-                <option value="Empleados estatales Nacionales">Empleados estatales Nacionales</option>
-                <option value="Empleados estatales Provinciales">Empleados estatales Provinciales</option>
-                <option value="Empleados estatales Municipales">Empleados estatales Municipales</option>
-                <option value="Actividades frenadas por pandemia">De actividades laborales que no se están desarrollando en virtud de las medidas de prevención dispuestas por el gobierno nacional en razón de la pandemia</option>
-              </select>
-            </p>
+            <p>Los ingresos de su grupo familiar provienen:</p>
+            <div class="ingresos">
+              <input type="checkbox" name="ingresos[]" style="font-weight: lighter;" value="Mercado informal">Del mercado informal de trabajo</input> <br>
+              <input type="checkbox" name="ingresos[]" style="font-weight: lighter;" value="Planes Sociales">De transferencias formales del Estado (Planes y Asignaciones Sociales)</input> <br>
+              <input type="checkbox" name="ingresos[]" style="font-weight: lighter;" value="Monotributo">De las categorías de Monotributo A y B</input> <br>
+              <input type="checkbox" name="ingresos[]" style="font-weight: lighter;" value="Actividades frenadas por pandemia">De actividades laborales que no se están desarrollando en virtud de las medidas de prevención dispuestas por el gobierno nacional en razón de la pandemia</input> <br>
+              <input type="checkbox" name="ingresos[]" style="font-weight: lighter;" value="Otros">Otros</input>
+            </div>
             <p>¿Tiene teléfono 4G?
               <div class="registro__form hijos">
                 <div>
@@ -238,6 +280,7 @@ if($esBecaConectar) {
                 <option value="Movistar">Movistar</option>
                 <option value="Claro">Claro</option>
                 <option value="Tuenti">Tuenti</option>
+                <option value="No se">No sé</option>
               </select>
             </p>
             <p>¿Presentas indicadores de vulnerabilidad?
@@ -262,6 +305,12 @@ if($esBecaConectar) {
             <select name="primerPaso" style="display:none;">
               <option value="1">PrimerPaso</option>
             </select>
+            <div class="ingresos" style="font-weight: bold;">
+              <p>DECLARO BAJO JURAMENTO:</p>
+              <input type="checkbox" name="juramento1" value="true">QUE LOS DATOS ARRIBA CONSIGNADOS SON FEHACIENTES</option> <br>
+              <input type="checkbox" name="juramento2" value="true">QUE LOS INGRESOS DE MI GRUPO FAMILIAR CONVIVIENTE ES MENOR O IGUAL A 3 SALARIOS MINIMO VITALY MOVIL. (S.M.V.M del mes de octubre 2020 $18.900)</option> <br>
+              <input type="checkbox" name="juramento3" value="true">NO CONTAR CON CONECTIVIDAD A INTERNET EN EL DOMICILIO DONDE ME ENCUENTRO CUMPLIMENTANDO LA MEDIDA DE AISLAMIENTO/DISTANCIAMIENTO SOCIAL, PREVENTIVO Y OBLIGATORIO DISPUESTA POR EL GOBIERNO NACIONAL.</option> <br>
+            </div>
             <div class="registro__button">
               <input type="submit" value="Siguiente" class="button">
             </div>
@@ -271,12 +320,15 @@ if($esBecaConectar) {
   } else {
     echo '
     <form action="" method="POST" class="registro">
-    <h2>Datos familiares y tecnológicos</h2>
+    <h2>Otros datos</h2>
       <div class="registro__form familiares">
         <p>Cantidad de integrantes de su grupo familiar (Contándose a usted mismo): <br>
           <input type="number" name="integrantes">
         </p>
-        <p>¿Tiene hijos?
+        <p>¿Cuántas personas del grupo familiar usan Internet por cuestiones académicas?: <br>
+          <input type="number" name="familiaresInternet">
+        </p>
+        <p>¿Tiene personas a su cargo? 
           <div class="registro__form hijos">
             <div>
               <input type="radio" name="tieneHijos" value="1">
@@ -288,20 +340,17 @@ if($esBecaConectar) {
             </div>
           </div>
         </p>
-        <p>En caso afirmativo, ¿Cuántos hijos tiene? <br>
-          <input type="number" name="cantidadHijos">
+        <p>En caso afirmativo, ¿A quién tiene a cargo?<br>
+          <input name="cantidadHijos">
         </p>
-        <p>Los ingresos de su grupo familiar provienen: <br>
-          <select name="ingresos">
-            <option value="Mercado informal de trabajo">Del mercado informal de trabajo</option>
-            <option value="Planes y Asignaciones Sociales">De transferencias formales del Estado (Planes y Asignaciones Sociales)</option>
-            <option value="Categorías de Monotributo A y B">De las categorías de Monotributo A y B</option>
-            <option value="Empleados estatales Nacionales">Empleados estatales Nacionales</option>
-            <option value="Empleados estatales Provinciales">Empleados estatales Provinciales</option>
-            <option value="Empleados estatales Municipales">Empleados estatales Municipales</option>
-            <option value="Actividades frenadas por pandemia">De actividades laborales que no se están desarrollando en virtud de las medidas de prevención dispuestas por el gobierno nacional en razón de la pandemia</option>
-          </select>
-        </p>
+        <p>Los ingresos de su grupo familiar provienen:</p>
+        <div class="ingresos">
+          <input type="checkbox" name="ingresos[]" style="font-weight: lighter;" value="Mercado informal de trabajo">Del mercado informal de trabajo</input> <br>
+          <input type="checkbox" name="ingresos[]" style="font-weight: lighter;" value="Planes Sociales">De transferencias formales del Estado (Planes y Asignaciones Sociales)</input> <br>
+          <input type="checkbox" name="ingresos[]" style="font-weight: lighter;" value="Monotributo">De las categorías de Monotributo A y B</input> <br>
+          <input type="checkbox" name="ingresos[]" style="font-weight: lighter;" value="Actividades frenadas por pandemia">De actividades laborales que no se están desarrollando en virtud de las medidas de prevención dispuestas por el gobierno nacional en razón de la pandemia</input> <br>
+          <input type="checkbox" name="ingresos[]" style="font-weight: lighter;" value="Otros">Otros</input>
+        </div>
         <p>¿Tiene teléfono 4G?
           <div class="registro__form hijos">
             <div>
@@ -340,6 +389,7 @@ if($esBecaConectar) {
             <option value="Movistar">Movistar</option>
             <option value="Claro">Claro</option>
             <option value="Tuenti">Tuenti</option>
+            <option value="No se">No sé</option>
           </select>
         </p>
         <p>¿Presentas indicadores de vulnerabilidad?
@@ -364,6 +414,12 @@ if($esBecaConectar) {
         <select name="primerPaso" style="display:none;">
           <option value="1">PrimerPaso</option>
         </select>
+        <div class="ingresos" style="font-weight: bold;">
+          <p>DECLARO BAJO JURAMENTO:</p>
+          <input type="checkbox" name="juramento1" value="true">QUE LOS DATOS ARRIBA CONSIGNADOS SON FEHACIENTES</option> <br>
+          <input type="checkbox" name="juramento2" value="true">QUE LOS INGRESOS DE MI GRUPO FAMILIAR CONVIVIENTE ES MENOR O IGUAL A 3 SALARIOS MINIMO VITALY MOVIL. (S.M.V.M del mes de octubre 2020 $18.900)</option> <br>
+          <input type="checkbox" name="juramento3" value="true">NO CONTAR CON CONECTIVIDAD A INTERNET EN EL DOMICILIO DONDE ME ENCUENTRO CUMPLIMENTANDO LA MEDIDA DE AISLAMIENTO/DISTANCIAMIENTO SOCIAL, PREVENTIVO Y OBLIGATORIO DISPUESTA POR EL GOBIERNO NACIONAL.</option> <br>
+        </div>
         <div class="registro__button">
           <input type="submit" value="Siguiente" class="button">
         </div>

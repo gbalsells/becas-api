@@ -20,7 +20,7 @@
         echo '
         <nav class="top-bar logos">
               <div class="top-bar__unt">
-                <img src="../assets/untletras.png" alt="" style="padding:10px;">          
+                <img src="../assets/unt.png" alt="" style="padding:10px;">          
               </div>
               <a onclick="location=`../index.php`" class="titulo">Becas ' .$beca .' - UNT</a>
               <div class="top-bar__organismos">

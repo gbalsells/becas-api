@@ -46,6 +46,15 @@
         $beca = 'Juan B. Teran';
     }
     $alumnoJson = json_encode($alumno);
+
+    if ($user->getTipoUsuario() !== 0) {
+        $userSession->setAlumno($alumnoJson);
+        $id = $alumno->getId();
+        $tieneDoc = $alumno->tieneDocumentacion($id);
+        if (!$tieneDoc) {
+            header("Location: components/AdjuntarArchivos.php");
+        }
+    }
     ?>
     <nav class="top-bar">
         Bienvenido/a, <?php echo $user->getNombre(); ?>
@@ -106,12 +115,14 @@
                         <li><b>DNI: </b><?php echo $alumno->getDNI();?></li>
                         <li><b>Email: </b><?php echo $alumno->getEmail();?></li>
                         <li><b>Teléfono: </b><?php echo $alumno->getTelefono();?></li>
+                        <li><b>Domicilio: </b><?php echo $alumno->getDomicilio();?></li>
+                        <li><b>Localidad: </b><?php echo $alumno->getLocalidad();?></li>
+                        <li><b>Provincia: </b><?php echo $alumno->getProvincia();?></li>
                     </ul>
                     <h3>Datos académicos</h3>
                     <ul class="caratula__datos__info">
                         <li><b>Facultad: </b><?php echo $alumno->getFacultad();?></li>
                         <li><b>Carrera: </b><?php echo $alumno->getCarrera();?></li>
-                        <li><b>Duración de la carrera: </b><?php echo $alumno->getAniosCarrera();?> años</li>
                         <li><b>Materias cursando actualmente: </b>
                             <ul>
                                 <?php
@@ -123,12 +134,13 @@
                             </ul>
                         </li>
                     </ul>
-                    <h3>Datos familiares</h3>
+                    <h3>Otros datos</h3>
                         <ul class="caratula__datos__info">
                     <?php
                         if ($esBecaConectar) {
                             echo '
                             <li><b>Integrantes del grupo familiar: </b> ' .$alumno->getIntegrantesFamilia() .'</li>
+                            <li><b>Integrantes del grupo familiar que usan Internet por cuestiones académicas: </b>' .$alumno->getFamiliaresInternet() .'</li>
                             <li><b>Fuente de Ingresos: </b>' .$alumno->getIngresos() .'</li>
                             <li><b>Hijos: </b>' .$alumno->getCantidadHijos() .'</li>
                             <li><b>Tiene teléfono 4G: </b>' .$alumno->getTelefono4G() .'</li>
@@ -169,7 +181,7 @@
                         //     ';
                         // }
                     ?>
-                    <div>
+                    <div class="fechasCaratula">
                         <h4>Creado el <?php echo $alumno->getFechaCreacion() ?> </h4>
                         <?php
                             if ($alumno->getFechaEdicion()) {

@@ -13,7 +13,7 @@
 <body>
     <nav class="top-bar logos">
         <div class="top-bar__unt">
-          <img src="assets/untletras.png" alt="" style="padding:10px;">          
+          <img src="assets/unt.png" alt="" style="padding:10px;">          
         </div>
         <a onclick="location='index.php'" class="titulo">Becas UNT</a>
         <div class="top-bar__organismos">
@@ -39,6 +39,7 @@
               <input type="submit" value="Iniciar Sesión" class="button">
               <input onclick="location='./pages/register.php'" type="button" value="Registrarse" class="button registrarse">
             </div>
+            <div>
             <!--
             MENSAJE PARA CUANDO CIERRE LA CONVOCATORIA
             <div id="mensaje-recordatorio">

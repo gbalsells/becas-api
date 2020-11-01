@@ -18,7 +18,7 @@
     $sql = "SELECT * FROM Usuario WHERE IdUsuario = 1";
     $resultado = $conexion->query($sql);
     if ($conexion->query($sql) === true) {
-        echo "VAMO PAPA";
+        // echo "VAMO PAPA";
     } else {
         echo $conexion ->error;
     }

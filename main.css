@@ -43,6 +43,11 @@ select {
   padding-left: 20px;
 }
 
+.registro .incorrecto{
+  padding-top: 20px;
+  padding-left: 0px;
+}
+
 .correcto{
   color: #0277bd;
   margin-bottom: 20px;
@@ -152,6 +157,12 @@ input{
   font-weight: 700;
 }
 
+h4 {
+  margin-top: 0;
+  padding-top: 80px;
+  padding-left: 20px;
+}
+
 /* ---------------  REGISTRO  -------------- */
 
 .tipoBeca{
@@ -192,6 +203,11 @@ input{
 
 .registro{
   padding-top: 80px;
+  padding-left: 50px;
+}
+
+.registro__inicio{
+  padding-top: 130px;
   padding-left: 50px;
 }
 
@@ -295,6 +311,10 @@ input:focus{
   width: 50%;
 }
 
+.inicio {
+  padding-top: 100px;
+}
+
 .solicitud__background{
   height: calc(100vh - 50px);
   display: flex;
@@ -319,6 +339,28 @@ input:focus{
   font-weight: 900;
   color: blue;
   cursor: pointer;
+}
+
+.ingresos input{
+  margin-top: 15px;
+}
+
+.registro input[type=checkbox]{
+  width: auto;
+  margin-right: 5px;
+}
+
+.domicilio {
+  display: flex;
+}
+
+.domicilio p {
+  font-weight: normal;
+  margin-top: 20px;
+}
+
+.registro .domicilio input {
+  width: 80%;
 }
 
 /* --------------- LOGIN --------------- */
@@ -370,7 +412,18 @@ input:focus{
   display: flex;
   justify-content: center;
   width: 60%;
-  margin-bottom: 3em;
+  margin-bottom: 10px;
+}
+
+.recuperar__pass {
+  padding-bottom: 2em;
+  text-decoration: none;
+  color: #004c8c;
+  cursor: pointer;
+}
+
+.recuperar__pass:hover{
+  text-decoration: underline;
 }
 
 .registrarse{
@@ -412,6 +465,10 @@ input:focus{
   justify-content: center;
   font-size: 14px;
   height: calc(100vh - 50px);
+}
+
+.fechasCaratula h4{
+  padding-top: 20px;
 }
 
 .caratula.button{
@@ -502,6 +559,13 @@ input:focus{
   margin-bottom: 3em;
 }
 
+.pdf__buttons{
+  margin-top: 1em;
+  display: flex;
+  justify-content: space-between;
+  max-width: 600px;
+}
+
 .editar__p{
   font-size: 18px;
 }
@@ -547,6 +611,19 @@ h2.warning{
 }
 
 /* ADJUNTAR ARCHIVOS */
+
+.adjuntar span {
+  font-weight: bold;
+}
+
+.documentacion {
+  margin-top: 20px;
+}
+
+.documentacion ol {
+  line-height : 25px
+}
+
 .document-form{
   background-color: #80deea;
   max-width: 580px;
@@ -578,12 +655,6 @@ iframe{
 }
 
 /* -------------  MEDIA QUERIES ------------ */
-
-@media (max-width: 1370px) {
-  .caratula{
-    height: auto;
-  }
-}
 
 @media (max-width: 767px) {
 
@@ -646,6 +717,7 @@ iframe{
 
   .registro__flex{
     flex-direction: column;
+    align-items: flex-start;
   }
 
   .registro__button{
@@ -658,9 +730,10 @@ iframe{
   /* CARATULA */
 
   .caratula{
+    height: auto;
     background-color: #e0f2f1;
   }
-  
+
   .caratula__container{
     flex-direction: column;
   }
@@ -719,8 +792,8 @@ iframe{
   }
 
   .titulo{
-    font-size: 20px;
-    width: 50%;
+    font-size: 12px;
+    width: 20%;
   }
 
   .top-bar__unt {
@@ -737,12 +810,6 @@ iframe{
     text-align: center;
   }
 
-  .solicitud__background{
-    height: 100vh;
-    background-color: white;
-    display: block;
-
-  }
   .editar__warning{
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
@@ -767,6 +834,14 @@ iframe{
   .adjuntar{
     padding-left: 15px;
     padding-right: 15px;
+  }
+
+  .domicilio {
+    flex-direction: column;
+  }
+  
+  .registro .domicilio input {
+    width: 100%;
   }
 
 }

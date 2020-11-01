@@ -45,6 +45,13 @@ class DB{
         return $query;
     }
 
+    public function tieneDocumentacion($id){
+        $idAlumno = (int)$id;
+        $query = $this->connect()->prepare('SELECT * FROM documento WHERE idAlumno = :idAlumno');
+        $query->execute(['idAlumno'=> $idAlumno]);
+        return $query;
+    }
+
     public function getAlumnosModificados(){
         $query = $this->connect()->prepare('SELECT * FROM importacion');
         $query->execute();

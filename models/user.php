@@ -21,7 +21,29 @@ class User extends DB{
         }
     }
 
-    public function createUser($apellidos, $nombres, $email, $dni, $pass, $user, $telefono, $esBecaConectar, $domicilio){
+    public function userExistsMail($email){
+
+        $query = $this->connect()->prepare('SELECT * FROM usuario WHERE Email = :email');
+        $query->execute(['email'=> $email]);
+
+        if($query->rowCount()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function setToken($token, $email) {
+        $query = $this->connect()->prepare('UPDATE usuario SET Token = :token WHERE Email = :email');
+        $query->execute(['token'=> $token, 'email'=> $email]);
+        if($query->rowCount()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function createUser($apellidos, $nombres, $email, $dni, $pass, $user, $telefono, $esBecaConectar, $domicilio, $localidad, $provincia){
         $query1 = $this->connect()->prepare('SELECT DNI, Usuario, Email FROM usuario WHERE (DNI = :dni OR Usuario = :user OR Email = :email)');
         $query1->execute(['user'=> $user, 'email' => $email, 'dni' => $dni]);
 
@@ -40,8 +62,8 @@ class User extends DB{
                 return 'El nombre de usuario ingresado ya fue registrado previamente. Por favor seleccione otro.';
             }
         } else {
-            $query = $this->connect()->prepare('INSERT INTO usuario VALUES(null, :apellidos, :nombres, :email, 1, :dni, :user, :pass, :telefono, :esBecaConectar, :domicilio)');
-            $query->execute(['user'=> $user, 'pass' => $pass, 'apellidos' => $apellidos, 'nombres' => $nombres, 'email' => $email, 'dni' => $dni, 'telefono' => $telefono, 'esBecaConectar' => $esBecaConectar, 'domicilio' => $domicilio ]);
+            $query = $this->connect()->prepare('INSERT INTO usuario VALUES(null, :apellidos, :nombres, :email, 1, :dni, :user, :pass, :telefono, :esBecaConectar, :domicilio, :localidad, :provincia)');
+            $query->execute(['user'=> $user, 'pass' => $pass, 'apellidos' => $apellidos, 'nombres' => $nombres, 'email' => $email, 'dni' => $dni, 'telefono' => $telefono, 'esBecaConectar' => $esBecaConectar, 'domicilio' => $domicilio, 'localidad' => $localidad, 'provincia' => $provincia ]);
         }
 
     }
@@ -62,6 +84,8 @@ class User extends DB{
             $this->telefono = $currentUser['Telefono'];
             $this->esBecaConectar = $currentUser['esBecaConectar'];
             $this->domicilio = $currentUser['Domicilio'];
+            $this->localidad = $currentUser['Localidad'];
+            $this->provincia = $currentUser['Provincia'];
         }
     }
 
@@ -124,6 +148,14 @@ class User extends DB{
 
     public function getDomicilio(){
         return $this->domicilio;
+    }
+
+    public function getLocalidad(){
+        return $this->localidad;
+    }
+
+    public function getProvincia(){
+        return $this->provincia;
     }
 }
 

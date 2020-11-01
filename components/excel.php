@@ -29,7 +29,7 @@
 
       include_once '../models/db.php';
       $db = new DB();
-      $alumnos = $db->getAlumnos();
+      $alumnos = $db->getAlumnosConectar();
       if ($user->getTipoUsuario() === 0){
         echo '
         <div class="lista_alumnos">
@@ -43,53 +43,59 @@
            <th>DNI</th>
            <th>Usuario</th>
            <th>Telefono</th>
+           <th>Domicilio</th>
+           <th>Localidad</th>
+           <th>Provincia</th>
            <th>Facultad</th>
            <th>Carrera</th>
-           <th>Año de ingreso a la facultad</th>
-           <th>Cantidad de materias de la carrera</th>
-           <th>Duración en años de la carrera</th>
-           <th>Promedio</th>
-           <th>Materias aprobadas en total</th>
-           <th>Materias aprobadas en 2018</th>
+           <th>Materias cursando en modalidad virtual</th>
            <th>Integrantes de grupo familiar</th>
-           <th>Ingresos</th>
-           <th>Egresos</th>
+           <th>Integrantes que utilizan Internet</th>
+           <th>Fuente de Ingresos</th>
+           <th>Es responsable de</th>
            <th>Fecha de creacion</th>
            <th>Fecha de edicion</th>
-           <th>Distancia</th>
+           <th>Tiene teléfono 4G</th>
+           <th>Tiene teléfono Liberado</th>
+           <th>Comapañía que posee</th>
+           <th>Compañía que mejor funciona en su zona</th>
            <th>Vulnerabilidad</th>
-           <th>Puntaje</th>
-           <th>Resultado</th>
         </tr>';
+
         foreach($alumnos as $alumno){
-        echo '
-        <tr>
-            <td>' .$alumno['idUsuario'] .'</td>
-            <td>' .$alumno['Apellidos'] .'</td>
-            <td>' .$alumno['Nombres'] .'</td>
-            <td>' .$alumno['Email'] .'</td>
-            <td>' .$alumno['DNI'] .'</td>
-            <td>' .$alumno['Usuario'] .'</td>
-            <td>' .$alumno['Telefono'] .'</td>
-            <td>' .$alumno['Facultad'] .'</td>
-            <td>' .$alumno['Carrera'] .'</td>
-            <td>' .$alumno['AnioIngreso'] .'</td>
-            <td>' .$alumno['CantidadMaterias'] .'</td>
-            <td>' .$alumno['AniosCarrera'] .'</td>
-            <td>' .$alumno['Promedio'] .'</td>
-            <td>' .$alumno['ExamenesRendidos'] .'</td>
-            <td>' .$alumno['MateriasAprobadas'] .'</td>
-            <td>' .$alumno['IntegrantesFamilia'] .'</td>
-            <td>' .$alumno['Ingresos'] .'</td>
-            <td>' .$alumno['Egresos'] .'</td>
-            <td>' .$alumno['FechaCreacion'] .'</td>
-            <td>' .$alumno['FechaEdicion'] .'</td>
-            <td>' .$alumno['Distancia'] .'</td>
-            <td>' .$alumno['Vulnerabilidad'] .'</td>
-            <td>' .$alumno['Puntaje'] .'</td>
-            <td>' .$alumno['Resultado'] .'</td>
-        </tr>
-        ';
+            $documentacion = $db->tieneDocumentacion($alumno['idUsuario']);
+            foreach($documentacion as $documento){
+                if($documento) {
+                    echo '
+                    <tr>
+                        <td>' .$alumno['idUsuario'] .'</td>
+                        <td>' .$alumno['Apellidos'] .'</td>
+                        <td>' .$alumno['Nombres'] .'</td>
+                        <td>' .$alumno['Email'] .'</td>
+                        <td>' .$alumno['DNI'] .'</td>
+                        <td>' .$alumno['Usuario'] .'</td>            
+                        <td>' .$alumno['Telefono'] .'</td>
+                        <td>' .$alumno['Domicilio'] .'</td>
+                        <td>' .$alumno['Localidad'] .'</td>
+                        <td>' .$alumno['Provincia'] .'</td>
+                        <td>' .$alumno['Facultad'] .'</td>
+                        <td>' .$alumno['Carrera'] .'</td>
+                        <td>' .$alumno['MateriasCursando'] .'</td>
+                        <td>' .$alumno['IntegrantesFamilia'] .'</td>
+                        <td>' .$alumno['FamiliaresInternet'] .'</td>
+                        <td>' .$alumno['Ingresos'] .'</td>
+                        <td>' .$alumno['CantidadHijos'] .'</td>
+                        <td>' .$alumno['FechaCreacion'] .'</td>
+                        <td>' .$alumno['FechaEdicion'] .'</td>
+                        <td>' .$alumno['Telefono4G'] .'</td>
+                        <td>' .$alumno['TelefonoLiberado'] .'</td>
+                        <td>' .$alumno['Compania'] .'</td>
+                        <td>' .$alumno['MejorCompania'] .'</td>
+                        <td>' .$alumno['Vulnerabilidad'] .'</td>
+                    </tr>
+                    ';
+                }
+            }
         }
         echo '
        </table>';

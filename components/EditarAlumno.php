@@ -69,10 +69,25 @@
                 <p>DNI: <br>
                     <input type="number" name="dni" value="' .$alumnoDecoded['dni'] .'">
                 </p>
+                <p> Lugar donde reside en época de aislamiento/distanciamiento social preventivo obligatorio: </p>
+                <div class="domicilio">
+                    <p>
+                        Domicilio (Calle, Número, Piso, Departamento): <br>
+                        <input type="text" name="domicilio" value="' .$alumnoDecoded['Domicilio'] .'">
+                    </p>
+                    <p>
+                        Localidad: <br>
+                        <input type="text" name="localidad" value="' .$alumnoDecoded['Localidad'] .'">
+                    </p>
+                    <p>
+                        Provincia: <br>
+                        <input type="text" name="provincia" value="' .$alumnoDecoded['Provincia'] .'">
+                    </p>
+                </div>
                 <p>Email: <br>
                     <input type="email" name="email" value="' .$alumnoDecoded['email'] .'">
                 </p>
-                <p class="registro__tel">Teléfono: <br>
+                <p class="registro__tel">Número de celular (Sin 0 ni 15): <br>
                     <input type="tel" name="telefono" value="' .$alumnoDecoded['telefono'] .'">
                 </p>
                 <p>Seleccione su facultad <br>
@@ -99,7 +114,7 @@
             </div>
         </form>
         ';
-    } else if (!isset($_POST['aceptarEdicion']) && isset($_POST['ingresos']) && isset($_POST['integrantes'])){
+    } else if (!isset($_POST['aceptarEdicion']) && isset($_POST['ingresos']) && isset($_POST['integrantes']) && isset($_POST['familiaresInternet'])){
         $facultad = $_POST['facultad'];
         $apellidos = $_POST['apellidos'];
         $nombres = $_POST['nombres'];
@@ -109,11 +124,16 @@
         $carrera = $_POST['carrera'];
         $materias = $_POST['materias'];
         $aniosCarrera = $_POST['aniosCarrera'];
-        $ingresos = $_POST['ingresos'];
+        $ingresos = implode(", ",array_unique(array_filter($_POST['ingresos'])));
         $integrantes = $_POST['integrantes'];
+        $familiaresInternet = $_POST['familiaresInternet'];
+        $domicilio = $_POST['domicilio'];
+        $localidad = $_POST['localidad'];
+        $provincia = $_POST['provincia'];
+
 
         if ($esBecaConectar) {
-            if ($_POST['tieneHijos'] === '1' && ($_POST['cantidadHijos'] === '0' || $_POST['cantidadHijos'] === '') ||
+            if ($_POST['tieneHijos'] === '1' && $_POST['cantidadHijos'] === '' ||
                 $_POST['vulnerabilidad'] === 'Si' && $_POST['descripcionVulnerabilidad'] === '' || $_POST['integrantes'] === '0' || $_POST['integrantes'] === '') {
                     echo '
                     <div class="incorrecto" style="margin-left: 50px; padding-top: 90px;">
@@ -131,7 +151,7 @@
                 $telefonoLiberado = $_POST['telefonoLiberado'];
                 $compania = $_POST['compania'];
                 $mejorCompania = $_POST['mejorCompania'];
-                $hijos = 0;
+                $hijos = 'No';
                 if($_POST['tieneHijos'] === '1' ) {
                   $hijos = $_POST['cantidadHijos'];
                 }
@@ -152,16 +172,19 @@
                         <p><b>Nombre:</b> ' .$nombres .'</p>
                         <p><b>Apellido:</b> ' .$apellidos .'</p>
                         <p><b>DNI:</b> ' .$dni .'</p>
+                        <p><b>Domicilio:</b> ' .$domicilio .'</p>
+                        <p><b>Localidad:</b> ' .$localidad .'</p>
+                        <p><b>Provincia:</b> ' .$provincia .'</p>
                         <p><b>Email:</b> ' .$email .'</p>
                         <p><b>Telefono:</b> ' .$telefono .'</p>
                         <p><b>Facultad:</b> ' .$facultad .'</p>
                         <p><b>Carrera:</b> ' .$carrera .'</p>
-                        <p><b>Duración de la carrera:</b> ' .$aniosCarrera .' años</p>
                         <p><b>Materias que se encuentra cursando:</b> ' .$materias .' </p>
     
                         <p><b>Integrantes del grupo familiar: </b> ' .$integrantes .'</p>
+                        <p><b>Integrantes del grupo familiar que usan Internet por cuestiones académicas : </b> ' .$familiaresInternet .'</p>
                         <p><b>Fuente de Ingresos: </b>' .$ingresos .'</p>
-                        <p><b>Hijos: </b>' .$hijos .'</p>
+                        <p><b>Personas a cargo: </b>' .$hijos .'</p>
                         <p><b>Tiene teléfono 4G: </b>' .$telefono4G .'</p>
                         <p><b>Tiene teléfono Liberado: </b>' .$telefonoLiberado .'</p>
                         <p><b>Compañía que posee: </b>' .$compania .'</p>
@@ -192,6 +215,21 @@
         
                         <select name="dni" style="display:none;">';
                         echo '<option value="' .$dni .'">' .$dni .'</option>';
+                        echo
+                        '</select>
+
+                        <select name="domicilio" style="display:none;">';
+                        echo '<option value="' .$domicilio .'">' .$domicilio .'</option>';
+                        echo
+                        '</select>
+
+                        <select name="localidad" style="display:none;">';
+                        echo '<option value="' .$localidad .'">' .$localidad .'</option>';
+                        echo
+                        '</select>
+
+                        <select name="provincia" style="display:none;">';
+                        echo '<option value="' .$provincia .'">' .$provincia .'</option>';
                         echo
                         '</select>
         
@@ -254,6 +292,11 @@
                         echo '<option value="' .$integrantes .'">' .$integrantes .'</option>';
                         echo
                         '</select>
+
+                        <select name="familiaresInternet" style="display:none;">';
+                        echo '<option value="' .$familiaresInternet .'">' .$familiaresInternet .'</option>';
+                        echo
+                        '</select>
         
                         <select name="materias" style="display:none;">';
                         echo '<option value="' .$materias .'">' .$materias .'</option>';
@@ -268,11 +311,6 @@
                 ';
             }
         } else {
-            // $ingreso = $_POST['ingreso'];
-            // $promedio = $_POST['promedio'];
-            // $aprobadas = $_POST['aprobadas'];
-            // $totales = $_POST['totales'];
-            // $rendidos = $_POST['rendidos'];
             $egresos = $_POST['egresos'];
             echo '
                 <form action="" method="POST" class="registro">
@@ -289,7 +327,6 @@
                     <p><b>Telefono:</b> ' .$telefono .'</p>
                     <p><b>Facultad:</b> ' .$facultad .'</p>
                     <p><b>Carrera:</b> ' .$carrera .'</p>
-                    <p><b>Duración de la carrera:</b> ' .$aniosCarrera .' años</p>
                     <p><b>Materias que se encuentra cursando:</b> ' .$materias .' </p>
     
                     <p><b>Ingresos del grupo familiar:</b> ' .$ingresos .'</p>
@@ -319,6 +356,21 @@
     
                     <select name="dni" style="display:none;">';
                     echo '<option value="' .$dni .'">' .$dni .'</option>';
+                    echo
+                    '</select>
+
+                    <select name="domicilio" style="display:none;">';
+                    echo '<option value="' .$domicilio .'">' .$domicilio .'</option>';
+                    echo
+                    '</select>
+
+                    <select name="localidad" style="display:none;">';
+                    echo '<option value="' .$localidad .'">' .$localidad .'</option>';
+                    echo
+                    '</select>
+
+                    <select name="provincia" style="display:none;">';
+                    echo '<option value="' .$provincia .'">' .$provincia .'</option>';
                     echo
                     '</select>
     
@@ -381,6 +433,11 @@
                     echo '<option value="' .$integrantes .'">' .$integrantes .'</option>';
                     echo
                     '</select>
+                        
+                    <select name="familiaresInternet" style="display:none;">';
+                    echo '<option value="' .$familiaresInternet .'">' .$familiaresInternet .'</option>';
+                    echo
+                    '</select>
     
                     <select name="materias" style="display:none;">';
                     echo '<option value="' .$materias .'">' .$materias .'</option>';
@@ -399,6 +456,9 @@
         $apellidos = $_POST['apellidos'];
         $nombres = $_POST['nombres'];
         $dni = $_POST['dni'];
+        $domicilio = $_POST['domicilio'];
+        $localidad = $_POST['localidad'];
+        $provincia = $_POST['provincia'];
         $email = $_POST['email'];
         $telefono = $_POST['telefono'];
         $carrera = $_POST['carrera'];
@@ -406,6 +466,7 @@
         $materias = $_POST['materias'];
         $ingresos = $_POST['ingresos'];
         $integrantes = $_POST['integrantes'];
+        $familiaresInternet = $_POST['familiaresInternet'];
 
         if($esBecaConectar) {
             $telefono4G = $_POST['telefono4G'];
@@ -414,7 +475,7 @@
             $mejorCompania = $_POST['mejorCompania'];
             $hijos = $_POST['hijos'];
             $vulnerabilidad = $_POST['vulnerabilidad'];
-            $alumno->editarAlumnoConectar($id, $facultad, $apellidos, $nombres, $dni, $email, $telefono, $carrera, $ingresos, $integrantes, $aniosCarrera, $materias, $telefono4G, $telefonoLiberado, $compania, $mejorCompania, $hijos, $vulnerabilidad);
+            $alumno->editarAlumnoConectar($id, $facultad, $apellidos, $nombres, $dni, $email, $telefono, $carrera, $ingresos, $integrantes, $aniosCarrera, $materias, $telefono4G, $telefonoLiberado, $compania, $mejorCompania, $hijos, $vulnerabilidad, $domicilio, $localidad, $provincia, $familiaresInternet);
         } else {
             $egresos = $_POST['egresos'];
             $alumno->editarAlumnoTeran($id, $facultad, $apellidos, $nombres, $dni, $email, $telefono, $carrera, $ingresos, $egresos, $integrantes, $aniosCarrera, $materias);
@@ -422,7 +483,7 @@
         $_SESSION['alumno'] = null;
         header("Location: ../index.php");
     } else if (isset($_POST['facultad']) && isset($_POST['nombres']) && isset($_POST['apellidos']) && isset($_POST['dni']) && isset($_POST['email']) && !isset($_POST['carrera'])){
-        if ($_POST['nombres'] === '' || $_POST['apellidos'] === '' || $_POST['dni'] === '' || $_POST['email'] === ''){
+        if ($_POST['nombres'] === '' || $_POST['apellidos'] === '' || $_POST['dni'] === '' || $_POST['email'] === '' || $_POST['domicilio'] === '' || $_POST['localidad'] === '' || $_POST['provincia'] === ''){
             echo '
             <div class="incorrecto" style="margin-left: 50px; padding-top: 90px;">
                 <form action="" method="POST">
@@ -439,6 +500,9 @@
             $apellidos = $_POST['apellidos'];
             $nombres = $_POST['nombres'];
             $dni = $_POST['dni'];
+            $domicilio = $_POST['domicilio'];
+            $localidad = $_POST['localidad'];
+            $provincia = $_POST['provincia'];
             $email = $_POST['email'];
             $telefono = $_POST['telefono'];
             foreach ($facultades as &$fac){
@@ -470,6 +534,21 @@
                     echo
                     '</select>
 
+                    <select name="domicilio" style="display:none;">';
+                    echo '<option value="' .$domicilio .'">' .$domicilio .'</option>';
+                    echo
+                    '</select>
+
+                    <select name="localidad" style="display:none;">';
+                    echo '<option value="' .$localidad .'">' .$localidad .'</option>';
+                    echo
+                    '</select>
+
+                    <select name="provincia" style="display:none;">';
+                    echo '<option value="' .$provincia .'">' .$provincia .'</option>';
+                    echo
+                    '</select>
+
                     <select name="email" style="display:none;">';
                     echo '<option value="' .$email .'">' .$email .'</option>';
                     echo
@@ -490,11 +569,11 @@
                         };
                     echo '</select>
                     </p>
-                    <p>Duración de la carrera en años: <br>
+                    <p style="display: none;">Duración de la carrera en años: <br>
                         <input type="number" name="aniosCarrera" value="' .$alumnoDecoded['AniosCarrera'] .'">
                     </p>
                     <p style="font-weight: bold;">
-                        Materias que cursa actualmente:
+                        Nombre de las materias que cursa actualmente en modalidad virtual:
                     </p>';
                     $materias = explode(", ", $alumnoDecoded['Materias']);
                     foreach($materias as &$materia) {
@@ -520,7 +599,7 @@
             $materiasUppercase=array_map(function($word) { return ucwords(strtolower($word)); }, $_POST['materias']);
             $materias = implode(", ",array_unique(array_filter($materiasUppercase)));
             if ($_POST['carrera'] !== ''){
-                if ($_POST['aniosCarrera'] === '' || $_POST['aniosCarrera'] === 0 || $materias === ''){
+                if ($materias === ''){
                     echo '
                     <div class="incorrecto" style="margin-left: 50px; padding-top: 90px;">
                         <form action="" method="POST">
@@ -537,6 +616,9 @@
                     $apellidos = $_POST['apellidos'];
                     $nombres = $_POST['nombres'];
                     $dni = $_POST['dni'];
+                    $domicilio = $_POST['domicilio'];
+                    $localidad = $_POST['localidad'];
+                    $provincia = $_POST['provincia'];
                     $email = $_POST['email'];
                     $telefono = $_POST['telefono'];
 
@@ -563,6 +645,21 @@
     
                         <select name="dni" style="display:none;">';
                         echo '<option value="' .$dni .'">' .$dni .'</option>';
+                        echo
+                        '</select>
+
+                        <select name="domicilio" style="display:none;">';
+                        echo '<option value="' .$domicilio .'">' .$domicilio .'</option>';
+                        echo
+                        '</select>
+
+                        <select name="localidad" style="display:none;">';
+                        echo '<option value="' .$localidad .'">' .$localidad .'</option>';
+                        echo
+                        '</select>
+
+                        <select name="provincia" style="display:none;">';
+                        echo '<option value="' .$provincia .'">' .$provincia .'</option>';
                         echo
                         '</select>
 
@@ -620,11 +717,14 @@
                             <p>Cantidad de integrantes de su grupo familiar (Contándose a usted mismo): <br>
                                 <input type="number" name="integrantes" value="' .$alumnoDecoded['IntegrantesFamilia'] .'">
                             </p>
-                            <p class="radiop">¿Tiene hijos?
+                            <p>¿Cuántas personas del grupo familiar usan Internet por cuestiones académicas?: <br>
+                                <input type="number" name="familiaresInternet" value="' .$alumnoDecoded['FamiliaresInternet'] .'">
+                            </p>
+                            <p class="radiop">¿Tiene personas a su cargo?
                                 <div class="registro__form hijos">
                                     <div>
                                         <input type="radio" name="tieneHijos" value="1"';
-                                        if ($alumnoDecoded['CantidadHijos'] > 0) {
+                                        if ($alumnoDecoded['CantidadHijos'] !== 'No') {
                                             echo 'checked';
                                         }
                                         echo '>
@@ -632,7 +732,7 @@
                                     </div>
                                     <div>
                                         <input type="radio" name="tieneHijos" value="0"';
-                                        if ($alumnoDecoded['CantidadHijos'] === 0) {
+                                        if ($alumnoDecoded['CantidadHijos'] === 'No') {
                                             echo 'checked';
                                         }
                                         echo '>
@@ -640,75 +740,58 @@
                                     </div>
                                 </div>
                             </p>
-                            <p>En caso afirmativo, ¿Cuántos hijos tiene? <br>
-                                <input type="number" name="cantidadHijos" value="' .$alumnoDecoded['CantidadHijos'] .'">
-                                </p>
-                                <p>Los ingresos de su grupo familiar provienen: <br>
-                                <select name="ingresos" value="' .$alumnoDecoded['Ingresos'] .'">';
-                                if ($alumnoDecoded['Ingresos'] === 'Mercado informal de trabajo') {
-                                    echo '
-                                    <option selected="selected" value="Mercado informal de trabajo">Del mercado informal de trabajo</option>
-                                    ';
-                                } else {
-                                    echo '
-                                    <option value="Mercado informal de trabajo">Del mercado informal de trabajo</option>
-                                    ';
-                                }
-                                if ($alumnoDecoded['Ingresos'] === 'Planes y Asignaciones Sociales') {
-                                    echo '
-                                    <option selected="selected" value="Planes y Asignaciones Sociales">De transferencias formales del Estado (Planes y Asignaciones Sociales)</option>
-                                    ';
-                                } else {
-                                    echo '
-                                    <option value="Planes y Asignaciones Sociales">De transferencias formales del Estado (Planes y Asignaciones Sociales)</option>
-                                    ';
-                                }
-                                if ($alumnoDecoded['Ingresos'] === 'Categorías de Monotributo A y B') {
-                                    echo '
-                                    <option selected="selected" value="Categorías de Monotributo A y B">De las categorías de Monotributo A y B</option>
-                                    ';
-                                } else {
-                                    echo '
-                                    <option value="Categorías de Monotributo A y B">De las categorías de Monotributo A y B</option>
-                                    ';
-                                }
-                                if ($alumnoDecoded['Ingresos'] === 'Empleados estatales Nacionales') {
-                                    echo '
-                                    <option selected="selected" value="Empleados estatales Nacionales">Empleados estatales Nacionales</option>
-                                    ';
-                                } else {
-                                    echo '
-                                    <option value="Empleados estatales Nacionales">Empleados estatales Nacionales</option>
-                                    ';
-                                }
-                                if ($alumnoDecoded['Ingresos'] === 'prueba') {
-                                    echo '
-                                    <option selected="selected" value="Empleados estatales Provinciales">Empleados estatales Provinciales</option>
-                                    ';
-                                } else {
-                                    echo '
-                                    <option value="Empleados estatales Provinciales">Empleados estatales Provinciales</option>
-                                    ';
-                                }
-                                if ($alumnoDecoded['Ingresos'] === 'Empleados estatales Municipales') {
-                                    echo '
-                                    <option selected="selected" value="Empleados estatales Municipales">Empleados estatales Municipales</option>
-                                    ';
-                                } else {
-                                    echo '
-                                    <option value="Empleados estatales Municipales">Empleados estatales Municipales</option>
-                                    ';
-                                }
-                                if ($alumnoDecoded['Ingresos'] === 'Actividades frenadas por pandemia') {
-                                    echo '
-                                    <option selected="selected" value="Actividades frenadas por pandemia">De actividades laborales que no se están desarrollando en virtud de las medidas de prevención dispuestas por el gobierno nacional en razón de la pandemia</option>
-                                    ';
-                                } else {
-                                    echo '
-                                    <option value="Actividades frenadas por pandemia">De actividades laborales que no se están desarrollando en virtud de las medidas de prevención dispuestas por el gobierno nacional en razón de la pandemia</option>
-                                    ';
-                                }
+                            <p>En caso afirmativo, ¿A quién tiene a cargo? <br>
+                                <input name="cantidadHijos" value="' .$alumnoDecoded['CantidadHijos'] .'">
+                            </p>
+                            <p>Los ingresos de su grupo familiar provienen: <br>
+                            <div class="ingresos">';
+                            $ingresos = explode(", ", $alumnoDecoded['Ingresos']);
+                            if (is_int(array_search('Mercado informal de trabajo', $ingresos))) {
                                 echo '
+                                <input type="checkbox" checked name="ingresos[]" style="font-weight: lighter;" value="Mercado informal de trabajo">Del mercado informal de trabajo</option> <br>
+                                ';
+                            } else {
+                                echo '
+                                <input type="checkbox" name="ingresos[]" style="font-weight: lighter;" value="Mercado informal de trabajo">Del mercado informal de trabajo</option> <br>
+                                ';
+                            }
+                            if (is_int(array_search('Planes Sociales', $ingresos))) {
+                                echo '
+                                <input type="checkbox" checked name="ingresos[]" style="font-weight: lighter;" value="Planes Sociales">De transferencias formales del Estado (Planes y Asignaciones Sociales)</option> <br>
+                                ';
+                            } else {
+                                echo '
+                                <input type="checkbox" name="ingresos[]" style="font-weight: lighter;" value="Planes Sociales">De transferencias formales del Estado (Planes y Asignaciones Sociales)</option> <br>
+                                ';
+                            }
+                            if (is_int(array_search('Monotributo', $ingresos))) {
+                                echo '
+                                <input type="checkbox" checked name="ingresos[]" style="font-weight: lighter;" value="Monotributo">De las categorías de Monotributo A y B</option> <br>
+                                ';
+                            } else {
+                                echo '
+                                <input type="checkbox" name="ingresos[]" style="font-weight: lighter;" value="Monotributo">De las categorías de Monotributo A y B</option> <br>
+                                ';
+                            }
+                            if (is_int(array_search('Actividades frenadas por pandemia', $ingresos))) {
+                                echo '
+                                <input type="checkbox" checked name="ingresos[]" style="font-weight: lighter;" value="Actividades frenadas por pandemia">De actividades laborales que no se están desarrollando en virtud de las medidas de prevención dispuestas por el gobierno nacional en razón de la pandemia</option> <br>
+                                ';
+                            } else {
+                                echo '
+                                <input type="checkbox" name="ingresos[]" style="font-weight: lighter;" value="Actividades frenadas por pandemia">De actividades laborales que no se están desarrollando en virtud de las medidas de prevención dispuestas por el gobierno nacional en razón de la pandemia</option> <br>
+                                ';
+                            }
+                            if (is_int(array_search('Otros', $ingresos))) {
+                                echo '
+                                <input type="checkbox" checked name="ingresos[]" style="font-weight: lighter;" value="Otros">Otros</option>
+                                ';
+                            } else {
+                                echo '
+                                <input type="checkbox" name="ingresos[]" style="font-weight: lighter;" value="Otros">Otros</option>
+                                ';
+                            }
+                            echo '
                                 </select>
                                 </p>
                                 <p class="radiop">¿Tiene teléfono 4G?
@@ -828,6 +911,15 @@
                                     } else {
                                         echo '
                                         <option value="Tuenti">Tuenti</option>
+                                        ';
+                                    }
+                                    if ($alumnoDecoded['MejorCompania'] === 'No se') {
+                                        echo '
+                                        <option selected="selected" value="No se">No sé</option>
+                                        ';
+                                    } else {
+                                        echo '
+                                        <option value="No se">No sé</option>
                                         ';
                                     }
                                     echo '
