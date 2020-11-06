@@ -79,7 +79,7 @@
             Listado de documentación requerida:
         </span>
         <ol>
-            <li><span>Fotocopia del DNI</span>: 1º y 2º hoja del Alumno y del Grupo Familiar Conviviente (todos deberán tener el mismo domicilio)</li>
+            <li><span>Fotocopia del DNI</span>: (Ambos lados) del Alumno y del Grupo Familiar Conviviente (todos deberán tener el mismo domicilio)</li>
             <li><span>Certificación Negativa del ANSES</span> del Alumno y de los mayores de 18 años del Grupo Familiar Conviviente. Se obtiene en https://www.anses.gob.ar/consulta/certificacion-negativa. En caso de que se encuentre “denegada” por tener ítems marcados y vigentes, realizar una captura de pantalla que registre la información que otorga el sistema y enviarla adjunta con el resto de la documentación.</li>
             <li>En caso de pertenecer a grupo familiar cuyo ingreso predominante proviene de actividades laborales que no se están desarrollando o se encuentran menguadas en virtud de las medidas de prevención dispuestas por el gobierno nacional en razón de la pandemia, debe presentar <span>constancia de inscripción de la actividad</span>.</li>
             <li><span>Constancia de ingresos del grupo familiar conviviente</span>:

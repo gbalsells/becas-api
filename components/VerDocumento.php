@@ -12,8 +12,6 @@
 </head>
 <body>
 <?php
-    include_once '../models/facultad.php';
-    include_once '../constants/facultadesCarreras.php';
     include_once '../models/user_session.php';
     require_once '../models/user.php';
     require_once '../models/alumno.php';
@@ -48,27 +46,23 @@
     Bienvenido/a, <?php echo $user->getNombre(); ?>
     <a class="cerrar-sesion" href=<?php echo $logout; ?>>Cerrar sesión</a>
 </nav>
-<div class="adjuntar">
-<h2>¡Lo sentimos!</h2>
-<p>Esta página se encuentra en mantenimiento. Le pedimos disculpas por las molestias ocasionadas.</p>
-<a class="button registrarse" href="javascript:history.go(-1);">Atras</a>
 <?php
-    // if (isset($_REQUEST['path']) && isset($_REQUEST['id'])) {
-    //     $path = $_REQUEST['path'];
-    //     $documentPath = $path .'/' .$alumnoDecoded['dni'] .'.pdf';
-    //     $idParam = $_REQUEST['id'];
-    //     if ($user->getTipoUsuario() !== 0) {
-    //         if($idParam - $id === 0) {
-    //             echo '<iframe src="' .$documentPath .'" ></iframe> <a class="button registrarse"onclick="location=`Documentacion.php`">Atras</a>';
-    //             echo '<a class="button registrarse" style="background-color: #b71c1c; margin-left: 20px;" onclick="location=`EliminarDocumentacion.php?path=' .$path .'&id=' .$id .'`">Eliminar</a>';
-    //         } else {
-    //             echo '<h4>Prohibido maquinola</h4>
-    //             <img src="https://media.tenor.com/images/de5a894861f9b4fcee484bdc1b6f5993/tenor.gif"/>';
-    //         }
-    //     } else {
-    //         echo '<iframe src="' .$documentPath .'" ></iframe> <a class="button registrarse" href="javascript:history.go(-1);">Atras</a>';
-    //         echo '<a class="button registrarse" style="background-color: #b71c1c; margin-left: 20px;" onclick="location=`EliminarDocumentacion.php?path=' .$path .'&id=' .$id .'`">Eliminar</a>';
-    //     }
-    // }
+    if (isset($_REQUEST['path']) && isset($_REQUEST['id'])) {
+        $path = "../files/" .$_REQUEST['path'];
+        $documentPath = $path .'/' .$alumnoDecoded['dni'] .'.pdf';
+        $idParam = $_REQUEST['id'];
+        if ($user->getTipoUsuario() !== 0) {
+            if($idParam - $id === 0) {
+                echo '<iframe src="' .$documentPath .'" ></iframe> <a class="button registrarse"onclick="location=`Documentacion.php`">Atras</a>';
+                echo '<a class="button registrarse" style="background-color: #b71c1c; margin-left: 20px;" onclick="location=`EliminarDocumentacion.php?path=' .$path .'&id=' .$id .'`">Eliminar</a>';
+            } else {
+                echo '<h4>Prohibido maquinola</h4>
+                <img src="https://media.tenor.com/images/de5a894861f9b4fcee484bdc1b6f5993/tenor.gif"/>';
+            }
+        } else {
+            echo '<iframe src="' .$documentPath .'" ></iframe> <a class="button registrarse" href="javascript:history.go(-1);">Atras</a>';
+            echo '<a class="button registrarse" style="background-color: #b71c1c; margin-left: 20px;" onclick="location=`EliminarDocumentacion.php?path=' .$path .'&id=' .$id .'`">Eliminar</a>';
+        }
+    }
 ?>
-</div>
+</body>

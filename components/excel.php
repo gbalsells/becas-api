@@ -20,7 +20,7 @@
 
     if ($user->getTipoUsuario() === 0){
         header('Content-type: application/vnd.ms-excel');
-        header("Content-Disposition: attachment; filename=alumnos_jbteran.xls");
+        header("Content-Disposition: attachment; filename=alumnos_conectividad.xls");
         header("Pragma: no-cache");
         header("Expires: 0");
     }
@@ -42,6 +42,7 @@
            <th>Email</th>
            <th>DNI</th>
            <th>Usuario</th>
+           <th>Subió documentación</th>
            <th>Telefono</th>
            <th>Domicilio</th>
            <th>Localidad</th>
@@ -64,42 +65,44 @@
 
         foreach($alumnos as $alumno){
             $documentacion = $db->tieneDocumentacion($alumno['idUsuario']);
-            foreach($documentacion as $documento){
-                if($documento) {
-                    echo '
-                    <tr>
-                        <td>' .$alumno['idUsuario'] .'</td>
-                        <td>' .$alumno['Apellidos'] .'</td>
-                        <td>' .$alumno['Nombres'] .'</td>
-                        <td>' .$alumno['Email'] .'</td>
-                        <td>' .$alumno['DNI'] .'</td>
-                        <td>' .$alumno['Usuario'] .'</td>            
-                        <td>' .$alumno['Telefono'] .'</td>
-                        <td>' .$alumno['Domicilio'] .'</td>
-                        <td>' .$alumno['Localidad'] .'</td>
-                        <td>' .$alumno['Provincia'] .'</td>
-                        <td>' .$alumno['Facultad'] .'</td>
-                        <td>' .$alumno['Carrera'] .'</td>
-                        <td>' .$alumno['MateriasCursando'] .'</td>
-                        <td>' .$alumno['IntegrantesFamilia'] .'</td>
-                        <td>' .$alumno['FamiliaresInternet'] .'</td>
-                        <td>' .$alumno['Ingresos'] .'</td>
-                        <td>' .$alumno['CantidadHijos'] .'</td>
-                        <td>' .$alumno['FechaCreacion'] .'</td>
-                        <td>' .$alumno['FechaEdicion'] .'</td>
-                        <td>' .$alumno['Telefono4G'] .'</td>
-                        <td>' .$alumno['TelefonoLiberado'] .'</td>
-                        <td>' .$alumno['Compania'] .'</td>
-                        <td>' .$alumno['MejorCompania'] .'</td>
-                        <td>' .$alumno['Vulnerabilidad'] .'</td>
-                    </tr>
-                    ';
+            $tieneDoc = 'NO';
+                echo '
+                <tr>
+                    <td>' .$alumno['idUsuario'] .'</td>
+                    <td>' .$alumno['Apellidos'] .'</td>
+                    <td>' .$alumno['Nombres'] .'</td>
+                    <td>' .$alumno['Email'] .'</td>
+                    <td>' .$alumno['DNI'] .'</td>
+                    <td>' .$alumno['Usuario'] .'</td>';
+                foreach($documentacion as $documento){
+                    $tieneDoc = 'SI';
                 }
+                echo '
+                    <td>' .$tieneDoc .'</td>
+                    <td>' .$alumno['Telefono'] .'</td>
+                    <td>' .$alumno['Domicilio'] .'</td>
+                    <td>' .$alumno['Localidad'] .'</td>
+                    <td>' .$alumno['Provincia'] .'</td>
+                    <td>' .$alumno['Facultad'] .'</td>
+                    <td>' .$alumno['Carrera'] .'</td>
+                    <td>' .$alumno['MateriasCursando'] .'</td>
+                    <td>' .$alumno['IntegrantesFamilia'] .'</td>
+                    <td>' .$alumno['FamiliaresInternet'] .'</td>
+                    <td>' .$alumno['Ingresos'] .'</td>
+                    <td>' .$alumno['CantidadHijos'] .'</td>
+                    <td>' .$alumno['FechaCreacion'] .'</td>
+                    <td>' .$alumno['FechaEdicion'] .'</td>
+                    <td>' .$alumno['Telefono4G'] .'</td>
+                    <td>' .$alumno['TelefonoLiberado'] .'</td>
+                    <td>' .$alumno['Compania'] .'</td>
+                    <td>' .$alumno['MejorCompania'] .'</td>
+                    <td>' .$alumno['Vulnerabilidad'] .'</td>
+                </tr>
+                ';
             }
         }
         echo '
        </table>';
-    }
       ?>
     </div>
 </body>

@@ -21,9 +21,13 @@ $db = new DB();
 $alumnos = $db->getAlumnosConectar();
 
 if ($user->getTipoUsuario() === 0){
-
+    
     $zip = new ZipArchive();
     $filename = "../files/documentacion-alumnos.zip";
+
+    if(file_exists($filename)) {
+        unlink($filename);
+    }
 
     if ($zip->open($filename, ZipArchive::CREATE)!==TRUE) {
         exit("cannot open <$filename>\n");
@@ -48,8 +52,8 @@ if ($user->getTipoUsuario() === 0){
         http_response_code(404);
         die();
     }
-
     
+
 }
 
 function output_file($file, $name, $mime_type='')

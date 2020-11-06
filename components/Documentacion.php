@@ -59,9 +59,9 @@
     <div>
         <?php
             if ($user->getTipoUsuario() === 0) {
-                $carpetaAlumno = "../files/" . $alumnoDecoded['usuario'];
+                $carpetaAlumno = $alumnoDecoded['usuario'];
             } else {
-                $carpetaAlumno = "../files/" . $user->getUsuario();
+                $carpetaAlumno = $user->getUsuario();
             }
             $destino = $carpetaAlumno;
             $documentos = $alumno->listaDocumentacion($id);
@@ -69,7 +69,8 @@
             foreach($documentos as $documento){
                 $nombre = $documento["Nombre"];
                 echo '
-                    <li class="document-link correcto" onclick="location=`VerDocumento.php?path=' .$carpetaAlumno .'&id=' .$id .'`">' .$nombre .'</li>';
+                    <li class="document-link correcto" onclick="location=`VerDocumento.php?path=' .$carpetaAlumno .'&id=' .$id .'`">' .$nombre .'</li>
+                ';
             };
             echo '</ul>';
         ?>
