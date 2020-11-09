@@ -100,7 +100,7 @@
           <p>DNI: <br>
             <input type="number" name="dni">
           </p>
-          <p> Lugar donde reside en época de aislamiento/distanciamiento social preventivo obligatorio: </p>
+          <p> Lugar de residencia durante el período de clases: </p>
           <div class="domicilio">
             <p>
               Domicilio (Calle, Número, Piso, Departamento): <br>
@@ -146,11 +146,11 @@
           <h3>¿Para qué beca desea postularse?</h3>
           <div class="tipoBeca__options">
             <div class="tipoBeca__radio">
-              <input type="radio" name="becaConectar" value="0" disabled>
+              <input type="radio" name="becaConectar" value="0">
               <label for="0">Becas J.B.Teran</label><br>
             </div>
             <div class="tipoBeca__radio">
-              <input type="radio" name="becaConectar" value="1" checked>
+              <input type="radio" name="becaConectar" value="1" disabled>
               <label for="1">Becas Conectividad</label><br>
             </div>
           </div>

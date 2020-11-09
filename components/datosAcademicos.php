@@ -51,6 +51,9 @@
                   };
               echo '</select>
               </p>
+              <p>Año de ingreso a la facultad: <br>
+                <input type="number" name="ingreso">
+              </p>
               <p style="display: none;">Duración de la carrera en años: <br>
                 <input type="number" name="aniosCarrera">
               </p>
@@ -68,17 +71,18 @@
               </div>
             </div>
           </form>';
-      } else if (isset($_POST['carrera']) && isset($_POST['materias']) && isset($_POST['aniosCarrera'])) {
+      } else if (isset($_POST['carrera']) && isset($_POST['materias']) && isset($_POST['ingreso']) && isset($_POST['aniosCarrera'])) {
         $materiasUppercase=array_map(function($word) { return ucwords(strtolower($word)); }, $_POST['materias']);
         $materias = implode(", ",array_unique(array_filter($materiasUppercase)));
-        if ($materias !== ''){
+        if ($materias !== '' && $_POST['ingreso'] !== 0 && $_POST['ingreso'] !== '' && $_POST['ingreso'] < 2020){
           $carrera = $_POST['carrera'];
           $aniosCarrera = $_POST['aniosCarrera'];
           $facultadAlumno = $_POST['facultad'];
+          $ingreso = $_POST['ingreso'];
           if ($esBecaConectar) {
             $alumno->datosAcademicosConectar($id, $facultadAlumno, $carrera, $aniosCarrera, $materias);
           } else {
-            $alumno->datosAcademicos($id, $facultadAlumno, $carrera, $aniosCarrera, $materias);
+            $alumno->datosAcademicos($id, $facultadAlumno, $carrera, $aniosCarrera, $materias, $ingreso);
           }
           include_once 'components/datosFamiliares.php';
         } else {
@@ -89,7 +93,17 @@
             }
           };
           echo '
-            <form action="" method="POST" class="registro">
+          <form action="" method="POST" class="registro">';
+              if ($materias === ''){
+                echo '<div class="incorrecto" style="padding-left: 0px;">Debe ingresar al menos una materia</div>';
+              }
+              if ($_POST['ingreso'] === '' || $_POST['ingreso'] === 0){
+                echo '<div class="incorrecto" style="padding-left: 0px;">Debe indicar en qué año ingresó a la Universidad</div>';
+              }
+              if ($_POST['ingreso'] === 2020 || $_POST['ingreso'] === '2020'){
+                echo '<div class="incorrecto" style="padding-left: 0px;">No puede postularse si ingresó este año a la Universidad</div>';
+              }
+              echo '
               <h2>Completar Datos Académicos</h2>
               <div class="registro__form">
               <select name="facultad" style="display:none;">';
@@ -102,6 +116,9 @@
                       echo '<option value="' .$carr .'">' .$carr .'</option>';
                     };
                 echo '</select>
+                </p>
+                <p>Año de ingreso a la facultad: <br>
+                  <input type="number" name="ingreso">
                 </p>
                 <p style="display: none;">Duración de la carrera en años: <br>
                   <input type="number" name="aniosCarrera">
@@ -120,9 +137,6 @@
                 </div>
               </div>
             </form>';
-            if ($materias === ''){
-              echo '<div class="incorrecto" style="margin-left: 50px; padding-left: 0px;">Debe ingresar al menos una materia</div>';
-            }
         }
       } else {
         echo '

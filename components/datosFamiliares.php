@@ -427,9 +427,66 @@ if($esBecaConectar) {
     </form>';
   }
 } else {
+  if (isset($_POST['vulnerabilidad']) && isset($_POST['tieneHijos']) && isset($_POST['ingresos']) && isset($_POST['egresos']) && isset($_POST['integrantes'])){
+    if ($_POST['vulnerabilidad'] === 'Si' && $_POST['descripcionVulnerabilidad'] === '') {
+      $mensajeVulnerabilidad = 'Debe describir su condición de vulnerabilidad';
+    }
+    if ($_POST['ingresos'] === '') {
+      $mensajeIngresos = 'Debe indicar la sumatoria de ingresos';
+    }
+    if ($_POST['egresos'] === 0 || $_POST['egresos'] === '') {
+      $mensajeEgresos = 'Debe indicar la sumatoria de egresos';
+    }
+    if ($_POST['tieneHijos'] === '1' && ($_POST['cantidadHijos'] === '')) {
+      $mensajeHijos = 'Debe indicar a quién tiene a cargo';
+    }
+    if (!isset($mensajeHijos) && !isset($mensajeVulnerabilidad) && !isset($mensajeIntegrantes) && !isset($mensajeIngresos) && !isset($mensajeFamiliares))      {
+      $ingresos = $_POST['ingresos'];
+      $egresos = $_POST['egresos'];
+      $integrantes = $_POST['integrantes'];
+      $hijos = 'No';
+      if($_POST['tieneHijos'] === '1' ) {
+        $hijos = $_POST['cantidadHijos'];
+      }
+      $vulnerabilidad = 'No';
+      if($_POST['vulnerabilidad'] === 'Si' ) {
+        $vulnerabilidad = $_POST['descripcionVulnerabilidad'];
+      } else if ($_POST['vulnerabilidad'] === 'NC' ) {
+        $vulnerabilidad = 'No deseo contestar';
+      }
+      $alumno->datosFamiliares($id, $ingresos, $egresos, $integrantes, $hijos, $vulnerabilidad);
+      header("Location: components/solicitudEnviada.php");
+    }
+  }
   echo '
   <form action="" method="POST" class="registro">
-    <h2>Datos Familiares</h2>
+      <h2>Otros datos</h2>
+      <div class="registro__form familiares">';
+      if(isset($mensajeJuramento)) {
+        echo'
+        <div class="incorrecto" style="padding-left: 0px;">'
+          .$mensajeJuramento 
+        .'</div>';
+      }
+      if(isset($mensajeVulnerabilidad)) {
+        echo'
+        <div class="incorrecto" style="padding-left: 0px;">'
+          .$mensajeVulnerabilidad 
+        .'</div>';
+      }
+      if(isset($mensajeIngresos)) {
+        echo'
+        <div class="incorrecto" style="padding-left: 0px;">'
+          .$mensajeIngresos 
+        .'</div>';
+      }
+      if(isset($mensajeEgresos)) {
+        echo'
+        <div class="incorrecto" style="padding-left: 0px;">'
+          .$mensajeEgresos 
+        .'</div>';
+      }
+        echo '
     <div class="registro__form familiares">
       <p>
       Ingresos totales en pesos (Sumatoria de los ingresos económicos de todos los integrantes del grupo familiar. Escriba el número <b>sin puntos</b>, salvo para indicar centavos): <br>
@@ -447,18 +504,45 @@ if($esBecaConectar) {
       <p>Cantidad de integrantes de su grupo familiar (Contándose a usted mismo): <br>
         <input type="number" name="integrantes">
       </p>
+      <p>¿Tiene personas a su cargo?
+        <div class="registro__form hijos">
+          <div>
+            <input type="radio" name="tieneHijos" value="1">
+            <label for="1">Si</label><br>
+          </div>
+          <div>
+            <input type="radio" name="tieneHijos" value="0">
+            <label for="0">No</label><br>
+          </div>
+        </div>
+      </p>
+      <p>En caso afirmativo, ¿A quién tiene a cargo?<br>
+        <input name="cantidadHijos">
+      </p>
+      <p>¿Presentas indicadores de vulnerabilidad?
+      <div class="registro__form vulnerabilidad">
+        <div>
+          <input type="radio" name="vulnerabilidad" value="Si">
+          <label for="Si">Si</label><br>
+        </div>
+        <div>
+          <input type="radio" name="vulnerabilidad" value="No">
+          <label for="No">No</label><br>
+        </div>
+        <div>
+          <input type="radio" name="vulnerabilidad" value="NC">
+          <label for="NC">No deseo contestar</label><br>
+        </div>
+        </div>
+        <p>En caso de responder afirmativamente la pregunta anterior, describa brevemente el mismo: <br>
+          <input type="text" name="descripcionVulnerabilidad">
+        </p>
+    </p>
       <div class="registro__button">
         <input type="submit" value="Siguiente" class="button">
       </div>
     </div>
   </form>';
-  if (isset($_POST['ingresos']) && isset($_POST['egresos']) && isset($_POST['integrantes'])){
-    $ingresos = $_POST['ingresos'];
-    $egresos = $_POST['egresos'];
-    $integrantes = $_POST['integrantes'];
-    $alumno->datosFamiliares($id, $ingresos, $egresos, $integrantes);
-    header("Location: components/solicitudEnviada.php");
-  }
 }
 ?>
   

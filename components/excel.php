@@ -8,101 +8,182 @@
     <link rel="shortcut icon" href="http://www.unt.edu.ar/favicon.ico" type="image/x-icon">
 </head>
 <body>
-<?php
-    include_once '../models/user_session.php';
-    require_once '../models/user.php';
-    $userSession = new UserSession();
-    $user = new User();
+    <?php
+        include_once '../models/user_session.php';
+        require_once '../models/user.php';
+        $userSession = new UserSession();
+        $user = new User();
 
-    if (isset($_SESSION['user'])){
-        $user->setUser($userSession->getCurrentUser($user));
-    }
+        if (isset($_SESSION['user'])){
+            $user->setUser($userSession->getCurrentUser($user));
+        }
 
-    if ($user->getTipoUsuario() === 0){
-        header('Content-type: application/vnd.ms-excel');
-        header("Content-Disposition: attachment; filename=alumnos_conectividad.xls");
-        header("Pragma: no-cache");
-        header("Expires: 0");
-    }
-?>
+        if ($user->getTipoUsuario() === 0){
+            header('Content-type: application/vnd.ms-excel');
+            if(isset($_REQUEST['beca'])) {
+                $beca = $_REQUEST['beca'];
+                if ($beca === '0') {
+                    header("Content-Disposition: attachment; filename=alumnos_teran.xls");
+                } else {
+                    header("Content-Disposition: attachment; filename=alumnos_conectividad.xls");
+                }
+            }
+            header("Pragma: no-cache");
+            header("Expires: 0");
+        }
+    ?>
       <?php
 
       include_once '../models/db.php';
       $db = new DB();
-      $alumnos = $db->getAlumnosConectar();
-      if ($user->getTipoUsuario() === 0){
-        echo '
-        <div class="lista_alumnos">
-        <h2>Alumnos registrados:</h2>
-        <table cellspacing="0" cellpadding="0">
-        <tr>
-           <th>id</th>
-           <th>Apellidos</th>
-           <th>Nombres</th>
-           <th>Email</th>
-           <th>DNI</th>
-           <th>Usuario</th>
-           <th>Subió documentación</th>
-           <th>Telefono</th>
-           <th>Domicilio</th>
-           <th>Localidad</th>
-           <th>Provincia</th>
-           <th>Facultad</th>
-           <th>Carrera</th>
-           <th>Materias cursando en modalidad virtual</th>
-           <th>Integrantes de grupo familiar</th>
-           <th>Integrantes que utilizan Internet</th>
-           <th>Fuente de Ingresos</th>
-           <th>Es responsable de</th>
-           <th>Fecha de creacion</th>
-           <th>Fecha de edicion</th>
-           <th>Tiene teléfono 4G</th>
-           <th>Tiene teléfono Liberado</th>
-           <th>Comapañía que posee</th>
-           <th>Compañía que mejor funciona en su zona</th>
-           <th>Vulnerabilidad</th>
-        </tr>';
-
-        foreach($alumnos as $alumno){
-            $documentacion = $db->tieneDocumentacion($alumno['idUsuario']);
-            $tieneDoc = 'NO';
+      if(isset($_REQUEST['beca'])) {
+        $beca = $_REQUEST['beca'];
+        if ($beca === '0') {
+            $alumnos = $db->getAlumnos();
+            if ($user->getTipoUsuario() === 0){
                 echo '
+                <div class="lista_alumnos">
+                <h2>Alumnos registrados:</h2>
+                <table cellspacing="0" cellpadding="0">
                 <tr>
-                    <td>' .$alumno['idUsuario'] .'</td>
-                    <td>' .$alumno['Apellidos'] .'</td>
-                    <td>' .$alumno['Nombres'] .'</td>
-                    <td>' .$alumno['Email'] .'</td>
-                    <td>' .$alumno['DNI'] .'</td>
-                    <td>' .$alumno['Usuario'] .'</td>';
-                foreach($documentacion as $documento){
-                    $tieneDoc = 'SI';
+                <th>id</th>
+                <th>Apellidos</th>
+                <th>Nombres</th>
+                <th>Email</th>
+                <th>DNI</th>
+                <th>Tiene documentacion</th>
+                <th>Usuario</th>
+                <th>Domicilio</th>
+                <th>Localidad</th>
+                <th>Provincia</th>
+                <th>Telefono</th>
+                <th>Facultad</th>
+                <th>Carrera</th>
+                <th>Año de ingreso a la facultad</th>
+                <th>Materias cursando en modalidad virtual</th>
+                <th>Integrantes de grupo familiar</th>
+                <th>Ingresos</th>
+                <th>Egresos</th>
+                <th>Familiares a cargo</th>
+                <th>Vulnerabilidad</th>
+                <th>Fecha de creacion</th>
+                <th>Fecha de edicion</th>
+                </tr>';
+                foreach($alumnos as $alumno){
+                    $documentacion = $db->tieneDocumentacion($alumno['idUsuario']);
+                    $tieneDoc = 'NO';
+                    echo '
+                    <tr>
+                        <td>' .$alumno['idUsuario'] .'</td>
+                        <td>' .$alumno['Apellidos'] .'</td>
+                        <td>' .$alumno['Nombres'] .'</td>
+                        <td>' .$alumno['Email'] .'</td>
+                        <td>' .$alumno['DNI'] .'</td>';
+                        foreach($documentacion as $documento){
+                            $tieneDoc = 'SI';
+                        }
+                        echo '
+                        <td>' .$tieneDoc .'</td>
+                        <td>' .$alumno['Usuario'] .'</td>
+                        <td>' .$alumno['Telefono'] .'</td>
+                        <td>' .$alumno['Domicilio'] .'</td>
+                        <td>' .$alumno['Localidad'] .'</td>
+                        <td>' .$alumno['Provincia'] .'</td>
+                        <td>' .$alumno['Facultad'] .'</td>
+                        <td>' .$alumno['Carrera'] .'</td>
+                        <td>' .$alumno['AnioIngreso'] .'</td>
+                        <td>' .$alumno['MateriasCursando'] .'</td>
+                        <td>' .$alumno['IntegrantesFamilia'] .'</td>
+                        <td>' .$alumno['Ingresos'] .'</td>
+                        <td>' .$alumno['Egresos'] .'</td>
+                        <td>' .$alumno['FamiliarCargo'] .'</td>
+                        <td>' .$alumno['Vulnerabilidad'] .'</td>
+                        <td>' .$alumno['FechaCreacion'] .'</td>
+                        <td>' .$alumno['FechaEdicion'] .'</td>
+
+                    </tr>
+                    ';
                 }
                 echo '
-                    <td>' .$tieneDoc .'</td>
-                    <td>' .$alumno['Telefono'] .'</td>
-                    <td>' .$alumno['Domicilio'] .'</td>
-                    <td>' .$alumno['Localidad'] .'</td>
-                    <td>' .$alumno['Provincia'] .'</td>
-                    <td>' .$alumno['Facultad'] .'</td>
-                    <td>' .$alumno['Carrera'] .'</td>
-                    <td>' .$alumno['MateriasCursando'] .'</td>
-                    <td>' .$alumno['IntegrantesFamilia'] .'</td>
-                    <td>' .$alumno['FamiliaresInternet'] .'</td>
-                    <td>' .$alumno['Ingresos'] .'</td>
-                    <td>' .$alumno['CantidadHijos'] .'</td>
-                    <td>' .$alumno['FechaCreacion'] .'</td>
-                    <td>' .$alumno['FechaEdicion'] .'</td>
-                    <td>' .$alumno['Telefono4G'] .'</td>
-                    <td>' .$alumno['TelefonoLiberado'] .'</td>
-                    <td>' .$alumno['Compania'] .'</td>
-                    <td>' .$alumno['MejorCompania'] .'</td>
-                    <td>' .$alumno['Vulnerabilidad'] .'</td>
-                </tr>
-                ';
+            </table>';
             }
+        } else {
+        $alumnos = $db->getAlumnosConectar();
+            if ($user->getTipoUsuario() === 0){
+            echo '
+            <div class="lista_alumnos">
+            <h2>Alumnos registrados:</h2>
+            <table cellspacing="0" cellpadding="0">
+            <tr>
+                <th>id</th>
+                <th>Apellidos</th>
+                <th>Nombres</th>
+                <th>Email</th>
+                <th>DNI</th>
+                <th>Usuario</th>
+                <th>Subió documentación</th>
+                <th>Telefono</th>
+                <th>Domicilio</th>
+                <th>Localidad</th>
+                <th>Provincia</th>
+                <th>Facultad</th>
+                <th>Carrera</th>
+                <th>Materias cursando en modalidad virtual</th>
+                <th>Integrantes de grupo familiar</th>
+                <th>Integrantes que utilizan Internet</th>
+                <th>Fuente de Ingresos</th>
+                <th>Es responsable de</th>
+                <th>Fecha de creacion</th>
+                <th>Fecha de edicion</th>
+                <th>Tiene teléfono 4G</th>
+                <th>Tiene teléfono Liberado</th>
+                <th>Comapañía que posee</th>
+                <th>Compañía que mejor funciona en su zona</th>
+                <th>Vulnerabilidad</th>
+            </tr>';
+    
+            foreach($alumnos as $alumno){
+                $documentacion = $db->tieneDocumentacion($alumno['idUsuario']);
+                $tieneDoc = 'NO';
+                    echo '
+                    <tr>
+                        <td>' .$alumno['idUsuario'] .'</td>
+                        <td>' .$alumno['Apellidos'] .'</td>
+                        <td>' .$alumno['Nombres'] .'</td>
+                        <td>' .$alumno['Email'] .'</td>
+                        <td>' .$alumno['DNI'] .'</td>
+                        <td>' .$alumno['Usuario'] .'</td>';
+                    foreach($documentacion as $documento){
+                        $tieneDoc = 'SI';
+                    }
+                    echo '
+                        <td>' .$tieneDoc .'</td>
+                        <td>' .$alumno['Telefono'] .'</td>
+                        <td>' .$alumno['Domicilio'] .'</td>
+                        <td>' .$alumno['Localidad'] .'</td>
+                        <td>' .$alumno['Provincia'] .'</td>
+                        <td>' .$alumno['Facultad'] .'</td>
+                        <td>' .$alumno['Carrera'] .'</td>
+                        <td>' .$alumno['MateriasCursando'] .'</td>
+                        <td>' .$alumno['IntegrantesFamilia'] .'</td>
+                        <td>' .$alumno['FamiliaresInternet'] .'</td>
+                        <td>' .$alumno['Ingresos'] .'</td>
+                        <td>' .$alumno['CantidadHijos'] .'</td>
+                        <td>' .$alumno['FechaCreacion'] .'</td>
+                        <td>' .$alumno['FechaEdicion'] .'</td>
+                        <td>' .$alumno['Telefono4G'] .'</td>
+                        <td>' .$alumno['TelefonoLiberado'] .'</td>
+                        <td>' .$alumno['Compania'] .'</td>
+                        <td>' .$alumno['MejorCompania'] .'</td>
+                        <td>' .$alumno['Vulnerabilidad'] .'</td>
+                    </tr>
+                    ';
+                }
+            }
+            echo '
+            </table>';
+            } 
         }
-        echo '
-       </table>';
       ?>
     </div>
 </body>

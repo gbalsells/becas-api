@@ -367,8 +367,10 @@ input:focus{
 
 
 .login-div{
-  height: calc(100vh - 50px);
+  height: 100vh;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   background: #e0f2f1;
   background-image: url("assets/untlogo.png");
@@ -408,11 +410,15 @@ input:focus{
 }
 
 .login__buttons{
-  margin-top: 3em;
+  margin-top: 1em;
   display: flex;
   justify-content: center;
   width: 60%;
   margin-bottom: 10px;
+}
+
+.message{
+  padding-right: 10px;
 }
 
 .recuperar__pass {
@@ -429,15 +435,30 @@ input:focus{
 .registrarse{
   background: #009688;
 }
+.lista-conectividad{
+  background: #0277bd;
+}
+.lista-teran{
+  background: #009688;
+}
+
+#btn-excel{
+  display: flex;
+  align-items: center;
+}
 
 .registrarse:hover{
   background: #00675b;
 }
 
 #mensaje-recordatorio{
-  max-width: 25em;
-  margin-top: -2.5em;
-  align-self: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#mensaje-recordatorio li{
+  margin-bottom: 10px;
+  font-size: 14px;
 }
 
 #atencion{
@@ -527,6 +548,23 @@ input:focus{
 }
 
 .alumno{
+  background-color: #009688;
+  margin: 20px 0 20px 0;
+  padding: 10px;
+  color: white;
+  -webkit-box-shadow: 0px 0px 20px -9px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 20px -9px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 20px -9px rgba(0,0,0,0.75);
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.4s;
+  min-width: 80%;
+}
+
+.alumno_conectar{
   background-color: #0277bd;
   margin: 20px 0 20px 0;
   padding: 10px;
@@ -548,6 +586,14 @@ input:focus{
 }
 
 .alumno span{
+  width: 23%;
+}
+
+.alumno_conectar:hover{
+  transform: scale(1.02);
+}
+
+.alumno_conectar span{
   width: 23%;
 }
 
@@ -610,6 +656,26 @@ h2.warning{
   border-radius: 3px;
 }
 
+.indicador-teran {
+  width: 20px;
+  height: 20px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  background: #009688;
+  margin-right: 5px;
+}
+
+.indicador-conectar {
+  margin-left: 30px;
+  width: 20px;
+  height: 20px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  background: #0277bd;
+  margin-right: 5px;
+}
 /* ADJUNTAR ARCHIVOS */
 
 .adjuntar span {

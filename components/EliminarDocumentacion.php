@@ -53,7 +53,7 @@
 <div>
 <?php
     if (isset($_REQUEST['path']) && isset($_REQUEST['id'])) {
-        $path = $_REQUEST['path'];
+        $path = "../files/" .$_REQUEST['path'];
         $idParam = $_REQUEST['id'];
         $documentPath = $path .'/' .$alumnoDecoded['dni'] .'.pdf';
         if ($user->getTipoUsuario() !== 0) {

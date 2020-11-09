@@ -24,7 +24,7 @@
       <form action="" method="POST" class="login">
           <?php
               if(isset($errorLogin)){
-                  echo $errorLogin;
+                echo $errorLogin;
               }
           ?>
           <div class="login__form">
@@ -42,10 +42,6 @@
             <div>
             <!--
             MENSAJE PARA CUANDO CIERRE LA CONVOCATORIA
-            <div id="mensaje-recordatorio">
-              <p id="atencion"><b>¡ATENCIÓN!</b></p>
-              <p id="recordar">La convocatoria ha cerrado. Puede ingresar para consultar el estado de su solicitud.</p>
-            </div>
             -->
             <?php
             if($incorrecto === true){
@@ -59,5 +55,18 @@
           </div>
       </form>
     </div>
+    <div class="login">
+      <div class="login__form message">
+        <div id="mensaje-recordatorio">
+          <p id="atencion"><b>¡ATENCIÓN!</b></p>
+          <ul>
+            <li>La convocatoria para las becas <b>Conectividad</b> ha cerrado. Puede ingresar para consultar el estado de su solicitud.</li>
+            <li>Se encuentran abiertas las inscripciones para la <b>Beca J. B. Terán</b></li>
+            <li>Si ya se encuentra inscripto a las becas Conectividad y desea postularse para las becas Juan B. Terán, <b>inicie sesión</b> y seleccione la opción <b>"Solicitar Beca J. B. Terán"</b></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

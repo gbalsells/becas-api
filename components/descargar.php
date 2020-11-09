@@ -18,12 +18,23 @@ if (isset($_SESSION['user'])){
 }
 
 $db = new DB();
-$alumnos = $db->getAlumnosConectar();
+if(isset($_REQUEST['beca'])) {
+    $beca = $_REQUEST['beca'];
+    if ($beca === '0') {
+        $alumnos = $db->getAlumnos();
+    } else {
+        $alumnos = $db->getAlumnosConectar();
+    }
+}
 
 if ($user->getTipoUsuario() === 0){
     
     $zip = new ZipArchive();
-    $filename = "../files/documentacion-alumnos.zip";
+    if ($beca === '0') {
+        $filename = "../files/documentacion-alumnos-teran.zip";
+    } else {
+        $filename = "../files/documentacion-alumnos-conectividad.zip";
+    }
 
     if(file_exists($filename)) {
         unlink($filename);
@@ -46,7 +57,11 @@ if ($user->getTipoUsuario() === 0){
     $zip->close();
 
     if(file_exists($filename)) {
-        output_file($filename, 'documentacion.zip');
+        if ($beca === '0') {
+            output_file($filename, 'documentacion-teran.zip');
+        } else {
+            output_file($filename, 'documentacion-conectividad.zip');
+        }
         exit;
     } else {
         http_response_code(404);

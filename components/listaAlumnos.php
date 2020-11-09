@@ -13,8 +13,12 @@
     <div class="lista_alumnos">
       <h2>Alumnos registrados:</h2>
       <div id="btn-excel">
-      <button class="button registrarse" style="margin-top:30px; margin-bottom: 20px;margin-left: auto; margin-right: auto;" onclick="location=`components/descargar.php`">Descargar Documentación</button>
-      <button class="button registrarse" style="margin-top:30px; margin-bottom: 20px;margin-left: auto; margin-right: auto;" onclick="location=`components/excel.php`">Descargar Excel</button>
+        <button class="button lista-teran" style="margin-top:30px; margin-bottom: 20px;margin-left: auto; margin-right: auto;" onclick="location=`components/descargar.php?beca=0`">Descargar Documentación Terán</button>
+        <button class="button lista-teran" style="margin-top:30px; margin-bottom: 20px;margin-left: auto; margin-right: auto;" onclick="location=`components/excel.php?beca=0`">Descargar Excel Terán</button>
+      </div>
+      <div id="btn-excel">
+        <button class="button lista-conectividad" style="margin-top:30px; margin-bottom: 20px;margin-left: auto; margin-right: auto;" onclick="location=`components/descargar.php?beca=1`">Descargar Documentación Conectividad</button>
+        <button class="button lista-conectividad" style="margin-top:30px; margin-bottom: 20px;margin-left: auto; margin-right: auto;" onclick="location=`components/excel.php?beca=1`">Descargar Excel Conectividad</button>
       </div>
       <div id="form-busqueda">
         <form action="" method="POST">
@@ -22,39 +26,68 @@
           <input type="submit" value="BUSCAR" id="btn-busqueda">
         </form>
       </div>
+      <div style="display: flex; align-items: center;">
+      <div class="indicador-teran"></div>Becas Terán
+      <div class="indicador-conectar"></div>Becas Conectividad
+      </div>
   
       <?php
       include_once 'models/db.php';
       $db = new DB();
+      
+      function object_sorter($clave,$orden=null) {
+        return function ($a, $b) use ($clave,$orden) {
+              $result=  ($orden=="DESC") ? strnatcmp($b->$clave, $a->$clave) :  strnatcmp($a->$clave, $b->$clave);
+              return $result;
+        };
+      }
 
       if(isset($_POST['busqueda'])){
         $busqueda = strtolower($_POST['busqueda']);
         if($busqueda == ''){
-          $alumnos = $db->getAlumnosConectar();
+          $alumnos1 = $db->getAlumnosConectar()->fetchAll(PDO::FETCH_OBJ);
+          $alumnos2 = $db->getAlumnos()->fetchAll(PDO::FETCH_OBJ);
+          $alumnos = array_merge($alumnos1, $alumnos2);
+          usort($alumnos, object_sorter('FechaCreacion'));
           foreach($alumnos as $alumno){
-            $id = $alumno['idUsuario'];
+            $id = $alumno->idUsuario;
             echo '
-            <div class="alumno" onclick="location=`components/CaratulaAlumno.php?id=' .$id .'`">
-              <span>' .$alumno['Apellidos'] .', ' .$alumno['Nombres'] . '</span>
-              <span>' .$alumno['DNI'] .'</span>
-              <span>' .$alumno['Facultad'] .'</span>
-              <span>' .$alumno['Carrera'] .'</span>
+            <div class="';
+            if($alumno->esBecaConectar) {
+              echo 'alumno_conectar';
+            } else {
+              echo 'alumno';
+            }
+            echo '" onclick="location=`components/CaratulaAlumno.php?id=' .$id .'`">
+              <span>' .$alumno->Apellidos .', ' .$alumno->Nombres . '</span>
+              <span>' .$alumno->DNI .'</span>
+              <span>' .$alumno->Facultad .'</span>
+              <span>' .$alumno->Carrera .'</span>
             </div>
             ';
           }
 
         }
         else {
-          $alumnos_buscados = $db->buscarAlumnoConectar($busqueda);
-          if($alumnos_buscados->rowCount()){
+          $alumnos_buscados1 = $db->buscarAlumnoConectar($busqueda)->fetchAll(PDO::FETCH_OBJ);
+          $alumnos_buscados2 = $db->buscarAlumno($busqueda)->fetchAll(PDO::FETCH_OBJ);
+          $alumnos_buscados = array_merge($alumnos_buscados1, $alumnos_buscados2);
+          usort($alumnos_buscados, object_sorter('FechaCreacion'));
+          if(count($alumnos_buscados) > 0){
             foreach($alumnos_buscados as $alumno){
-              $id = $alumno['idUsuario'];
+              $id = $alumno->idUsuario;
               echo '
-              <div class="alumno" onclick="location=`components/CaratulaAlumno.php?id=' .$id .'`">
-                <span>' .$alumno['Apellidos'] .', ' .$alumno['Nombres'] . '</span>
-                <span>' .$alumno['DNI'] .'</span>
-                <span>' .$alumno['Facultad'] .'</span>
-                <span>' .$alumno['Carrera'] .'</span>
+              <div class="';
+              if($alumno->esBecaConectar) {
+                echo 'alumno_conectar';
+              } else {
+                echo 'alumno';
+              }
+              echo '" onclick="location=`components/CaratulaAlumno.php?id=' .$id .'`">
+                <span>' .$alumno->Apellidos .', ' .$alumno->Nombres . '</span>
+                <span>' .$alumno->DNI .'</span>
+                <span>' .$alumno->Facultad .'</span>
+                <span>' .$alumno->Carrera .'</span>
               </div>
               ';
             }
@@ -64,15 +97,24 @@
         }
       } 
       else {
-        $alumnos = $db->getAlumnosConectar();
+        $alumnos1 = $db->getAlumnosConectar()->fetchAll(PDO::FETCH_OBJ);
+        $alumnos2 = $db->getAlumnos()->fetchAll(PDO::FETCH_OBJ);
+        $alumnos = array_merge($alumnos1, $alumnos2);
+        usort($alumnos, object_sorter('FechaCreacion'));
         foreach($alumnos as $alumno){
-          $id = $alumno['idUsuario'];
+          $id = $alumno->idUsuario;
           echo '
-          <div class="alumno" onclick="location=`components/CaratulaAlumno.php?id=' .$id .'`">
-            <span>' .$alumno['Apellidos'] .', ' .$alumno['Nombres'] . '</span>
-            <span>' .$alumno['DNI'] .'</span>
-            <span>' .$alumno['Facultad'] .'</span>
-            <span>' .$alumno['Carrera'] .'</span>
+          <div class="';
+          if($alumno->esBecaConectar) {
+            echo 'alumno_conectar';
+          } else {
+            echo 'alumno';
+          }
+          echo '" onclick="location=`components/CaratulaAlumno.php?id=' .$id .'`">
+            <span>' .$alumno->Apellidos .', ' .$alumno->Nombres . '</span>
+            <span>' .$alumno->DNI .'</span>
+            <span>' .$alumno->Facultad .'</span>
+            <span>' .$alumno->Carrera .'</span>
           </div>
           ';
         }

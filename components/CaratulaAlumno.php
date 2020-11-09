@@ -38,7 +38,7 @@
         $esBecaConectar = $user->getBeca();
     }
 
-    if ($esBecaConectar) {
+    if ($esBecaConectar === 1) {
         $alumno->setAlumnoByUserConectar($id);
         $beca = 'Conectividad';
     } else {
@@ -51,7 +51,7 @@
         $userSession->setAlumno($alumnoJson);
         $id = $alumno->getId();
         $tieneDoc = $alumno->tieneDocumentacion($id);
-        if (!$tieneDoc) {
+        if (!$tieneDoc && !$esBecaConectar) {
             header("Location: components/AdjuntarArchivos.php");
         }
     }
@@ -123,6 +123,13 @@
                     <ul class="caratula__datos__info">
                         <li><b>Facultad: </b><?php echo $alumno->getFacultad();?></li>
                         <li><b>Carrera: </b><?php echo $alumno->getCarrera();?></li>
+                        <?php
+                        if (!$esBecaConectar) {
+                            echo '
+                            <li><b>Año de Ingreso: </b>' .$alumno->getAnioIngreso() .'</li>
+                            ';
+                        }
+                        ?>
                         <li><b>Materias cursando actualmente: </b>
                             <ul>
                                 <?php
@@ -147,13 +154,15 @@
                             <li><b>Tiene teléfono Liberado: </b>' .$alumno->getTelefonoLiberado() .'</li>
                             <li><b>Compañía que posee: </b>' .$alumno->getCompania() .'</li>
                             <li><b>Compañía con mejor cobertura en su zona: </b>' .$alumno->getMejorCompania() .'</li>
-                            <li><b>Vunerabilidad: </b>' .$alumno->getVulnerabilidad() .'</li>
+                            <li><b>Vulnerabilidad: </b>' .$alumno->getVulnerabilidad() .'</li>
                             ';
                         } else {
                             echo '
-                            <li><b>Ingresos: </b>' .$alumno->getIngresos() .'</li>
-                            <li><b>Egresos: </b>' .$alumno->getEgresos() .'</li>
                             <li><b>Integrantes del grupo familiar: </b> ' .$alumno->getIntegrantesFamilia() .'</li>
+                            <li><b>Ingresos: </b> $' .$alumno->getIngresos() .'</li>
+                            <li><b>Egresos: </b> $' .$alumno->getEgresos() .'</li>
+                            <li><b>Familiares a cargo: </b>' .$alumno->getFamiliarCargo() .'</li>
+                            <li><b>Vulnerabilidad: </b>' .$alumno->getVulnerabilidad() .'</li>
                             ';
                         }
                     ?>
@@ -167,7 +176,7 @@
                         //         if ($alumno->getVulnerabilidad()){
                         //             echo $alumno->getVulnerabilidad();
                         //         } else {
-                        //             echo '<span style="color: red; font-weight: 700;">Vunerabilidad no cargada</span>';
+                        //             echo '<span style="color: red; font-weight: 700;">Vulnerabilidad no cargada</span>';
                         //         }
                         //         echo '</li>
                         //         <li><b>Distancia: </b>';
@@ -257,7 +266,7 @@
                     echo '
                     <div class="button_flex">
                     ';
-                    if ($alumno->getFechaEdicion() === null) {
+                    if ($alumno->getFechaEdicion() === null && !$esBecaConectar) {
                         $userSession->setAlumno($alumnoJson);
                         echo '<button class="button atras" onclick="location=`components/EditarAlumno.php`">Editar</button>';                    
                     }
@@ -267,8 +276,11 @@
                     if ($tieneDoc) {
                         echo '<button class="button atras" onclick="location=`components/Documentacion.php`">Ver Documentación Adjuntada</button>';
                     } else {
-                        echo '<button class="button atras" onclick="location=`components/AdjuntarArchivos.php`">Adjuntar Documentación</button>';
+                        if (!$esBecaConectar) {
+                            echo '<button class="button atras" onclick="location=`components/AdjuntarArchivos.php`">Adjuntar Documentación</button>';
+                        }
                     }
+                    echo '<button class="button atras" onclick="location=`Documentacion.php`">Solicitar Beca Juan B. Terán</button>';
                 }
             ?>
             </div>

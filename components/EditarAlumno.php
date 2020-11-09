@@ -114,7 +114,7 @@
             </div>
         </form>
         ';
-    } else if (!isset($_POST['aceptarEdicion']) && isset($_POST['ingresos']) && isset($_POST['integrantes']) && isset($_POST['familiaresInternet'])){
+    } else if (!isset($_POST['aceptarEdicion']) && isset($_POST['ingresos']) && isset($_POST['integrantes'])){
         $facultad = $_POST['facultad'];
         $apellidos = $_POST['apellidos'];
         $nombres = $_POST['nombres'];
@@ -124,15 +124,15 @@
         $carrera = $_POST['carrera'];
         $materias = $_POST['materias'];
         $aniosCarrera = $_POST['aniosCarrera'];
-        $ingresos = implode(", ",array_unique(array_filter($_POST['ingresos'])));
         $integrantes = $_POST['integrantes'];
-        $familiaresInternet = $_POST['familiaresInternet'];
         $domicilio = $_POST['domicilio'];
         $localidad = $_POST['localidad'];
         $provincia = $_POST['provincia'];
 
 
         if ($esBecaConectar) {
+            $ingresos = implode(", ",array_unique(array_filter($_POST['ingresos'])));
+            $familiaresInternet = $_POST['familiaresInternet'];
             if ($_POST['tieneHijos'] === '1' && $_POST['cantidadHijos'] === '' ||
                 $_POST['vulnerabilidad'] === 'Si' && $_POST['descripcionVulnerabilidad'] === '' || $_POST['integrantes'] === '0' || $_POST['integrantes'] === '') {
                     echo '
@@ -189,7 +189,7 @@
                         <p><b>Tiene teléfono Liberado: </b>' .$telefonoLiberado .'</p>
                         <p><b>Compañía que posee: </b>' .$compania .'</p>
                         <p><b>Compañía con mejor cobertura en su zona: </b>' .$mejorCompania .'</p>
-                        <p><b>Vunerabilidad: </b>' .$vulnerabilidad .'</p>
+                        <p><b>Vulnerabilidad: </b>' .$vulnerabilidad .'</p>
     
                         <p style="padding-top: 10px;font-size: 20px; font-weight: 700;">¿Guardar cambios?</p>
         
@@ -311,145 +311,190 @@
                 ';
             }
         } else {
-            $egresos = $_POST['egresos'];
-            echo '
-                <form action="" method="POST" class="registro">
-                    <h2>Datos Ingresados</h2>
-                    ';
-                    if ($user->getTipoUsuario() === 1) {
-                        echo '<span class="precaucion"><b>Por favor, revise los datos con precaución antes de aceptar los cambios. No podrá volver a editarlos en el futuro.</b></span>';
-                    }
+            if ($_POST['tieneHijos'] === '1' && $_POST['FamiliarCargo'] === '' ||
+                $_POST['vulnerabilidad'] === 'Si' && $_POST['descripcionVulnerabilidad'] === '' || $_POST['integrantes'] === '0' || $_POST['integrantes'] === '') {
                     echo '
-                    <p><b>Nombre:</b> ' .$nombres .'</p>
-                    <p><b>Apellido:</b> ' .$apellidos .'</p>
-                    <p><b>DNI:</b> ' .$dni .'</p>
-                    <p><b>Email:</b> ' .$email .'</p>
-                    <p><b>Telefono:</b> ' .$telefono .'</p>
-                    <p><b>Facultad:</b> ' .$facultad .'</p>
-                    <p><b>Carrera:</b> ' .$carrera .'</p>
-                    <p><b>Materias que se encuentra cursando:</b> ' .$materias .' </p>
+                    <div class="incorrecto" style="margin-left: 50px; padding-top: 90px;">
+                        <form action="" method="POST">
+                            ERROR: Para editar sus datos, deberá completar todos los campos. Por favor, intente nuevamente.
+                            <br>
+                            <select name="aceptar" style="display:none;">
+                                <option value="aceptar">true</option>
+                            </select>
+                            <input type="submit" value="Reintentar" class="button" style="margin-top: 20px;">
+                        </form>
+                    </div>';
+            } else {
+                $ingreso = $_POST['ingreso'];
+                $ingresos = $_POST['ingresos'];
+                $egresos = $_POST['egresos'];
+                $vulnerabilidad = 'No';
+                if($_POST['vulnerabilidad'] === 'Si' ) {
+                  $vulnerabilidad = $_POST['descripcionVulnerabilidad'];
+                } else if ($_POST['vulnerabilidad'] === 'NC' ) {
+                  $vulnerabilidad = 'No deseo contestar';
+                }
+                $familiarCargo = 'No';
+                if($_POST['tieneHijos'] === '1') {
+                  $familiarCargo = $_POST['FamiliarCargo'];
+                }
+                echo '
+                    <form action="" method="POST" class="resumen">
+                        <h2>Datos Ingresados</h2>
+                        ';
+                        if ($user->getTipoUsuario() === 1) {
+                            echo '<span class="precaucion"><b>Por favor, revise los datos con precaución antes de aceptar los cambios. No podrá volver a editarlos en el futuro.</b></span>';
+                        }
+                        echo '
+                        <p><b>Nombre:</b> ' .$nombres .'</p>
+                        <p><b>Apellido:</b> ' .$apellidos .'</p>
+                        <p><b>DNI:</b> ' .$dni .'</p>
+                        <p><b>Email:</b> ' .$email .'</p>
+                        <p><b>Telefono:</b> ' .$telefono .'</p>
+                        <p><b>Facultad:</b> ' .$facultad .'</p>
+                        <p><b>Carrera:</b> ' .$carrera .'</p>
+                        <p><b>Año de Ingreso:</b> ' .$ingreso .'</p>
+                        <p><b>Materias que se encuentra cursando:</b> ' .$materias .' </p>
+        
+                        <p><b>Ingresos del grupo familiar:</b> ' .$ingresos .'</p>
+                        <p><b>Egresos del grupo familiar:</b> ' .$egresos .'</p>
+                        <p><b>Integrantes del grupo familiar:</b> ' .$integrantes .'</p>
+                        <p><b>Familiares a cargo:</b> ' .$familiarCargo .'</p>
+                        <p><b>Vulnerabilidad:</b> ' .$vulnerabilidad .'</p>
+                        <p style="padding-top: 10px;font-size: 20px; font-weight: 700;">¿Guardar cambios?</p>
+        
+                        <select name="facultad" style="display:none;">';
+                        echo '<option value="' .$facultad .'">' .$facultad .'</option>';
+                        echo
+                        '</select>
+        
+                        <select name="aceptarEdicion" style="display:none;">';
+                        echo '<option value="aceptarEdicion"> aceptarEdicion </option>';
+                        echo
+                        '</select>
+        
+                        <select name="nombres" style="display:none;">';
+                        echo '<option value="' .$nombres .'">' .$nombres .'</option>';
+                        echo
+                        '</select>
+        
+                        <select name="apellidos" style="display:none;">';
+                        echo '<option value="' .$apellidos .'">' .$apellidos .'</option>';
+                        echo
+                        '</select>
+        
+                        <select name="dni" style="display:none;">';
+                        echo '<option value="' .$dni .'">' .$dni .'</option>';
+                        echo
+                        '</select>
     
-                    <p><b>Ingresos del grupo familiar:</b> ' .$ingresos .'</p>
-                    <p><b>Egresos del grupo familiar:</b> ' .$egresos .'</p>
-                    <p><b>Integrantes del grupo familiar:</b> ' .$integrantes .'</p>
-                    <p style="padding-top: 10px;font-size: 20px; font-weight: 700;">¿Guardar cambios?</p>
+                        <select name="domicilio" style="display:none;">';
+                        echo '<option value="' .$domicilio .'">' .$domicilio .'</option>';
+                        echo
+                        '</select>
     
-                    <select name="facultad" style="display:none;">';
-                    echo '<option value="' .$facultad .'">' .$facultad .'</option>';
-                    echo
-                    '</select>
+                        <select name="localidad" style="display:none;">';
+                        echo '<option value="' .$localidad .'">' .$localidad .'</option>';
+                        echo
+                        '</select>
     
-                    <select name="aceptarEdicion" style="display:none;">';
-                    echo '<option value="aceptarEdicion"> aceptarEdicion </option>';
-                    echo
-                    '</select>
-    
-                    <select name="nombres" style="display:none;">';
-                    echo '<option value="' .$nombres .'">' .$nombres .'</option>';
-                    echo
-                    '</select>
-    
-                    <select name="apellidos" style="display:none;">';
-                    echo '<option value="' .$apellidos .'">' .$apellidos .'</option>';
-                    echo
-                    '</select>
-    
-                    <select name="dni" style="display:none;">';
-                    echo '<option value="' .$dni .'">' .$dni .'</option>';
-                    echo
-                    '</select>
-
-                    <select name="domicilio" style="display:none;">';
-                    echo '<option value="' .$domicilio .'">' .$domicilio .'</option>';
-                    echo
-                    '</select>
-
-                    <select name="localidad" style="display:none;">';
-                    echo '<option value="' .$localidad .'">' .$localidad .'</option>';
-                    echo
-                    '</select>
-
-                    <select name="provincia" style="display:none;">';
-                    echo '<option value="' .$provincia .'">' .$provincia .'</option>';
-                    echo
-                    '</select>
-    
-                    <select name="email" style="display:none;">';
-                    echo '<option value="' .$email .'">' .$email .'</option>';
-                    echo
-                    '</select>
-    
-                    <select name="telefono" style="display:none;">';
-                    echo '<option value="' .$telefono .'">' .$telefono .'</option>';
-                    echo
-                    '</select>
-    
-                    <select name="carrera" style="display:none;">';
-                    echo '<option value="' .$carrera .'">' .$carrera .'</option>';
-                    echo
-                    '</select>
-    
-                    <select name="aniosCarrera" style="display:none;">';
-                    echo '<option value="' .$aniosCarrera .'">' .$aniosCarrera .'</option>';
-                    echo
-                    '</select>
-                    
-                    <select name="ingreso" style="display:none;">';
-                    echo '<option value="' .$ingreso .'">' .$ingreso .'</option>';
-                    echo
-                    '</select>
-    
-                    <select name="promedio" style="display:none;">';
-                    echo '<option value="' .$promedio .'">' .$promedio .'</option>';
-                    echo
-                    '</select>
-    
-                    <select name="aprobadas" style="display:none;">';
-                    echo '<option value="' .$aprobadas .'">' .$aprobadas .'</option>';
-                    echo
-                    '</select>
-    
-                    <select name="totales" style="display:none;">';
-                    echo '<option value="' .$totales .'">' .$totales .'</option>';
-                    echo
-                    '</select>
-    
-                    <select name="rendidos" style="display:none;">';
-                    echo '<option value="' .$rendidos .'">' .$rendidos .'</option>';
-                    echo
-                    '</select>
-    
-                    <select name="ingresos" style="display:none;">';
-                    echo '<option value="' .$ingresos .'">' .$ingresos .'</option>';
-                    echo
-                    '</select>
-    
-                    <select name="egresos" style="display:none;">';
-                    echo '<option value="' .$egresos .'">' .$egresos .'</option>';
-                    echo
-                    '</select>
-    
-                    <select name="integrantes" style="display:none;">';
-                    echo '<option value="' .$integrantes .'">' .$integrantes .'</option>';
-                    echo
-                    '</select>
+                        <select name="provincia" style="display:none;">';
+                        echo '<option value="' .$provincia .'">' .$provincia .'</option>';
+                        echo
+                        '</select>
+        
+                        <select name="email" style="display:none;">';
+                        echo '<option value="' .$email .'">' .$email .'</option>';
+                        echo
+                        '</select>
+        
+                        <select name="telefono" style="display:none;">';
+                        echo '<option value="' .$telefono .'">' .$telefono .'</option>';
+                        echo
+                        '</select>
+        
+                        <select name="carrera" style="display:none;">';
+                        echo '<option value="' .$carrera .'">' .$carrera .'</option>';
+                        echo
+                        '</select>
+        
+                        <select name="aniosCarrera" style="display:none;">';
+                        echo '<option value="' .$aniosCarrera .'">' .$aniosCarrera .'</option>';
+                        echo
+                        '</select>
                         
-                    <select name="familiaresInternet" style="display:none;">';
-                    echo '<option value="' .$familiaresInternet .'">' .$familiaresInternet .'</option>';
-                    echo
-                    '</select>
+                        <select name="ingreso" style="display:none;">';
+                        echo '<option value="' .$ingreso .'">' .$ingreso .'</option>';
+                        echo
+                        '</select>
+        
+                        <select name="promedio" style="display:none;">';
+                        echo '<option value="' .$promedio .'">' .$promedio .'</option>';
+                        echo
+                        '</select>
+        
+                        <select name="aprobadas" style="display:none;">';
+                        echo '<option value="' .$aprobadas .'">' .$aprobadas .'</option>';
+                        echo
+                        '</select>
+        
+                        <select name="totales" style="display:none;">';
+                        echo '<option value="' .$totales .'">' .$totales .'</option>';
+                        echo
+                        '</select>
+        
+                        <select name="rendidos" style="display:none;">';
+                        echo '<option value="' .$rendidos .'">' .$rendidos .'</option>';
+                        echo
+                        '</select>
+        
+                        <select name="ingresos" style="display:none;">';
+                        echo '<option value="' .$ingresos .'">' .$ingresos .'</option>';
+                        echo
+                        '</select>
+        
+                        <select name="egresos" style="display:none;">';
+                        echo '<option value="' .$egresos .'">' .$egresos .'</option>';
+                        echo
+                        '</select>
+        
+                        <select name="integrantes" style="display:none;">';
+                        echo '<option value="' .$integrantes .'">' .$integrantes .'</option>';
+                        echo
+                        '</select>
+                            
+                        <select name="familiaresInternet" style="display:none;">';
+                        echo '<option value="' .$familiaresInternet .'">' .$familiaresInternet .'</option>';
+                        echo
+                        '</select>
+        
+                        <select name="materias" style="display:none;">';
+                        echo '<option value="' .$materias .'">' .$materias .'</option>';
+                        echo
+                        '</select>
     
-                    <select name="materias" style="display:none;">';
-                    echo '<option value="' .$materias .'">' .$materias .'</option>';
-                    echo
-                    '</select>
+                        <select name="ingreso" style="display:none;">';
+                        echo '<option value="' .$ingreso .'">' .$ingreso .'</option>';
+                        echo
+                        '</select>
     
-                    <div class="registro__button" style="margin-bottom: 20px;">
-                    <input type="submit" value="Aceptar" class="button">
-                    <a class="button registrarse" style="margin-left:10px;" onclick="location=`../index.php`">Cancelar</a>
-                </div>
-                </form>
-            ';
+                        <select name="familiarCargo" style="display:none;">';
+                        echo '<option value="' .$familiarCargo .'">' .$familiarCargo .'</option>';
+                        echo
+                        '</select>
+    
+                        <select name="vulnerabilidad" style="display:none;">';
+                        echo '<option value="' .$vulnerabilidad .'">' .$vulnerabilidad .'</option>';
+                        echo
+                        '</select>
+        
+                        <div class="registro__button" style="margin-bottom: 20px;">
+                        <input type="submit" value="Aceptar" class="button">
+                        <a class="button registrarse" style="margin-left:10px;" onclick="location=`../index.php`">Cancelar</a>
+                    </div>
+                    </form>
+                ';
+            }
         }
     } else if (isset($_POST['aceptarEdicion'])) {
         $facultad = $_POST['facultad'];
@@ -467,18 +512,20 @@
         $ingresos = $_POST['ingresos'];
         $integrantes = $_POST['integrantes'];
         $familiaresInternet = $_POST['familiaresInternet'];
+        $hijos = $_POST['hijos'];
+        $vulnerabilidad = $_POST['vulnerabilidad'];
 
         if($esBecaConectar) {
             $telefono4G = $_POST['telefono4G'];
             $telefonoLiberado = $_POST['telefonoLiberado'];
             $compania = $_POST['compania'];
             $mejorCompania = $_POST['mejorCompania'];
-            $hijos = $_POST['hijos'];
-            $vulnerabilidad = $_POST['vulnerabilidad'];
             $alumno->editarAlumnoConectar($id, $facultad, $apellidos, $nombres, $dni, $email, $telefono, $carrera, $ingresos, $integrantes, $aniosCarrera, $materias, $telefono4G, $telefonoLiberado, $compania, $mejorCompania, $hijos, $vulnerabilidad, $domicilio, $localidad, $provincia, $familiaresInternet);
         } else {
             $egresos = $_POST['egresos'];
-            $alumno->editarAlumnoTeran($id, $facultad, $apellidos, $nombres, $dni, $email, $telefono, $carrera, $ingresos, $egresos, $integrantes, $aniosCarrera, $materias);
+            $familiarCargo = $_POST['familiarCargo'];
+            $anioIngreso = $_POST['ingreso'];
+            $alumno->editarAlumnoTeran($id, $facultad, $apellidos, $nombres, $dni, $email, $telefono, $carrera, $ingresos, $egresos, $integrantes, $aniosCarrera, $materias, $vulnerabilidad, $familiarCargo, $anioIngreso);
         }
         $_SESSION['alumno'] = null;
         header("Location: ../index.php");
@@ -572,6 +619,9 @@
                     <p style="display: none;">Duración de la carrera en años: <br>
                         <input type="number" name="aniosCarrera" value="' .$alumnoDecoded['AniosCarrera'] .'">
                     </p>
+                        <p>Año de ingreso a la facultad: <br>
+                        <input type="number" name="ingreso" value="' .$alumnoDecoded['AnioIngreso'] .'">
+                    </p>
                     <p style="font-weight: bold;">
                         Nombre de las materias que cursa actualmente en modalidad virtual:
                     </p>';
@@ -621,9 +671,10 @@
                     $provincia = $_POST['provincia'];
                     $email = $_POST['email'];
                     $telefono = $_POST['telefono'];
-
+                    
                     $carrera = $_POST['carrera'];
                     $aniosCarrera = $_POST['aniosCarrera'];
+                    $ingreso = $_POST['ingreso'];
 
                     echo '
                     <form action="" method="POST" class="registro">
@@ -710,6 +761,7 @@
     
                         <select name="rendidos" style="display:none;">';
                         echo '<option value="' .$rendidos .'">' .$rendidos .'</option>';
+                        
                         if ($esBecaConectar) {
                             echo '
                             </select>
@@ -972,6 +1024,11 @@
                         } else {
                             echo
                             '</select>
+
+                            <select name="ingreso" style="display:none;">';
+                            echo '<option value="' .$ingreso .'">' .$ingreso .'</option>
+                            </select>
+
                             <div class="registro__form familiares">
                             <p>
                             Ingresos totales en pesos (Sumatoria de los ingresos económicos de todos los integrantes del grupo familiar. Escriba el número <b>sin puntos</b>, salvo para indicar centavos): <br>
@@ -989,6 +1046,65 @@
                             <p>Cantidad de integrantes de su grupo familiar (Contándose a usted mismo): <br>
                                 <input type="number" name="integrantes" value="' .$alumnoDecoded['IntegrantesFamilia'] .'">
                             </p>
+                            <p class="radiop">¿Tiene personas a su cargo?
+                                <div class="registro__form hijos">
+                                    <div>
+                                        <input type="radio" name="tieneHijos" value="1"';
+                                        if ($alumnoDecoded['FamiliarCargo'] !== 'No') {
+                                            echo 'checked';
+                                        }
+                                        echo '>
+                                        <label for="1">Si</label><br>
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="tieneHijos" value="0"';
+                                        if ($alumnoDecoded['FamiliarCargo'] === 'No') {
+                                            echo 'checked';
+                                        }
+                                        echo '>
+                                        <label for="0">No</label><br>
+                                    </div>
+                                </div>
+                            </p>
+                            <p>En caso afirmativo, ¿A quién tiene a cargo? <br>
+                                <input name="FamiliarCargo" value="' .$alumnoDecoded['FamiliarCargo'] .'">
+                            </p>';
+                            echo '
+                            <p class="radiop">¿Presentas indicadores de vulnerabilidad?
+                                <div class="registro__form vulnerabilidad">
+                                    <div>
+                                        <input type="radio" name="vulnerabilidad" value="Si"';
+                                        if ($alumnoDecoded['Vulnerabilidad'] !== "No" && $alumnoDecoded['Vulnerabilidad'] !== "No deseo contestar") {
+                                            echo 'checked';
+                                        }
+                                        echo '>
+                                        <label for="Si">Si</label><br>
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="vulnerabilidad" value="No"';
+                                        if ($alumnoDecoded['Vulnerabilidad'] === "No") {
+                                            echo 'checked';
+                                        }
+                                        echo '>
+                                        <label for="No">No</label><br>
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="vulnerabilidad" value="NC"';
+                                        if ($alumnoDecoded['Vulnerabilidad'] === "No deseo contestar") {
+                                            echo 'checked';
+                                        }
+                                        echo '>
+                                        <label for="NC">No deseo contestar</label><br>
+                                    </div>
+                                </div>
+                                </p>
+                                <p>En caso de responder afirmativamente la pregunta anterior, describa brevemente el mismo: <br>
+                                <input type="text" name="descripcionVulnerabilidad" value="';
+                                if ($alumnoDecoded['Vulnerabilidad'] !== "No" && $alumnoDecoded['Vulnerabilidad'] !== "No deseo contestar") {
+                                    echo $alumnoDecoded['Vulnerabilidad'];
+                                }
+                                echo '">
+                                </p>
                             <div class="registro__button" style="padding-bottom: 20px;">
                                 <input type="submit" value="Siguiente" class="button">
                                 <a class="button registrarse" style="margin-left:10px;" onclick="location=`../index.php`">Cancelar</a>
@@ -997,6 +1113,7 @@
                         </form>
                         ';
                         }
+                        
                 }
             } else {
                 echo '
