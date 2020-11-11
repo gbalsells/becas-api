@@ -55,7 +55,7 @@
         if ($user->getTipoUsuario() !== 0) {
             if($idParam - $id === 0) {
                 echo '<iframe src="' .$documentPath .'" ></iframe> <a class="button registrarse"onclick="location=`Documentacion.php`">Atras</a>';
-                if(!$esBecaConectar){
+                if($esBecaConectar!==1){
                     echo '<a class="button registrarse" style="background-color: #b71c1c; margin-left: 20px;" onclick="location=`EliminarDocumentacion.php?path=' .$carpetaAlumno .'&id=' .$id .'`">Eliminar</a>';
                 }
             } else {
