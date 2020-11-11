@@ -37,13 +37,22 @@
         $logout = "models/logout.php";
         $esBecaConectar = $user->getBeca();
     }
-
-    if ($esBecaConectar === 1) {
-        $alumno->setAlumnoByUserConectar($id);
-        $beca = 'Conectividad';
+    if (isset($_REQUEST['beca'])) {
+        if($_REQUEST['beca'] === '0') {
+            $alumno->setAlumnoByUserTeran($id);
+            $beca = 'Juan B. Teran';
+        } else {
+            $alumno->setAlumnoByUserConectar($id);
+            $beca = 'Conectividad';
+        }
     } else {
-        $alumno->setAlumnoByUserTeran($id);
-        $beca = 'Juan B. Teran';
+        if ($esBecaConectar === 1) {
+            $alumno->setAlumnoByUserConectar($id);
+            $beca = 'Conectividad';
+        } else {
+            $alumno->setAlumnoByUserTeran($id);
+            $beca = 'Juan B. Teran';
+        }
     }
     $alumnoJson = json_encode($alumno);
 
@@ -51,7 +60,7 @@
         $userSession->setAlumno($alumnoJson);
         $id = $alumno->getId();
         $tieneDoc = $alumno->tieneDocumentacion($id);
-        if (!$tieneDoc && !$esBecaConectar) {
+        if (!$tieneDoc && $esBecaConectar !== 1) {
             header("Location: components/AdjuntarArchivos.php");
         }
     }
@@ -124,7 +133,7 @@
                         <li><b>Facultad: </b><?php echo $alumno->getFacultad();?></li>
                         <li><b>Carrera: </b><?php echo $alumno->getCarrera();?></li>
                         <?php
-                        if (!$esBecaConectar) {
+                        if ($beca === 'Juan B. Teran') {
                             echo '
                             <li><b>Año de Ingreso: </b>' .$alumno->getAnioIngreso() .'</li>
                             ';
@@ -144,7 +153,7 @@
                     <h3>Otros datos</h3>
                         <ul class="caratula__datos__info">
                     <?php
-                        if ($esBecaConectar) {
+                        if ($beca === 'Conectividad') {
                             echo '
                             <li><b>Integrantes del grupo familiar: </b> ' .$alumno->getIntegrantesFamilia() .'</li>
                             <li><b>Integrantes del grupo familiar que usan Internet por cuestiones académicas: </b>' .$alumno->getFamiliaresInternet() .'</li>
@@ -167,29 +176,6 @@
                         }
                     ?>
                     </ul>
-                    <?php
-                        // if($user->getTipoUsuario() === 0 && !$esBecaConectar){
-                        //     echo '
-                        //     <h3>Otros datos</h3>
-                        //     <ul class="caratula__datos__info">
-                        //         <li><b>Vulnerabilidad: </b>';
-                        //         if ($alumno->getVulnerabilidad()){
-                        //             echo $alumno->getVulnerabilidad();
-                        //         } else {
-                        //             echo '<span style="color: red; font-weight: 700;">Vulnerabilidad no cargada</span>';
-                        //         }
-                        //         echo '</li>
-                        //         <li><b>Distancia: </b>';
-                        //         if ($alumno->getDistancia()){
-                        //             echo $alumno->getDistancia();
-                        //         } else {
-                        //             echo '<span style="color: red; font-weight: 700;">Distancia no cargada</span>';
-                        //         }
-                        //         echo '</li>
-                        //     </ul>
-                        //     ';
-                        // }
-                    ?>
                     <div class="fechasCaratula">
                         <h4>Creado el <?php echo $alumno->getFechaCreacion() ?> </h4>
                         <?php
@@ -266,7 +252,7 @@
                     echo '
                     <div class="button_flex">
                     ';
-                    if ($alumno->getFechaEdicion() === null && !$esBecaConectar) {
+                    if ($alumno->getFechaEdicion() === null && $beca !== 'Conectividad') {
                         $userSession->setAlumno($alumnoJson);
                         echo '<button class="button atras" onclick="location=`components/EditarAlumno.php`">Editar</button>';                    
                     }
@@ -276,11 +262,21 @@
                     if ($tieneDoc) {
                         echo '<button class="button atras" onclick="location=`components/Documentacion.php`">Ver Documentación Adjuntada</button>';
                     } else {
-                        if (!$esBecaConectar) {
+                        if ($esBecaConectar!==1) {
                             echo '<button class="button atras" onclick="location=`components/AdjuntarArchivos.php`">Adjuntar Documentación</button>';
                         }
                     }
-                    echo '<button class="button atras" onclick="location=`Documentacion.php`">Solicitar Beca Juan B. Terán</button>';
+                    if($esBecaConectar === 1) {
+                        echo '<button class="button atras" onclick="location=`components/SolicitarTeran.php`">Solicitar Beca Juan B. Terán</button>';
+                    }
+                    if($esBecaConectar === 2) {
+                        if (isset($_REQUEST['beca']) && $_REQUEST['beca'] === '1') {
+                            echo '<button class="button atras" onclick="location=`index.php?beca=0`">Ver datos Beca Juan B. Terán</button>';
+                        } else {
+                            echo '<button class="button atras" onclick="location=`index.php?beca=1`">Ver datos Beca Conectividad</button>';
+                        }
+
+                    }
                 }
             ?>
             </div>

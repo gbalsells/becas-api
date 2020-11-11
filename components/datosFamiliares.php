@@ -15,7 +15,7 @@ include_once 'models/alumno.php';
 $alumno = new Alumno();
 $id = $user->getIdUsuario();
 $esBecaConectar = $user->getBeca();
-if($esBecaConectar) {
+if($esBecaConectar === 1) {
   if(isset($_POST['primerPaso'])) {
     if (isset($_POST['ingresos']) && isset($_POST['tieneHijos']) && isset($_POST['telefono4G'])
       && isset($_POST['telefonoLiberado']) && isset($_POST['compania']) && isset($_POST['mejorCompania'])

@@ -33,14 +33,10 @@ class User extends DB{
         }
     }
 
-    public function setToken($token, $email) {
-        $query = $this->connect()->prepare('UPDATE usuario SET Token = :token WHERE Email = :email');
-        $query->execute(['token'=> $token, 'email'=> $email]);
-        if($query->rowCount()){
-            return true;
-        }else{
-            return false;
-        }
+    public function solicitarTeran() {
+        $query = $this->connect()->prepare('UPDATE usuario SET esBecaConectar = 2 WHERE DNI = :dni');
+        $query->execute(['dni'=> $this->dni]);
+        return $query;
     }
 
     public function createUser($apellidos, $nombres, $email, $dni, $pass, $user, $telefono, $esBecaConectar, $domicilio, $localidad, $provincia){

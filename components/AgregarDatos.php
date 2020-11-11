@@ -42,7 +42,7 @@
     $alumno = new Alumno();
 
 
-    if($esBecaConectar) {
+    if($esBecaConectar === 1) {
         $alumno->setAlumnoByUserConectar($alumnoSession);
     } else {
         $alumno->setAlumnoByUserTeran($alumnoSession);

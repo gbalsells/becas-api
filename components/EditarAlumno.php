@@ -40,7 +40,7 @@
         header("Location: ../index.php");
     }
     
-    if($esBecaConectar) {
+    if($esBecaConectar === 1) {
         $alumno->setAlumnoByUserConectar($alumnoSession);
     } else {
         $alumno->setAlumnoByUserTeran($alumnoSession);
@@ -130,7 +130,7 @@
         $provincia = $_POST['provincia'];
 
 
-        if ($esBecaConectar) {
+        if ($esBecaConectar === 1) {
             $ingresos = implode(", ",array_unique(array_filter($_POST['ingresos'])));
             $familiaresInternet = $_POST['familiaresInternet'];
             if ($_POST['tieneHijos'] === '1' && $_POST['cantidadHijos'] === '' ||
@@ -489,9 +489,9 @@
                         '</select>
         
                         <div class="registro__button" style="margin-bottom: 20px;">
-                        <input type="submit" value="Aceptar" class="button">
-                        <a class="button registrarse" style="margin-left:10px;" onclick="location=`../index.php`">Cancelar</a>
-                    </div>
+                            <input type="submit" value="Aceptar" class="button">
+                            <a class="button registrarse" style="margin-left:10px;" onclick="location=`../index.php`">Cancelar</a>
+                        </div>
                     </form>
                 ';
             }
@@ -515,7 +515,7 @@
         $hijos = $_POST['hijos'];
         $vulnerabilidad = $_POST['vulnerabilidad'];
 
-        if($esBecaConectar) {
+        if($esBecaConectar === 1) {
             $telefono4G = $_POST['telefono4G'];
             $telefonoLiberado = $_POST['telefonoLiberado'];
             $compania = $_POST['compania'];
@@ -762,7 +762,7 @@
                         <select name="rendidos" style="display:none;">';
                         echo '<option value="' .$rendidos .'">' .$rendidos .'</option>';
                         
-                        if ($esBecaConectar) {
+                        if ($esBecaConectar === 1) {
                             echo '
                             </select>
                             <div class="registro__form familiares">

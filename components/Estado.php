@@ -38,7 +38,7 @@
         header("Location: ../index.php");
     }
 
-    if($esBecaConectar) {
+    if($esBecaConectar === 1) {
         $alumno->setAlumnoByUserConectar($alumnoSession);
     } else {
         $alumno->setAlumnoByUserTeran($alumnoSession);
@@ -51,7 +51,7 @@
 <?php
 if (isset($_POST['estado'])){
     $estado = $_POST['estado'];
-    if($esBecaConectar) {
+    if($esBecaConectar === 1) {
         $alumno->editarEstadoConectar($id, $estado);
     } else {
         $alumno->editarEstado($id, $estado);

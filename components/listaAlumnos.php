@@ -53,12 +53,14 @@
             $id = $alumno->idUsuario;
             echo '
             <div class="';
-            if($alumno->esBecaConectar) {
+            if (isset($alumno->Compania)) {
+              $beca = 1;
               echo 'alumno_conectar';
             } else {
+              $beca = 0;
               echo 'alumno';
             }
-            echo '" onclick="location=`components/CaratulaAlumno.php?id=' .$id .'`">
+            echo '" onclick="location=`components/CaratulaAlumno.php?id=' .$id .'&beca=' .$beca .'`">
               <span>' .$alumno->Apellidos .', ' .$alumno->Nombres . '</span>
               <span>' .$alumno->DNI .'</span>
               <span>' .$alumno->Facultad .'</span>
@@ -78,12 +80,14 @@
               $id = $alumno->idUsuario;
               echo '
               <div class="';
-              if($alumno->esBecaConectar) {
+              if (isset($alumno->Compania)) {
+                $beca = 1;
                 echo 'alumno_conectar';
               } else {
+                $beca = 0;
                 echo 'alumno';
               }
-              echo '" onclick="location=`components/CaratulaAlumno.php?id=' .$id .'`">
+              echo '" onclick="location=`components/CaratulaAlumno.php?id=' .$id .'&beca=' .$beca .'`">
                 <span>' .$alumno->Apellidos .', ' .$alumno->Nombres . '</span>
                 <span>' .$alumno->DNI .'</span>
                 <span>' .$alumno->Facultad .'</span>
@@ -105,12 +109,14 @@
           $id = $alumno->idUsuario;
           echo '
           <div class="';
-          if($alumno->esBecaConectar) {
+          if (isset($alumno->Compania)) {
+            $beca = 1;
             echo 'alumno_conectar';
           } else {
+            $beca = 0;
             echo 'alumno';
           }
-          echo '" onclick="location=`components/CaratulaAlumno.php?id=' .$id .'`">
+          echo '" onclick="location=`components/CaratulaAlumno.php?id=' .$id .'&beca=' .$beca .'`">
             <span>' .$alumno->Apellidos .', ' .$alumno->Nombres . '</span>
             <span>' .$alumno->DNI .'</span>
             <span>' .$alumno->Facultad .'</span>

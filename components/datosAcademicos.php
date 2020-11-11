@@ -16,7 +16,7 @@
     $alumno = new Alumno();
     $id = $user->getIdUsuario();
     $esBecaConectar = $user->getBeca();
-    if($esBecaConectar) {
+    if($esBecaConectar === 1) {
       $hayAlumno = $user->hayAlumnoConectar();
     } else {
       $hayAlumno = $user->hayAlumno();
@@ -79,7 +79,7 @@
           $aniosCarrera = $_POST['aniosCarrera'];
           $facultadAlumno = $_POST['facultad'];
           $ingreso = $_POST['ingreso'];
-          if ($esBecaConectar) {
+          if ($esBecaConectar === 1) {
             $alumno->datosAcademicosConectar($id, $facultadAlumno, $carrera, $aniosCarrera, $materias);
           } else {
             $alumno->datosAcademicos($id, $facultadAlumno, $carrera, $aniosCarrera, $materias, $ingreso);
