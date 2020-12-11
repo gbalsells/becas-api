@@ -55,9 +55,9 @@
         if ($user->getTipoUsuario() !== 0) {
             if($idParam - $id === 0) {
                 echo '<iframe src="' .$documentPath .'" ></iframe> <a class="button registrarse"onclick="location=`Documentacion.php`">Atras</a>';
-                if($esBecaConectar!==1){
-                    echo '<a class="button registrarse" style="background-color: #b71c1c; margin-left: 20px;" onclick="location=`EliminarDocumentacion.php?path=' .$carpetaAlumno .'&id=' .$id .'`">Eliminar</a>';
-                }
+                // if($esBecaConectar!==1){
+                //     echo '<a class="button registrarse" style="background-color: #b71c1c; margin-left: 20px;" onclick="location=`EliminarDocumentacion.php?path=' .$carpetaAlumno .'&id=' .$id .'`">Eliminar</a>';
+                // }
             } else {
                 echo '<h4>Prohibido maquinola</h4>
                 <img src="https://media.tenor.com/images/de5a894861f9b4fcee484bdc1b6f5993/tenor.gif"/>';

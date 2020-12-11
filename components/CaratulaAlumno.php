@@ -61,7 +61,7 @@
         $id = $alumno->getId();
         $tieneDoc = $alumno->tieneDocumentacion($id);
         if (!$tieneDoc && $esBecaConectar !== 1) {
-            header("Location: components/AdjuntarArchivos.php");
+            // header("Location: components/AdjuntarArchivos.php");
         }
     }
     ?>
@@ -90,69 +90,183 @@
                     ?>
                     </span>
             </div>
-            <!-- para cuando esten los resultados
-            <div class="resultado__container">
-                <h1 class="resultado__texto">
-                    RESULTADO: 
-                </h1>
-                <h1 class="resultado__texto">
-                <?php 
-                // if ($alumno->getResultado() === 'FUERA DE CONCURSO: MENOS DE 2 MATERIAS APROBADAS EN 2018') {
-                //     echo 'FUERA DE CONCURSO: MENOS DE 2 MATERIAS APROBADAS EN 2018 SEGÚN UNIDAD ACADÉMICA';
-                // } else if ($alumno->getResultado() === 'FUERA DE CONCURSO.PROMEDIO INFERIOR A 5' || $alumno->getResultado() === 'FUERA DE CONCURSO: PROMEDIO INFERIOR A 5') {
-                //     echo 'FUERA DE CONCURSO: PROMEDIO INFERIOR A 5 SEGÚN UNIDAD ACADÉMICA';
-                // } else if ($alumno->getResultado() === 'BECA APROBADA. A LA BREVEDAD LE COMUNICAREMOS LUGAR Y FECHA DE COBRO.') {
-                //     echo 'BECA APROBADA';
+            <?php
+            $resultados = true; //DESHABILITAR AL ABRIR CONVOCATORIAS
+            if ($resultados && $esBecaConectar === 1) {
+                $resultadoConectividad = $user->resultadoConectividad($alumno->getDNI());
+                if ($resultadoConectividad) {
+                    foreach($resultadoConectividad as $alla) {
+                        if ($alla['Numero'] === 'NO') {
+                            echo '
+                            <div class="resultado__container">
+                                <h2>BECA CONECTIVIDAD OTORGADA</h2>
+                                <p style="max-width: 700px;"><b>FELICIDADES!</b> Sos beneficiario de la Beca de Conectividad, la cual consiste en una recarga de 6 GB de datos de la empresa que posees actualmente, ya que declaraste en la ficha inscripción que no resides actualmente en la provincia de Tucumán. <br><br>La recarga se realizará mensualmente mientras dure la actividad académica remota. Las fechas previstas de recarga son: </p>
+                                <ul>
+                                    <li>11/12/20</li>
+                                    <li>01/03/21</li>
+                                    <li>01/04/21</li>
+                                    <li>01/05/21</li>
+                                </ul>
+                            </div>
+                        ';
+                        } else {
+                            echo '
+                                <div class="resultado__container">
+                                <h2>BECA CONECTIVIDAD OTORGADA</h2>
+                                    <p style="max-width: 700px;"><b>FELICIDADES!</b> Sos beneficiario/a de la Beca de Conectividad, la cual consiste en un chip prepago de la Empresa <b>' .$alla['Empresa'] .'</b> con 6GB de datos. La recarga se realizará mensualmente, mientras dure la actividad académica remota. Las fechas previstas de recarga son: </p>
+                                    <ul>
+                                        <li>11/12/20</li>
+                                        <li>01/03/21</li>
+                                        <li>01/04/21</li>
+                                        <li>01/05/21</li>
+                                    </ul>
+                                    <p>El Centro de Estudiantes de tu facultad te entregará el Chip prepago.</p>
+                                </div>
+                            ';
+                        }
+                    break;
+                    }
+                } else {
+                    echo '
+                    <div class="resultado__container">
+                        <h2>BECA CONECTIVIDAD NO OTORGADA</h2>
+                        <p>Lamentablemente no cumples con los requisitos para ser beneficiario de la Beca de Conectividad.</p>
+                    </div>
+                ';
+                }
+            } else if($resultados && $esBecaConectar === 0) {
+                $resultadoTeran = $user->resultadoTeran($alumno->getDNI());
+                if ($resultadoTeran) {
+                    echo '
+                        <div class="resultado__container">
+                            <h2>BECA JUAN B. TERÁN OTORGADA</h2>
+                            <p style="max-width: 700px;"><b>FELICIDADES!</b> Sos beneficiario de la <b>Beca Juan B. Terán</b>. <br><br> En breve nos comunicaremos vía mail para informarte sobre la forma de pago.</p>
+                        </div>
+                    ';
+                } else {
+                    echo '
+                    <div class="resultado__container">
+                        <h2>BECA JUAN B. TERÁN NO OTORGADA</h2>
+                        <p>Lamentablemente no cumples con los requisitos para ser beneficiario de la Beca Juan B. Terán.</p>
+                    </div>
+                ';
+                }
+            }
+            if($esBecaConectar === 2) {
+                $resultadoTeran = $user->resultadoTeran($alumno->getDNI());
+                $resultadoConectividad = $user->resultadoConectividad($alumno->getDNI());
+                if(!$resultadoTeran && !$resultadoConectividad ) {
+                    echo '
+                        <div class="resultado__container">
+                            <h2>BECAS NO OTORGADAS</h2>
+                            <p>Lamentablemente no cumples con los requisitos para ser beneficiario de la Beca Juan B. Terán o la Beca Conectividad</p>
+                        </div>
+                    ';                
+                } else if($beca === 'Juan B. Teran' && !$resultadoTeran && $resultadoConectividad ) {
+                    header("Location: index.php?beca=1");
+                } else if($beca === 'Conectividad' && !$resultadoConectividad  && $resultadoTeran) {
+                    header("Location: index.php?beca=0");
+                } else {
+                    if ($beca === 'Conectividad') {
+                        if ($resultadoConectividad) {
+                            foreach($resultadoConectividad as $alla) {
+                                if ($alla['Numero'] === 'NO') {
+                                    echo '
+                                    <div class="resultado__container">
+                                        <h2>BECA CONECTIVIDAD OTORGADA</h2>
+                                        <p style="max-width: 700px;"><b>FELICIDADES!</b> Sos beneficiario de la Beca de Conectividad, la cual consiste en una recarga de 6 GB de datos de la empresa que posees actualmente, ya que declaraste en la ficha inscripción que no resides actualmente en la provincia de Tucumán. <br><br>La recarga se realizará mensualmente mientras dure la actividad académica remota. Las fechas previstas de recarga son: </p>
+                                        <ul>
+                                            <li>11/12/20</li>
+                                            <li>01/03/21</li>
+                                            <li>01/04/21</li>
+                                            <li>01/05/21</li>
+                                        </ul>
+                                ';
+                                } else {
+                                    echo '
+                                        <div class="resultado__container">
+                                        <h2>BECA CONECTIVIDAD OTORGADA</h2>
+                                            <p style="max-width: 700px;"><b>FELICIDADES!</b> Sos beneficiario/a de la Beca de Conectividad, la cual consiste en un chip prepago de la Empresa <b>' .$alla['Empresa'] .'</b> con 6GB de datos. La recarga se realizará mensualmente, mientras dure la actividad académica remota. Las fechas previstas de recarga son: </p>
+                                            <ul>
+                                                <li>11/12/20</li>
+                                                <li>01/03/21</li>
+                                                <li>01/04/21</li>
+                                                <li>01/05/21</li>
+                                            </ul>
+                                            <p>El Centro de Estudiantes de tu facultad te entregará el Chip prepago.</p>
+                                            ';
+                                        }
+                                        echo '<p>Al haber obtenido la Beca de Conectividad, ya no calificas para la Beca Juan B. Terán.</p>
+                                    </div>';
+                                    break;
+                            }
+                        } else {
+                            echo '
+                            <div class="resultado__container">
+                                <h2>BECA CONECTIVIDAD NO OTORGADA</h2>
+                                <p>Lamentablemente no cumples con los requisitos para ser beneficiario de la Beca de Conectividad.</p>
+                            </div>
+                        ';
+                        }
+                    } else {
+                        if ($resultadoTeran) {
+                            echo '
+                                <div class="resultado__container">
+                                    <h2>BECA JUAN B. TERÁN OTORGADA</h2>
+                                    <p style="max-width: 700px;"><b>FELICIDADES!</b> Sos beneficiario de la <b>Beca Juan B. Terán</b>. <br><br> En breve nos comunicaremos vía mail para informarte sobre la forma de pago.</p>
+                                    <p>Al haber obtenido la Beca de Juan B. Terán, ya no calificas para la Beca Conectividad.</p>
+                                </div>
+                            ';
+                        } else {
+                            echo '
+                            <div class="resultado__container">
+                                <h2>BECA JUAN B. TERÁN NO OTORGADA</h2>
+                                <p>Lamentablemente no cumples con los requisitos para ser beneficiario de la Beca Juan B. Terán.</p>
+                            </div>
+                        ';
+                        }
+                    }
+                }
+                // if (isset($_REQUEST['beca']) && $_REQUEST['beca'] === '1') {
+                //     echo '<button class="button atras" onclick="location=`index.php?beca=0`">Ver datos Beca Juan B. Terán</button>';
                 // } else {
-                //     echo $alumno->getResultado();
+                //     echo '<button class="button atras" onclick="location=`index.php?beca=1`">Ver datos Beca Conectividad</button>';
                 // }
-                
-                ?></h1>
-                <h1 style="text-align: center;">
-                <?php
-                    // if ($alumno->getResultado() === 'BECA APROBADA. A LA BREVEDAD LE COMUNICAREMOS LUGAR Y FECHA DE COBRO.') {
-                    //     echo 'El pago se efectuará en la tesorería de su facultad. Consulte allí mismo la fecha de pago. ';
-                    // }
-                ?>
-                </h1>
-            </div>
-            -->
+            }
+            if(!$resultados){
+            echo '
             <div class="caratula__container">
                 <div class="caratula__datos">
                     <h3>Datos personales</h3>
                     <ul class="caratula__datos__info">
-                        <li><b>DNI: </b><?php echo $alumno->getDNI();?></li>
-                        <li><b>Email: </b><?php echo $alumno->getEmail();?></li>
-                        <li><b>Teléfono: </b><?php echo $alumno->getTelefono();?></li>
-                        <li><b>Domicilio: </b><?php echo $alumno->getDomicilio();?></li>
-                        <li><b>Localidad: </b><?php echo $alumno->getLocalidad();?></li>
-                        <li><b>Provincia: </b><?php echo $alumno->getProvincia();?></li>
+                        <li><b>DNI: </b>' .$alumno->getDNI() .'</li>
+                        <li><b>Email: </b>' .$alumno->getEmail() .'</li>
+                        <li><b>Teléfono: </b>' .$alumno->getTelefono() .'</li>
+                        <li><b>Domicilio: </b>' .$alumno->getDomicilio() .'</li>
+                        <li><b>Localidad: </b>' .$alumno->getLocalidad() .'</li>
+                        <li><b>Provincia: </b>' .$alumno->getProvincia() .'</li>
                     </ul>
                     <h3>Datos académicos</h3>
                     <ul class="caratula__datos__info">
-                        <li><b>Facultad: </b><?php echo $alumno->getFacultad();?></li>
-                        <li><b>Carrera: </b><?php echo $alumno->getCarrera();?></li>
-                        <?php
+                        <li><b>Facultad: </b>' .$alumno->getFacultad() .'</li>
+                        <li><b>Carrera: </b>' .$alumno->getCarrera() .'</li>';
                         if ($beca === 'Juan B. Teran') {
                             echo '
                             <li><b>Año de Ingreso: </b>' .$alumno->getAnioIngreso() .'</li>
                             ';
                         }
-                        ?>
+                        echo '
                         <li><b>Materias cursando actualmente: </b>
-                            <ul>
-                                <?php
+                            <ul>';
                                     $materias = explode(", ", $alumno->getMaterias());
                                     foreach ($materias as &$mat){
                                         echo '<li>' .$mat .'</li>';
                                     };
-                                ?>
-                            </ul>
+                            echo '</ul>
                         </li>
                     </ul>
                     <h3>Otros datos</h3>
-                        <ul class="caratula__datos__info">
-                    <?php
+                        <ul class="caratula__datos__info">'; 
                         if ($beca === 'Conectividad') {
                             echo '
                             <li><b>Integrantes del grupo familiar: </b> ' .$alumno->getIntegrantesFamilia() .'</li>
@@ -174,11 +288,9 @@
                             <li><b>Vulnerabilidad: </b>' .$alumno->getVulnerabilidad() .'</li>
                             ';
                         }
-                    ?>
-                    </ul>
+                    echo '</ul>
                     <div class="fechasCaratula">
-                        <h4>Creado el <?php echo $alumno->getFechaCreacion() ?> </h4>
-                        <?php
+                        <h4>Creado el ' .$alumno->getFechaCreacion() .'</h4>';
                             if ($alumno->getFechaEdicion()) {
                                 echo '<h4>Editado el ' .$alumno->getFechaEdicion() .'</h4>';
                             }
@@ -228,10 +340,8 @@
                                 // $merito = $meritoPromedio + $meritoFamiliar + $meritoRegularidad + $alumno->getVulnerabilidad() + $alumno->getDistancia();
                                 // echo '<h3 class="puntuacion">Puntuacion: ' .$merito .'</h3>';
                             }
-                        ?>
-                    </div>
-                </div>
-            <?php
+                    echo '</div>
+                </div>';
                 if ($user->getTipoUsuario() === 0) {
                     $userSession->setAlumno($alumnoJson);
                     // $userSession->setMerito($merito);
@@ -252,22 +362,22 @@
                     echo '
                     <div class="button_flex">
                     ';
-                    if ($alumno->getFechaEdicion() === null && $beca !== 'Conectividad') {
-                        $userSession->setAlumno($alumnoJson);
-                        echo '<button class="button atras" onclick="location=`components/EditarAlumno.php`">Editar</button>';                    
-                    }
+                    // if ($alumno->getFechaEdicion() === null && $beca !== 'Conectividad') {
+                    //     $userSession->setAlumno($alumnoJson);
+                    //     echo '<button class="button atras" onclick="location=`components/EditarAlumno.php`">Editar</button>';                    
+                    // }
                     $userSession->setAlumno($alumnoJson);
                     $id = $alumno->getId();
                     $tieneDoc = $alumno->tieneDocumentacion($id);
                     if ($tieneDoc) {
                         echo '<button class="button atras" onclick="location=`components/Documentacion.php`">Ver Documentación Adjuntada</button>';
                     } else {
-                        if ($esBecaConectar!==1) {
-                            echo '<button class="button atras" onclick="location=`components/AdjuntarArchivos.php`">Adjuntar Documentación</button>';
-                        }
+                        // if ($esBecaConectar!==1) {
+                        //     echo '<button class="button atras" onclick="location=`components/AdjuntarArchivos.php`">Adjuntar Documentación</button>';
+                        // }
                     }
                     if($esBecaConectar === 1) {
-                        echo '<button class="button atras" onclick="location=`components/SolicitarTeran.php`">Solicitar Beca Juan B. Terán</button>';
+                        // echo '<button class="button atras" onclick="location=`components/SolicitarTeran.php`">Solicitar Beca Juan B. Terán</button>';
                     }
                     if($esBecaConectar === 2) {
                         if (isset($_REQUEST['beca']) && $_REQUEST['beca'] === '1') {
@@ -278,6 +388,7 @@
 
                     }
                 }
+            }
             ?>
             </div>
     </div>

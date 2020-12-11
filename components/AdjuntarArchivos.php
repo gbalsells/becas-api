@@ -50,7 +50,7 @@
     <a class="cerrar-sesion" href=<?php echo $logout; ?>>Cerrar sesión</a>
 </nav>
 <div class="adjuntar">
-    <h2>Adjuntar PDF</h2>
+    <!-- <h2>Adjuntar PDF</h2>
     <h3>A continuación, puede adjuntar la documentación requerida. </h3>
     <p style="font-size: 16px;">
         <span>
@@ -91,15 +91,15 @@
                 </ul
             </li>
         </ol>
-    </div>
-    <form method="post" action="" enctype="multipart/form-data">
+    </div> -->
+    <!-- <form method="post" action="" enctype="multipart/form-data">
         <p class="document-form">Archivo: <br>
             <input type="file" name="archivo" class="document-input">
         </p>
         <div class="pdf__buttons">
             <input type="submit" value="Subir" name="subir" class="button">
         </div>
-    </form>            
+    </form>             -->
     <?php
         if (isset($_POST['subir'])) {
             $nombre = $alumnoDecoded['dni'] .'.pdf';
@@ -113,7 +113,7 @@
             }
             $destino = $carpetaAlumno .'/' . $nombre;
             if ($nombre !== '') {
-                if ($tipo === 'application/pdf' && $tamanio < 1000000) {
+                if ($tipo === 'application/pdf' && $tamanio < 1700000) {
                     if(!is_dir($carpetaAlumno)){
                         $crear = mkdir($carpetaAlumno, 0777, true);
                     }

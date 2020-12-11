@@ -37,12 +37,9 @@
             </p>
             <div class="login__buttons">
               <input type="submit" value="Iniciar Sesión" class="button">
-              <input onclick="location='./pages/register.php'" type="button" value="Registrarse" class="button registrarse">
+              <!-- <input onclick="location='./pages/register.php'" type="button" value="Registrarse" class="button registrarse"> -->
             </div>
             <div>
-            <!--
-            MENSAJE PARA CUANDO CIERRE LA CONVOCATORIA
-            -->
             <?php
             if($incorrecto === true){
               echo '
@@ -56,13 +53,16 @@
       </form>
     </div>
     <div class="login">
+      <!--
+        MENSAJE PARA CUANDO CIERRE LA CONVOCATORIA
+      -->
       <div class="login__form message">
         <div id="mensaje-recordatorio">
           <p id="atencion"><b>¡ATENCIÓN!</b></p>
           <ul>
-            <li>La convocatoria para las becas <b>Conectividad</b> ha cerrado. Puede ingresar para consultar el estado de su solicitud.</li>
-            <li>Se encuentran abiertas las inscripciones para la <b>Beca J. B. Terán</b></li>
-            <li>Si ya se encuentra inscripto a las becas Conectividad y desea postularse para las becas Juan B. Terán, <b>inicie sesión</b> y seleccione la opción <b>"Solicitar Beca J. B. Terán"</b></li>
+            <li>Se encuentran disponibles los resultados de las Becas <b>Conectividad</b> y <b>Juan B. Terán</b>. Puede ingresar con su usuario y contraseña para consultar su estado.</li>
+            <!-- <li>Se encuentran abiertas las inscripciones para la <b>Beca J. B. Terán</b></li>
+            <li>Si ya se encuentra inscripto a las becas Conectividad y desea postularse para las becas Juan B. Terán, <b>inicie sesión</b> y seleccione la opción <b>"Solicitar Beca J. B. Terán"</b></li> -->
           </ul>
         </div>
       </div>

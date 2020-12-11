@@ -31,7 +31,7 @@
     </nav>
     <div class="solicitud__background">
 
-    <form action="" method="POST" class="solicitud__text">
+    <!-- <form action="" method="POST" class="solicitud__text">
         <h2>Solicitar Beca Juan B. Terán</h2>
         <p>Para continuar, deberá <span style="font-weight: bold; color:red;" >completar el formulario de registro </span>.</p>
         <p>¿Está seguro que desea postularse para la Beca Juan B. Terán?</p>
@@ -46,7 +46,7 @@
             <input type="submit" value="aceptar" class="button">
             <a class="button registrarse" style="margin-left:10px;" onclick="location=`../index.php`">Cancelar</a>
         </div>
-    </form>
+    </form> -->
     </div>
     <?php
         if(isset($_POST['aceptar'])) {

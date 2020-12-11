@@ -113,6 +113,26 @@ class User extends DB{
         }
     }
 
+    public function resultadoConectividad($dni){
+        $query = $this->connect()->prepare('SELECT * FROM conectividadresultados1 WHERE DNI = :dni');
+        $query->execute(['dni' => $dni]);
+        if($query->rowCount()){
+            return $query;
+        }else{
+            return false;
+        }
+    }
+
+    public function resultadoTeran($dni){
+        $query = $this->connect()->prepare('SELECT * FROM teranresultados1 WHERE DNI = :dni');
+        $query->execute(['dni' => $dni]);
+        if($query->rowCount()){
+            return $query;
+        }else{
+            return false;
+        }
+    }
+
     public function getUsuario(){
         return $this->usuario;
     }
